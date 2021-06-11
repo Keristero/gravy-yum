@@ -314,7 +314,7 @@
   </object>
   <object id="159" name="D3STROIT" type="Server Warp" gid="65" x="1152" y="512" width="61" height="32">
    <properties>
-    <property name="Address" value="173.26.107.134"/>
+    <property name="Address" value="d3str0y3d255.duckdns.org"/>
     <property name="Data" value="mm_gravy_yum_2"/>
     <property name="Direction" value="Up Left"/>
     <property name="IncomingData" value="REDACTED"/>
