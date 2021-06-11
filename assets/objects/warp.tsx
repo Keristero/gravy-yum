@@ -9,6 +9,11 @@
    <property name="Y" type="float" value="0"/>
    <property name="Z" type="float" value="0"/>
   </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="30.5" y="8">
+    <polygon points="0,0 -15.25,8 0,16 15.25,8 0,0"/>
+   </object>
+  </objectgroup>
   <animation>
    <frame tileid="1" duration="100"/>
    <frame tileid="2" duration="100"/>
