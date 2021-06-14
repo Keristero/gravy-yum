@@ -49,6 +49,8 @@ local fall_in_animation = {
             local sound_path = '/server/assets/landings/earthquake.ogg'
             Net.play_sound(area_id, sound_path)
             Net.shake_player_camera(player_id, 3, 2)
+            Net.unlock_player_input(player_id)
+            Net.unlock_player_camera(player_id)
         end,fall_duration)
     end
 }
@@ -62,7 +64,6 @@ function doAnimationForWarp(player_id,animation_name)
     print('[Landings] doing special animation '..animation_name)
     Net.lock_player_input(player_id)
     special_animations[animation_name].animate(player_id)
-    Net.unlock_player_input(player_id)
 end
 
 function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, special_animation)
@@ -117,7 +118,7 @@ function handle_player_request(player_id, data)
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
                     --and also if the camera should be locked, lock it on the arrival position, rather than entry position
                     if special_animation.lock_camera then
-                        Net.move_player_camera(player_id,special_animation.camera_lock_duration)
+                        Net.move_player_camera(player_id,l["x"],l["y"],l["z"],special_animation.camera_lock_duration)
                     end
                 end
             end
