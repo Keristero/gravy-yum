@@ -22,8 +22,7 @@ local fall_in_animation = {
         y=0,
         z=20
     },
-    camera_lock_duration=1,
-    lock_camera=true,
+    lock_camera_on_landing=true,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
@@ -118,7 +117,7 @@ function handle_player_request(player_id, data)
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
                     --and also if the camera should be locked, lock it on the arrival position, rather than entry position
                     if special_animation.lock_camera then
-                        Net.move_player_camera(player_id,l["x"],l["y"],l["z"],special_animation.camera_lock_duration)
+                        Net.move_player_camera(player_id,l["x"],l["y"],l["z"])
                     end
                 end
             end
