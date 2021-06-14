@@ -166,16 +166,6 @@
     <property name="speed" type="float" value="1.2"/>
    </properties>
   </object>
-  <object id="219" name="Central Area " type="Server Warp" gid="65" x="576" y="640" width="61" height="32">
-   <properties>
-    <property name="Address" value="127.0.0.1"/>
-    <property name="Data" value="central3-gravy-yum-warp-xyz"/>
-    <property name="Direction" value="Up Right"/>
-    <property name="IncomingData" value="MA"/>
-    <property name="Port" type="int" value="8765"/>
-    <property name="WarpIn" type="bool" value="false"/>
-   </properties>
-  </object>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -325,16 +315,6 @@
 </data>
  </layer>
  <objectgroup id="24" name="Object Layer 5" offsetx="0" offsety="-48">
-  <object id="158" name="Central Area " type="Server Warp" gid="65" x="768" y="960" width="61" height="32">
-   <properties>
-    <property name="Address" value="99.15.113.82"/>
-    <property name="Data" value="llkeepyoumydirtylittlesecret"/>
-    <property name="Direction" value="Up Right"/>
-    <property name="IncomingData" value="central2-gravy-yum-warp-xyz"/>
-    <property name="Port" type="int" value="3066"/>
-    <property name="WarpIn" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="159" name="D3STROIT" type="Server Warp" gid="65" x="1152" y="512" width="61" height="32">
    <properties>
     <property name="Address" value="d3str0y3d255.duckdns.org"/>
