@@ -22,12 +22,13 @@ local fall_in_animation = {
         y=0,
         z=20
     },
+    camera_lock_duration=1,
+    lock_camera=true,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
         local landing_z = player_pos.z-20
         local fall_duration = 1
-        Net.move_player_camera(player_id, player_pos.x, player_pos.y, landing_z, fall_duration)
         local keyframes = {{
             properties={{
                 property="Z",
@@ -103,20 +104,24 @@ function handle_player_request(player_id, data)
     end
     for key, l in next, landings do
         if data == key then
-            local x = l["x"]
-            local y = l["y"]
-            local z = l["z"]
+            local entry_x = l["x"]
+            local entry_y = l["y"]
+            local entry_z = l["z"]
             if l["special_animation"] then
                 local special_animation_name = l["special_animation"]
                 if special_animations[special_animation_name] then
                     local special_animation = special_animations[special_animation_name]
                     player_animations[player_id] = special_animation_name
-                    x = x + special_animation.pre_animation_offsets.x
-                    y = y + special_animation.pre_animation_offsets.y
-                    z = z + special_animation.pre_animation_offsets.z
+                    entry_x = entry_x + special_animation.pre_animation_offsets.x
+                    entry_y = entry_y + special_animation.pre_animation_offsets.y
+                    entry_z = entry_z + special_animation.pre_animation_offsets.z
+                    --and also if the camera should be locked, lock it on the arrival position, rather than entry position
+                    if special_animation.lock_camera then
+                        Net.move_player_camera(player_id,special_animation.camera_lock_duration)
+                    end
                 end
             end
-            Net.transfer_player(player_id, l["area_id"], l["warp_in"], x, y, z, l["direction"])
+            Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_x, entry_y, entry_z, l["direction"])
             return
         end
     end
