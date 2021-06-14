@@ -49,7 +49,6 @@ local fall_in_animation = {
             Net.play_sound(area_id, sound_path)
             Net.shake_player_camera(player_id, 3, 2)
             Net.unlock_player_input(player_id)
-            Net.unlock_player_camera(player_id)
         end,fall_duration)
     end
 }
@@ -115,10 +114,6 @@ function handle_player_request(player_id, data)
                     entry_x = entry_x + special_animation.pre_animation_offsets.x
                     entry_y = entry_y + special_animation.pre_animation_offsets.y
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
-                    --and also if the camera should be locked, lock it on the arrival position, rather than entry position
-                    if special_animation.lock_camera_on_landing then
-                        Net.move_player_camera(player_id,l["x"],l["y"],l["z"])
-                    end
                 end
             end
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_x, entry_y, entry_z, l["direction"])
