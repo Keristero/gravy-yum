@@ -2,43 +2,60 @@
 -- Just gotta add some custom properties to your Server Warps
 --   "IncomingData" (string) secret to share with the server that is linking to you; for their "Data"
 --   "Direction" (string) direction the warp will make the player walk on arrival; defaults to "Down"
+--   "WarpIn" (boolean) should the warp in animation be shown (laser from sky)
+--   "SpecialAnimation" (string) name of special animation which should play on warp in, not compatible with "WarpIn"
+--      fall_in
 local landings = {}
+local delay = require('scripts/libs/delay')
 local player_animations = {}
 
 
 --Animations
-function animate_fall_in(player_id)
-    local player_pos = Net.get_player_position(player_id)
-    print('player pos x'..player_pos.x)
-    local keyframes = {{
-        properties={{
-            property="Z",
-            value=player_pos.z+20
-        }},
-        duration=0.0
-    }}
-    print('landing start pos'..player_pos.z-20)
-    keyframes[#keyframes+1] = {
-        properties={{
-            property="Z",
-            ease="Linear",
-            value=player_pos.z
-        }},
-        duration=1
-    }
-    Net.animate_player_properties(player_id, keyframes)
-    Net.shake_player_camera(player_id, 3, 3)
-end
+local fall_in_animation = {
+    --these offsets will modify the warp landing location so that the player can animate from their spawn location nicely
+    pre_animation_offsets={
+        x=0,
+        y=0,
+        z=20
+    },
+    animate=function(player_id)
+        local player_pos = Net.get_player_position(player_id)
+        local area_id = Net.get_player_area(player_id)
+        print('player pos x'..player_pos.x)
+        local fall_duration = 1
+        local keyframes = {{
+            properties={{
+                property="Z",
+                value=player_pos.z
+            }},
+            duration=0.0
+        }}
+        print('landing start pos'..player_pos.z-20)
+        keyframes[#keyframes+1] = {
+            properties={{
+                property="Z",
+                ease="Linear",
+                value=player_pos.z-20
+            }},
+            duration=1
+        }
+        Net.animate_player_properties(player_id, keyframes)
+        delay.seconds(function ()
+            Net.shake_player_camera(player_id, 3, 2)
+            Net.play_sound(area_id, --TODO choose sound!)
+        end,fall_duration)
+    end
+}
 
 --Map animation functions to text labels
-local animation_functions = {
-    fall_in = animate_fall_in
+local special_animations = {
+    fall_in = fall_in_animation
 }
 
 function doAnimationForWarp(player_id,animation_name)
     print('[Landings] doing special animation '..animation_name)
     Net.lock_player_input(player_id)
-    animation_functions[animation_name](player_id)
+    special_animations[animation_name](player_id)
     Net.unlock_player_input(player_id)
 end
 
@@ -49,6 +66,9 @@ function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, specia
         x = x,
         y = y,
         z = z,
+        pre_animation_x=x,
+        pre_animation_y=y,
+        pre_animation_z=z,
         direction = direction,
         special_animation = special_animation
     }
@@ -78,10 +98,20 @@ function handle_player_request(player_id, data)
     end
     for key, l in next, landings do
         if data == key then
-            Net.transfer_player(player_id, l["area_id"], l["warp_in"], l["x"], l["y"], l["z"], l["direction"])
+            local x = l["x"]
+            local y = l["y"]
+            local z = l["z"]
             if l["special_animation"] then
-                player_animations[player_id] = l["special_animation"]
+                local special_animation_name = l["special_animation"]
+                if special_animations[special_animation_name] then
+                    local special_animation = special_animations[special_animation_name]
+                    player_animations[player_id] = special_animation_name
+                    x = x + special_animation.pre_animation_offsets.x
+                    y = y + special_animation.pre_animation_offsets.y
+                    x = x + special_animation.pre_animation_offsets.z
+                end
             end
+            Net.transfer_player(player_id, l["area_id"], l["warp_in"], x, y, z, l["direction"])
             return
         end
     end
