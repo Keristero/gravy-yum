@@ -292,7 +292,7 @@ function doAnimationForWarp(player_id,animation_name)
     special_animations[animation_name].animate(player_id)
 end
 
-function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, special_animation)
+function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, arrival_animation)
     local new_landing = {
         area_id = area_id,
         warp_in = warp_in,
@@ -303,7 +303,7 @@ function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, specia
         pre_animation_y=y,
         pre_animation_z=z,
         direction = direction,
-        special_animation = special_animation
+        arrival_animation = arrival_animation
     }
     landings[incoming_data] = new_landing
     
@@ -316,11 +316,11 @@ for i, area_id in next, areas do
     for i, object_id in next, objects do
         local object = Net.get_object_by_id(area_id, object_id)
         local incoming_data = object.custom_properties.IncomingData
-        local special_animation = object.custom_properties.SpecialAnimation
+        local arrival_animation = object.custom_properties.ArrivalAnimation
         if object.type == "Server Warp" and incoming_data then
             local direction = object.custom_properties.Direction or "Down"
             local warp_in = object.custom_properties.WarpIn == "true"
-            add_landing(area_id, incoming_data, object.x+0.5, object.y+0.5, object.z, direction, warp_in,special_animation)
+            add_landing(area_id, incoming_data, object.x+0.5, object.y+0.5, object.z, direction, warp_in,arrival_animation)
         end
     end
 end
@@ -335,14 +335,15 @@ function handle_player_request(player_id, data)
             local entry_x = l["x"]
             local entry_y = l["y"]
             local entry_z = l["z"]
-            if l["special_animation"] then
-                local special_animation_name = l["special_animation"]
+            if l["arrival_animation"] then
+                local special_animation_name = l["arrival_animation"]
                 if special_animations[special_animation_name] then
                     local special_animation = special_animations[special_animation_name]
                     player_animations[player_id] = special_animation_name
                     entry_x = entry_x + special_animation.pre_animation_offsets.x
                     entry_y = entry_y + special_animation.pre_animation_offsets.y
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
+                    print('[Landings] stored arrival animation for player '..special_animation_name)
                 end
             end
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_x, entry_y, entry_z, l["direction"])
@@ -373,7 +374,6 @@ end
 
 function handle_player_join(player_id)
     if player_animations[player_id] then
-        local special_animation = special_animations[player_animations[player_id]]
         doAnimationForWarp(player_id,player_animations[player_id])
         player_animations[player_id] = nil
     end
