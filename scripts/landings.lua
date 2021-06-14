@@ -326,6 +326,7 @@ for i, area_id in next, areas do
 end
 
 function handle_player_request(player_id, data)
+    print('[Landings] player '..player_id..' arrived with data: '..data)
     if data == nil or data == "" then
         return
     end
