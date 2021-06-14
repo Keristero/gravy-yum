@@ -116,7 +116,7 @@ function handle_player_request(player_id, data)
                     entry_y = entry_y + special_animation.pre_animation_offsets.y
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
                     --and also if the camera should be locked, lock it on the arrival position, rather than entry position
-                    if special_animation.lock_camera then
+                    if special_animation.lock_camera_on_landing then
                         Net.move_player_camera(player_id,l["x"],l["y"],l["z"])
                     end
                 end
@@ -130,6 +130,7 @@ end
 
 function handle_player_join(player_id)
     if player_animations[player_id] then
+        local special_animation = special_animations[player_animations[player_id]]
         doAnimationForWarp(player_id,player_animations[player_id])
         player_animations[player_id] = nil
     end
