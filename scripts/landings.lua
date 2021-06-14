@@ -9,6 +9,10 @@ local landings = {}
 local delay = require('scripts/libs/delay')
 local player_animations = {}
 
+function tick(delta_time)
+    delay.on_tick(delta_time)
+end
+
 
 --Animations
 local fall_in_animation = {
@@ -21,7 +25,6 @@ local fall_in_animation = {
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
-        print('player pos x'..player_pos.x)
         local fall_duration = 1
         local keyframes = {{
             properties={{
@@ -30,7 +33,6 @@ local fall_in_animation = {
             }},
             duration=0.0
         }}
-        print('landing start pos'..player_pos.z-20)
         keyframes[#keyframes+1] = {
             properties={{
                 property="Z",
@@ -41,8 +43,9 @@ local fall_in_animation = {
         }
         Net.animate_player_properties(player_id, keyframes)
         delay.seconds(function ()
+            local sound_path = '/server/assets/landings/earthquake.ogg'
+            Net.play_sound(area_id, sound_path)
             Net.shake_player_camera(player_id, 3, 2)
-            Net.play_sound(area_id, --TODO choose sound!)
         end,fall_duration)
     end
 }
@@ -55,7 +58,7 @@ local special_animations = {
 function doAnimationForWarp(player_id,animation_name)
     print('[Landings] doing special animation '..animation_name)
     Net.lock_player_input(player_id)
-    special_animations[animation_name](player_id)
+    special_animations[animation_name].animate(player_id)
     Net.unlock_player_input(player_id)
 end
 
@@ -108,7 +111,7 @@ function handle_player_request(player_id, data)
                     player_animations[player_id] = special_animation_name
                     x = x + special_animation.pre_animation_offsets.x
                     y = y + special_animation.pre_animation_offsets.y
-                    x = x + special_animation.pre_animation_offsets.z
+                    z = z + special_animation.pre_animation_offsets.z
                 end
             end
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], x, y, z, l["direction"])

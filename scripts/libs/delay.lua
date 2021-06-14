@@ -21,6 +21,7 @@ function Seconds(callback,secs_delay)
         callback=callback,
         secs_delay=secs_delay
     }
+    return latest_event_id
 end
 
 --Interface
