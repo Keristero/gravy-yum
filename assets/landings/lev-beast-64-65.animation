@@ -1,0 +1,25 @@
+imagePath="lev-beast-64-65.png"
+
+animation state="IDLE_U"
+frame duration="1.00" x="0" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="128" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+
+animation state="IDLE_D"
+frame duration="1.00" x="0" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="128" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+
+animation state="IDLE_L"
+frame duration="1.00" x="0" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="128" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+
+animation state="IDLE_R"
+frame duration="1.00" x="0" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="128" y="0" w="64" h="65" originx="32" originy="32"
+frame duration="1.00" x="64" y="0" w="64" h="65" originx="32" originy="32"
