@@ -8,6 +8,7 @@
 local landings = {}
 local delay = require('scripts/libs/delay')
 local player_animations = {}
+local player_interactions = {}
 
 function tick(delta_time)
     delay.on_tick(delta_time)
@@ -353,7 +354,19 @@ function handle_player_request(player_id, data)
     print('[Landings] no landing for '..data)
 end
 
+function duplicate_player_interaction(player_id,object_id)
+    if player_interactions[player_id] == object_id then
+        return true
+    else
+        player_interactions[player_id] = object_id
+        return false
+    end
+end
+
 function handle_object_interaction(player_id, object_id)
+    if duplicate_player_interaction(player_id, object_id) then
+        return
+    end
     local area_id = Net.get_player_area(player_id)
     local warp_object = Net.get_object_by_id(area_id,object_id)
     if warp_object.type ~= "Lev Beast Warp" then
@@ -368,6 +381,7 @@ function handle_object_interaction(player_id, object_id)
         end
         delay.seconds(function ()
             Net.transfer_server(player_id, warp_properties.Address, warp_properties.Port, warp_out, data)
+            player_interactions[player_id] = nil
         end,special_animations[warp_properties.LeaveAnimation].leave_animation_duration)
     end
 end
