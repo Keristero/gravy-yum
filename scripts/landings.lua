@@ -25,7 +25,9 @@ local fall_in_animation = {
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
+        local landing_z = player_pos.z-20
         local fall_duration = 1
+        Net.move_player_camera(player_id, player_pos.x, player_pos.y, landing_z, fall_duration)
         local keyframes = {{
             properties={{
                 property="Z",
@@ -37,7 +39,7 @@ local fall_in_animation = {
             properties={{
                 property="Z",
                 ease="Linear",
-                value=player_pos.z-20
+                value=landing_z
             }},
             duration=1
         }
