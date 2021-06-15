@@ -1,11 +1,13 @@
--- Automatically adds landings for server warps to your server
--- Just gotta add some custom properties to your Server Warps
---   "IncomingData" (string) secret to share with the server that is linking to you; for their "Data"
---   "Direction" (string) direction the warp will make the player walk on arrival; defaults to "Down"
---   "WarpIn" (boolean) should the warp in animation be shown (laser from sky)
---   "SpecialAnimation" (string) name of special animation which should play on warp in, not compatible with "WarpIn"
---      fall_in
+--for timed events
 local delay = require('scripts/libs/delay')
+
+--arrival / leaving animations
+local special_animations = {
+    fall_in = require('scripts/landings/fall_in_animation'),
+    lev_beast_in = require('scripts/landings/lev_beast_in_animation'),
+    lev_beast_out = require('scripts/landings/lev_beast_out_animation')
+}
+
 local landings = {}
 local player_animations = {}
 local player_interactions = {}
@@ -13,16 +15,6 @@ local player_interactions = {}
 function tick(delta_time)
     delay.on_tick(delta_time)
 end
-
-
---Animations
-
---Map animation functions to text labels
-local special_animations = {
-    fall_in = require('scripts/landings/fall_in_animation'),
-    lev_beast_in = require('scripts/landings/lev_beast_in_animation'),
-    lev_beast_out = require('scripts/landings/lev_beast_out_animation')
-}
 
 function doAnimationForWarp(player_id,animation_name)
     print('[Landings] doing special animation '..animation_name)
@@ -55,16 +47,18 @@ for i, area_id in next, areas do
         local object = Net.get_object_by_id(area_id, object_id)
         local incoming_data = object.custom_properties.IncomingData
         local arrival_animation = object.custom_properties.ArrivalAnimation
-        if object.type == "Server Warp" and incoming_data then
-            local direction = object.custom_properties.Direction or "Down"
-            local warp_in = object.custom_properties.WarpIn == "true"
-            add_landing(area_id, incoming_data, object.x+0.5, object.y+0.5, object.z, direction, warp_in,arrival_animation)
+        if incoming_data then
+            if object.type == "Server Warp" or "Custom Warp" then
+                local direction = object.custom_properties.Direction or "Down"
+                local warp_in = object.custom_properties.WarpIn == "true"
+                add_landing(area_id, incoming_data, object.x+0.5, object.y+0.5, object.z, direction, warp_in,arrival_animation)
+            end
         end
     end
 end
 
 function handle_player_request(player_id, data)
-    print('[Landings] player '..player_id..' arrived with data: '..data)
+    print('[Landings] player '..player_id..' requested connection with data: '..data)
     if data == nil or data == "" then
         return
     end
@@ -81,7 +75,7 @@ function handle_player_request(player_id, data)
                     entry_x = entry_x + special_animation.pre_animation_offsets.x
                     entry_y = entry_y + special_animation.pre_animation_offsets.y
                     entry_z = entry_z + special_animation.pre_animation_offsets.z
-                    print('[Landings] stored arrival animation for player '..special_animation_name)
+                    print('[Landings] stored arrival animation '..special_animation_name..' to run when player joins')
                 end
             end
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_x, entry_y, entry_z, l["direction"])

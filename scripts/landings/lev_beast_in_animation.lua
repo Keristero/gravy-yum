@@ -94,16 +94,19 @@ local lev_beast_in_animation = {
             }},
             duration=seconds_leaving
         }
+        Net.shake_player_camera(player_id, 3, 1)
         Net.animate_player(player_id, "IDLE_DL",true)
         Net.animate_player_properties(player_id, player_keyframes)
         Net.animate_bot_properties(lev_beast_id, beast_keyframes)
         delay.seconds(function ()
-            local sound_path = '/server/assets/landings/lev-bus-arrive.ogg'
-            Net.play_sound_for_player(player_id, sound_path)
+            Net.play_sound(area_id, '/server/assets/landings/lev-bus-arrive.ogg')
         end,0.1)
         delay.seconds(function ()
-            local sound_path = '/server/assets/landings/lev-bus-leave.ogg'
-            Net.play_sound_for_player(player_id, sound_path)
+            Net.play_sound(area_id, 'resources/sfx/falzar.ogg')
+            Net.shake_player_camera(player_id, 3, 1)
+        end,seconds_arriving)
+        delay.seconds(function ()
+            Net.play_sound(area_id, '/server/assets/landings/lev-bus-leave.ogg')
             Net.unlock_player_input(player_id)
         end,seconds_arriving+seconds_here)
         delay.seconds(function ()

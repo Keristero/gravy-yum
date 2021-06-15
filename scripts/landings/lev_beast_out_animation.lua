@@ -8,7 +8,7 @@ local lev_beast_out_animation = {
         z=0
     },
     lock_camera_on_landing=false,
-    leave_animation_duration = 7,
+    leave_animation_duration = 8,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
@@ -24,6 +24,7 @@ local lev_beast_out_animation = {
         })
 
         local beast_z_offset = 3
+        local seconds_intro = 1
         local seconds_arriving = 3
         local seconds_here = 1
         local seconds_leaving = 3
@@ -96,21 +97,21 @@ local lev_beast_out_animation = {
             duration=seconds_leaving
         }
         local player_mugshot = Net.get_player_mugshot(player_id)
-        local sound_path = '/server/assets/landings/lev-bus-arrive.ogg'
-        Net.play_sound(area_id, sound_path)
+        Net.play_sound(area_id, 'resources/sfx/falzar.ogg')
+        Net.shake_player_camera(player_id, 3, 1)
         Net.animate_player(player_id, "IDLE_DL",true)
-        Net.animate_player_properties(player_id, player_keyframes)
-        Net.animate_bot_properties(lev_beast_id, beast_keyframes)
         delay.seconds(function ()
+            Net.play_sound(area_id, '/server/assets/landings/lev-bus-arrive.ogg')
+            Net.animate_player_properties(player_id, player_keyframes)
+            Net.animate_bot_properties(lev_beast_id, beast_keyframes)
             Net.message_player(player_id, "AHHH! The Lev Beast is here!?", player_mugshot.texture_path, player_mugshot.animation_path)
-        end,0.1)
+        end,seconds_intro)
         delay.seconds(function ()
-            local sound_path = '/server/assets/landings/lev-bus-leave.ogg'
-            Net.play_sound(area_id, sound_path)
-        end,seconds_arriving+seconds_here)
+            Net.play_sound(area_id, '/server/assets/landings/lev-bus-leave.ogg')
+        end,seconds_intro+seconds_arriving+seconds_here)
         delay.seconds(function ()
             Net.remove_bot(lev_beast_id)
-        end,seconds_arriving+seconds_here+seconds_leaving)
+        end,seconds_intro+seconds_arriving+seconds_here+seconds_leaving)
     end
 }
 
