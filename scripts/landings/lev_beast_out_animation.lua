@@ -8,7 +8,7 @@ local lev_beast_out_animation = {
         z=0
     },
     lock_camera_on_landing=false,
-    leave_animation_duration = 8,
+    leave_animation_duration = 8,--delay in seconds from start of animation till player warps out
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)

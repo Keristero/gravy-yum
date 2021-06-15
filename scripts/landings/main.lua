@@ -48,7 +48,7 @@ for i, area_id in next, areas do
         local incoming_data = object.custom_properties.IncomingData
         local arrival_animation = object.custom_properties.ArrivalAnimation
         if incoming_data then
-            if object.type == "Server Warp" or "Custom Warp" then
+            if object.type == "Server Warp" or "Custom Warp" or "Interact Warp" then
                 local direction = object.custom_properties.Direction or "Down"
                 local warp_in = object.custom_properties.WarpIn == "true"
                 add_landing(area_id, incoming_data, object.x+0.5, object.y+0.5, object.z, direction, warp_in,arrival_animation)
