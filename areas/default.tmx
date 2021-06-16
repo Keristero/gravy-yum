@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="434">
+<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="457">
+ <editorsettings>
+  <export target="../../../tmx-parser/default.json" format="json"/>
+ </editorsettings>
  <properties>
   <property name="Background" value="grave"/>
   <property name="Name" value="Gravy Yum"/>
@@ -142,7 +145,11 @@
     <property name="Navi" value="Keristero"/>
    </properties>
   </object>
-  <object id="185" gid="70" x="916.061" y="315.121" width="35" height="45"/>
+  <object id="185" gid="70" x="916.061" y="315.121" width="35" height="45">
+   <properties>
+    <property name="Interact Relay" type="object" value="434"/>
+   </properties>
+  </object>
   <object id="187" gid="71" x="949.561" y="313.621" width="35" height="45"/>
   <object id="188" gid="72" x="966.061" y="309.121" width="35" height="45"/>
   <object id="247" x="656" y="528">
@@ -219,6 +226,177 @@
     <property name="Text 1" value="Then scram!"/>
     <property name="Text 2" value="Get lost then!"/>
     <property name="Text 3" value="Later kid!"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="434" name="Net Cafe Guy" type="NPC" x="936" y="288">
+   <properties>
+    <property name="Asset Name" value="punk-navi-exe6_red"/>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Direction" value="Down Left"/>
+    <property name="Next 1" type="object" value="435"/>
+    <property name="Text 1" value="Hey, whats up"/>
+    <property name="Text 2" value="Hows it going?"/>
+    <property name="Text 3" value="Ello"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="435" name="question" x="976" y="240">
+   <properties>
+    <property name="Dialogue Type" value="question"/>
+    <property name="Next 1" type="object" value="437"/>
+    <property name="Next 2" type="object" value="436"/>
+    <property name="Text 1" value="Fancy some net gravy? only 300z a pot..."/>
+   </properties>
+   <point/>
+  </object>
+  <object id="436" name="no" x="1024" y="240">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="Thats a shame"/>
+    <property name="Text 2" value="Your loss I guess"/>
+    <property name="Text 3" value="Hmm, maybe next time then"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="437" name="yes" x="976" y="192">
+   <properties>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Event Name" value="Buy Gravy"/>
+    <property name="Got Gravy" type="object" value="446"/>
+    <property name="No Gravy" type="object" value="438"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="438" name="no money" x="1024" y="192">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="Sorry, you aint got the zenny"/>
+    <property name="Text 2" value="Come back when you have the zenny"/>
+    <property name="Text 3" value="If you aint got cash. youd better dash"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="446" name="drink gravy" x="968" y="144">
+   <properties>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Event Name" value="Drink Gravy"/>
+    <property name="Next 1" type="object" value="447"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="447" name="tips and rumors" x="960" y="104">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 5" type="object" value="448"/>
+    <property name="Text 1" value="We often see cybeast spirits unable to rest around here... look out"/>
+    <property name="Text 2" value="This area is the gateway to the deepest darkest areas of the net..."/>
+    <property name="Text 3" value="The ingredients? hah, maybe if you buy 1000 pots Ill tell you..."/>
+    <property name="Text 4">Every week new net areas are mysteriously appearing.
+the world is becoming more and more interconnected...</property>
+    <property name="Text 5" value="He-he-here we go!"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="448" name="rap part" x="992" y="96">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="450"/>
+    <property name="Text 1" value="Huh... how did it go again..."/>
+    <property name="Text 2">So they're finally here, performing for you
+If you know the words, you can join in too
+Put your hands together, if you want to clap
+As we take you through this monkey rap!
+Huh!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="450" name="rap part" x="1016" y="72">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="451"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">DK
+Donkey Kong!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="451" name="rap part" x="1048" y="56">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="452"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">He's the leader of the bunch, you know him well
+He's finally back to kick some tail
+His coconut gun can fire in spurts
+If he shoots ya, it's gonna hurt!
+He's bigger, faster, and stronger too
+He's the first member of the DK crew!
+Huh!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="452" name="rap part" x="1096" y="64">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="453"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">DK
+Donkey Kong!
+DK
+Donkey Kong is here!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="453" name="rap part" x="1144" y="112">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="454"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">This Kong's got style, so listen up dudes
+She can shrink in size, to suit her mood
+She's quick and nimble when she needs to be
+She can float through the air and climb up trees!
+If you choose her, you'll not choose wrong
+With a skip and a hop, she's one cool Kong!
+Huh!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="454" name="rap part" x="1128" y="136">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="455"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">DK
+Donkey Kong!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="455" name="rap part" x="1104" y="152">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="456"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">He has no style, he has no grace
+Th-this Kong has a funny face
+He can handstand when he needs to
+And stretch his arms out, just for you
+Inflate himself just like a balloon
+This crazy Kong just digs this tune!
+Huh!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="456" name="rap part" x="1056" y="152">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 2" type="object" value="448"/>
+    <property name="Text 1" value="Huh... uh... how did it go again..."/>
+    <property name="Text 2">DK
+Donkey Kong!
+DK
+Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>

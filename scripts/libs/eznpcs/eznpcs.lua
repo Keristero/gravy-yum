@@ -2,6 +2,7 @@ local Direction = require("scripts/libs/direction")
 local math = require('math')
 
 local eznpcs = {}
+local placeholder_to_botid = {}
 
 local npc_asset_folder = '/server/assets/eznpcs/'
 local generic_npc_animation_path = npc_asset_folder..'sheet/npc.animation'
@@ -43,13 +44,23 @@ function DoDialogue(npc,player_id,dialogue)
     local message = ""
     local next_dialogue_id = nil
     if event_name then
-        next_dialogue_id = events[event_name].action(npc,player_id)
+        next_dialogue_info = events[event_name].action(npc,player_id,dialogue)
+        if next_dialogue_info then
+            if next_dialogue_info.id then
+                if not next_dialogue_info.wait_for_response then
+                    print('do next dialouge without waiting '..next_dialogue_info.id)
+                    local area_id = Net.get_player_area(player_id)
+                    local dialogue = Net.get_object_by_id(area_id,next_dialogue_info.id)
+                    DoDialogue(npc,player_id,dialogue)
+                    return
+                end
+                next_dialogue_id = next_dialogue_info.id
+            end
+        end
     end
-    if dialogue_type == "none" or dialogue_type == nil then
+    if dialogue_type == nil then
         return
     end
-    npc.conversations = npc.conversations+1
-    npc.talking_to[player_id] = true
     local mug_texture_path = npc_asset_folder.."mug/"..npc.asset_name..".png"
     local mug_animation_path = generic_npc_mug_animation_path
     local player_pos = Net.get_player_position(player_id)
@@ -58,7 +69,6 @@ function DoDialogue(npc,player_id,dialogue)
     for i=1,10 do
         local text = dialogue.custom_properties["Text "..i]
         if text then
-            print('[eznpcs] found text option ('..text..')') 
             dialogue_texts[i] = text
         end
     end
@@ -67,7 +77,6 @@ function DoDialogue(npc,player_id,dialogue)
     for i=1,10 do
         local next_id = dialogue.custom_properties["Next "..i]
         if next_id then
-            print('[eznpcs] found next option ('..next_id..')') 
             next_dialogues[i] = next_id
         end
     end
@@ -77,17 +86,19 @@ function DoDialogue(npc,player_id,dialogue)
     end
 
     if dialogue_type == "random" then
-        local rnd_text_index = math.random( #dialogue_texts )
+        local rnd_text_index = math.random( #dialogue_texts)
         message = dialogue_texts[rnd_text_index]
         next_dialogue_id = next_dialogues[rnd_text_index] or next_dialogues[1]
     end
 
     Net.set_bot_direction(npc.bot_id, Direction.from_points(npc, player_pos))
 
-    if dialogue_type == "question" then
-        Net.question_player(player_id, message, mug_texture_path, mug_animation_path)
-    else
-        Net.message_player(player_id, message, mug_texture_path, mug_animation_path)
+    if dialogue_type ~= "none" then
+        if dialogue_type == "question" then
+            Net.question_player(player_id, message, mug_texture_path, mug_animation_path)
+        else
+            Net.message_player(player_id, message, mug_texture_path, mug_animation_path)
+        end
     end
     textbox_responses[player_id] = {
         npc=npc,
@@ -102,9 +113,9 @@ function DoDialogue(npc,player_id,dialogue)
                 next_dialogue_id = next_dialogues[next_index]
             end
             if next_dialogue_id then
+                print('do next dialouge '..next_dialogue_id)
                 local area_id = Net.get_player_area(player_id)
                 local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
-                print('do next dialouge '..next_dialogue_id)
                 DoDialogue(npc,player_id,dialogue)
             end
         end
@@ -113,8 +124,8 @@ end
 
 function CreateBotFromObject(area_id,object_id)
     local placeholder_object = Net.get_object_by_id(area_id, object_id)
-    local x = placeholder_object.x+1
-    local y = placeholder_object.y+1
+    local x = placeholder_object.x
+    local y = placeholder_object.y
     local z = placeholder_object.z
 
     for i, prop_name in pairs(npc_required_properties) do
@@ -128,6 +139,8 @@ function CreateBotFromObject(area_id,object_id)
     local direction = placeholder_object.custom_properties.Direction
 
     local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction)
+    placeholder_to_botid[tostring(object_id)] = npc.bot_id
+    print('added placeholder mapping '..object_id..' to '..npc.bot_id)
 
     if placeholder_object.custom_properties["Dialogue Type"] then
         --If the placeholder has Chat text, add behaviour to have it respond to interactions
@@ -164,13 +177,11 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name)
         solid=true, 
         size=0.2,
         speed=1,
-        conversations=0,
-        talking_to={}
     }
     Net.create_bot(lastBotId, npc_data)
     npcs[lastBotId] = npc_data
     print('[eznpcs] created npc '..lastBotId..' at ('..x..','..y..','..z..')')
-    return npcs[lastBotId]
+    return npc_data
 end
 
 function AddBehaviour(npc,behaviour)
@@ -200,12 +211,15 @@ function ChatBehaviour()
 end
 
 function EndConversation(player_id)
-    local conversation = textbox_responses[player_id]
-    if conversation then
-        conversation.npc.conversations = conversation.npc.conversations - 1
-        conversation.npc.talking_to[player_id] = nil
-        textbox_responses[player_id] = nil
+    textbox_responses[player_id] = nil
+end
+
+function GetTableLength(tbl)
+    local getN = 0
+    for n in pairs(tbl) do 
+      getN = getN + 1 
     end
+    return getN
 end
 
 function WaypointFollowBehaviour(first_waypoint_id)
@@ -263,8 +277,17 @@ function position_overlaps_something(position,area_id)
     return false
 end
 
+function AnyoneTalkingToNPC(npc_id)
+    for player_id, conversation in next, textbox_responses do
+        if conversation.npc.bot_id == npc_id then
+            return true
+        end
+    end
+    return false
+end
+
 function MoveNPC(npc,delta_time)
-    if npc.conversations > 0 then
+    if AnyoneTalkingToNPC(npc.bot_id) then
         return
     end
     if npc.wait_time and npc.wait_time > 0 then
@@ -327,13 +350,20 @@ end
 
 function AddEvent(event_object)
     if event_object.name and event_object.action then
-        events[event_object.name] = {
-            action=function (npc,player_id)
-                local player_mugshot = Net.get_player_mugshot(player_id)
-                Net.play_sound_for_player(player_id,'resources/sfx/hurt.ogg')
-                Net.message_player(player_id,"owchie!",player_mugshot.texture_path,player_mugshot.animation_path)
-            end
-        }
+        events[event_object.name] = event_object
+    else
+        print('[eznpcs] Cant add invalid event, events need a name and action {}')
+    end
+end
+
+function OnObjectInteract(player_id, object_id)
+    print('object interact')
+    local area_id = Net.get_player_area(player_id)
+    local object = Net.get_object_by_id(area_id,object_id)
+    if object.custom_properties["Interact Relay"] then
+        local placeholder_id = object.custom_properties["Interact Relay"]
+        local bot_id = placeholder_to_botid[placeholder_id]
+        OnActorInteraction(player_id,bot_id)
     end
 end
 
@@ -343,7 +373,7 @@ function AddNpcsToArea(area_id)
     for i, object_id in next, objects do
         local object = Net.get_object_by_id(area_id, object_id)
         if object.type == "NPC" then
-            eznpcs.create_npc_from_object(area_id, object_id)
+            CreateBotFromObject(area_id, object_id)
         end
     end
 end
@@ -388,6 +418,10 @@ end
 
 function eznpcs.on_textbox_response(player_id, response)
     return ( OnTextboxResponse(player_id, response))
+end
+
+function eznpcs.on_object_interact(player_id, object_id)
+    return ( OnObjectInteract(player_id, object_id))
 end
 
 return eznpcs
