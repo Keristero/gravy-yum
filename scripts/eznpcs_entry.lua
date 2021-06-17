@@ -37,7 +37,9 @@ end
 
 --custom events
 --custom events need a name and an action
---you can return the id of the next dialouge object that you want to use
+--you can return the information of the next dialouge object that you want to use
+--next dialouge options = {id,wait_for_response}
+--wait_for_response should be true if your event sends a message
 local event1 = {
     name="Punch",
     action=function (npc,player_id,dialogue)
@@ -57,7 +59,6 @@ local event2 = {
         if player_cash >= 300 then
             print('enough cash')
             Net.set_player_money(player_id,player_cash-300)
-            local player_mugshot = Net.get_player_mugshot(player_id)
             Net.play_sound_for_player(player_id,sfx.item_get)
             Net.message_player(player_id,"Got net gravy!")
             local next_dialouge_options = {
@@ -91,3 +92,42 @@ local event3 = {
     end
 }
 eznpcs.add_event(event3)
+
+local event4 = {
+    name="Cafe Counter Check",
+    action=function (npc,player_id,dialogue,relay_object)
+        if relay_object then
+            local next_dialouge_options = {
+                wait_for_response=false,
+                id=dialogue.custom_properties["Counter Chat"]
+            }
+        else
+            local next_dialouge_options = {
+                wait_for_response=false,
+                id=dialogue.custom_properties["Next 1"]
+            }
+        end
+        return next_dialouge_options
+    end
+}
+eznpcs.add_event(event4)
+
+local gift_zenny = {
+    name="Gift Zenny",
+    action=function (npc,player_id,dialogue)
+        local zenny_amount = tonumber(dialogue.custom_properties["Amount"])
+        local player_cash = Net.get_player_money(player_id)
+        Net.set_player_money(player_id,player_cash+zenny_amount)
+        Net.play_sound_for_player(player_id,sfx.item_get)
+        Net.message_player(player_id,"Got "..zenny_amount.. "Zenny!")
+        local next_dialogue_id = dialogue.custom_properties["Next 1"]
+        if next_dialogue_id then
+            local next_dialouge_options = {
+                wait_for_response=true,
+                id=dialogue.custom_properties["Next 1"]
+            }
+            return next_dialouge_options
+        end
+    end
+}
+eznpcs.add_event(gift_zenny)

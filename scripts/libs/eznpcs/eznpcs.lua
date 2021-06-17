@@ -38,7 +38,7 @@ local npc_required_properties = {"Direction","Asset Name"}
 --  Next 2, etc
 --  Event Name (npc,player_id)
 
-function DoDialogue(npc,player_id,dialogue)
+function DoDialogue(npc,player_id,dialogue,relay_object)
     local dialogue_type = dialogue.custom_properties["Dialogue Type"]
     local event_name = dialogue.custom_properties["Event Name"]
     local message = ""
@@ -202,9 +202,9 @@ end
 function ChatBehaviour()
     behaviour = {
         type='on_interact',
-        action=function(npc,player_id)
+        action=function(npc,player_id,relay_object)
             local dialogue = npc.first_dialogue
-            DoDialogue(npc,player_id,dialogue)
+            DoDialogue(npc,player_id,dialogue,relay_object)
         end
     }
     return behaviour
@@ -240,12 +240,12 @@ function WaypointFollowBehaviour(first_waypoint_id)
     return behaviour
 end
 
-function OnActorInteraction(player_id,actor_id)
+function OnActorInteraction(player_id,actor_id,relay_object)
     local npc_id = tonumber(actor_id)
     if npcs[npc_id] then
         local npc = npcs[npc_id]
         if npc.on_interact then
-            npc.on_interact.action(npc,player_id)
+            npc.on_interact.action(npc,player_id,relay_object)
         end
     end
 end
@@ -359,11 +359,11 @@ end
 function OnObjectInteract(player_id, object_id)
     print('object interact')
     local area_id = Net.get_player_area(player_id)
-    local object = Net.get_object_by_id(area_id,object_id)
-    if object.custom_properties["Interact Relay"] then
-        local placeholder_id = object.custom_properties["Interact Relay"]
+    local relay_object = Net.get_object_by_id(area_id,object_id)
+    if relay_object.custom_properties["Interact Relay"] then
+        local placeholder_id = relay_object.custom_properties["Interact Relay"]
         local bot_id = placeholder_to_botid[placeholder_id]
-        OnActorInteraction(player_id,bot_id)
+        OnActorInteraction(player_id,bot_id,relay_object)
     end
 end
 

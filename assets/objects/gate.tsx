@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.1" name="gate" tilewidth="34" tileheight="52" tilecount="5" columns="5" objectalignment="bottom">
+<tileset version="1.5" tiledversion="2021.03.23" name="gate" tilewidth="34" tileheight="52" tilecount="5" columns="5" objectalignment="bottom">
  <grid orientation="isometric" width="64" height="32"/>
  <properties>
   <property name="Solid" type="bool" value="true"/>
@@ -7,7 +7,9 @@
  <image source="gate.png" width="170" height="52"/>
  <tile id="0">
   <objectgroup draworder="index" id="3">
-   <object id="3" x="7" y="22.5" width="33" height="32"/>
+   <object id="5" x="0" y="40">
+    <polygon points="0,0 32,0 40,-8 32,-16 0,-16 -8,-8"/>
+   </object>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="50"/>

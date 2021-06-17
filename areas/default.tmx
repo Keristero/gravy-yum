@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="457">
+<map version="1.5" tiledversion="2021.03.23" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="466">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -29,7 +29,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,15,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,18,18,18,15,18,18,18,18,18,15,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,18,17,18,17,18,15,0,0,0,0,0,0,0,0,
@@ -232,12 +232,11 @@
   <object id="434" name="Net Cafe Guy" type="NPC" x="936" y="288">
    <properties>
     <property name="Asset Name" value="punk-navi-exe6_red"/>
-    <property name="Dialogue Type" value="random"/>
+    <property name="Counter Chat" type="object" value="458"/>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Direct Chat" type="object" value="459"/>
     <property name="Direction" value="Down Left"/>
-    <property name="Next 1" type="object" value="435"/>
-    <property name="Text 1" value="Hey, whats up"/>
-    <property name="Text 2" value="Hows it going?"/>
-    <property name="Text 3" value="Ello"/>
+    <property name="Event Name" value="Cafe Counter Check"/>
    </properties>
    <point/>
   </object>
@@ -363,7 +362,7 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="454" name="rap part" x="1128" y="136">
+  <object id="454" name="rap part" x="1136" y="128">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="455"/>
@@ -373,7 +372,7 @@ Donkey Kong!</property>
    </properties>
    <point/>
   </object>
-  <object id="455" name="rap part" x="1104" y="152">
+  <object id="455" name="rap part" x="1120" y="144">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="456"/>
@@ -388,10 +387,10 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="456" name="rap part" x="1056" y="152">
+  <object id="456" name="rap part" x="1104" y="160">
    <properties>
     <property name="Dialogue Type" value="random"/>
-    <property name="Next 2" type="object" value="448"/>
+    <property name="Next 2" type="object" value="461"/>
     <property name="Text 1" value="Huh... uh... how did it go again..."/>
     <property name="Text 2">DK
 Donkey Kong!
@@ -400,6 +399,55 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
+  <object id="458" name="greeting" x="952" y="256">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 1" type="object" value="435"/>
+    <property name="Text 1" value="Hey, whats up"/>
+    <property name="Text 2" value="Hows it going?"/>
+    <property name="Text 3" value="Ello, how can I help you?"/>
+    <property name="Text 4" value="Hi, having a nice day?"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="459" name="decline chat" x="904" y="240">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="Other side thanks..."/>
+    <property name="Text 2" value="Are you a customer or what?"/>
+    <property name="Text 3" value="Snoopers better watch their backs..."/>
+    <property name="Text 4" value="You wont find the recipe back here"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="461" name="no money" x="1088" y="176">
+   <properties>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Next 1" type="object" value="462"/>
+    <property name="Text 1">...Thanks for listening, Im suprised I managed to remember the whole thing.
+Take some Zenny for inspiring me</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="462" name="gift zenny" x="1056" y="176">
+   <properties>
+    <property name="Amount" type="int" value="10000"/>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Event Name" value="Gift Zenny"/>
+    <property name="Next 1" type="object" value="464"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="464" name="encore" x="1008" y="136">
+   <properties>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Next 1" type="object" value="448"/>
+    <property name="Text 1">What, you want more?
+ He-he-here we go!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="465" gid="10" x="856" y="264" width="34" height="52"/>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -409,7 +457,7 @@ Donkey Kong is here!</property>
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -451,12 +499,12 @@ Donkey Kong is here!</property>
  <layer id="16" name="Floor 3" width="40" height="40" offsetx="0" offsety="-32">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,18,18,18,22,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,18,18,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,22,18,18,18,15,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483684,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
