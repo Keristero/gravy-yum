@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="2021.03.23" name="gate" tilewidth="34" tileheight="52" tilecount="5" columns="5" objectalignment="bottom">
+<tileset version="1.5" tiledversion="1.5.0" name="gate" tilewidth="34" tileheight="52" tilecount="5" columns="5" objectalignment="topleft">
  <grid orientation="isometric" width="64" height="32"/>
  <properties>
   <property name="Solid" type="bool" value="true"/>
