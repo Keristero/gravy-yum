@@ -79,7 +79,7 @@ local event3 = {
     action=function (npc,player_id,dialogue)
         local player_mugshot = Net.get_player_mugshot(player_id)
         Net.play_sound_for_player(player_id,sfx.recover)
-        Net.message_player(player_id,"\x01...mmm\x01 gravy yum",player_mugshot.texture_path,player_mugshot.animation_path)
+        Net.message_player(player_id,"\x01...\x01mmm gravy yum",player_mugshot.texture_path,player_mugshot.animation_path)
         local next_dialouge_options = {
             wait_for_response=true,
             id=dialogue.custom_properties["Next 1"]
@@ -116,7 +116,7 @@ local gift_zenny = {
         local player_cash = Net.get_player_money(player_id)
         Net.set_player_money(player_id,player_cash+zenny_amount)
         Net.play_sound_for_player(player_id,sfx.item_get)
-        Net.message_player(player_id,"Got "..zenny_amount.. " Zenny!")
+        Net.message_player(player_id,"Got "..zenny_amount.. "$!")
         if dialogue.custom_properties["Next 1"] then
             local next_dialouge_options = {
                 wait_for_response=true,

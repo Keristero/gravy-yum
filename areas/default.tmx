@@ -191,7 +191,7 @@
    </properties>
    <point/>
   </object>
-  <object id="426" name="Central 3 Pit" type="Server Warp" x="592" y="592">
+  <object id="426" name="Central 3 Pit" type="Server Warp" x="584" y="584">
    <properties>
     <property name="Address" value="99.15.113.82"/>
     <property name="ArrivalAnimation" value="fall_in"/>
@@ -245,7 +245,7 @@
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="437"/>
     <property name="Next 2" type="object" value="436"/>
-    <property name="Text 1" value="Fancy some net gravy? only 300z a pot..."/>
+    <property name="Text 1" value="Fancy some net gravy? only 300$ a pot..."/>
    </properties>
    <point/>
   </object>
