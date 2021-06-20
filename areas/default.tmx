@@ -446,7 +446,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="465" gid="10" x="803" y="210" width="34" height="52"/>
+  <object id="465" gid="10" x="856" y="264" width="34" height="52"/>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
