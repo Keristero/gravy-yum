@@ -53,11 +53,8 @@ eznpcs.add_event(event1)
 local event2 = {
     name="Buy Gravy",
     action=function (npc,player_id,dialogue)
-        print('buying gravy ')
         local player_cash = Net.get_player_money(player_id)
-        print('player cash '..player_cash)
         if player_cash >= 300 then
-            print('enough cash')
             Net.set_player_money(player_id,player_cash-300)
             Net.play_sound_for_player(player_id,sfx.item_get)
             Net.message_player(player_id,"Got net gravy!")
@@ -80,7 +77,6 @@ eznpcs.add_event(event2)
 local event3 = {
     name="Drink Gravy",
     action=function (npc,player_id,dialogue)
-        print('drinking gravy ')
         local player_mugshot = Net.get_player_mugshot(player_id)
         Net.play_sound_for_player(player_id,sfx.recover)
         Net.message_player(player_id,"\x01...mmm\x01 gravy yum",player_mugshot.texture_path,player_mugshot.animation_path)
@@ -96,15 +92,16 @@ eznpcs.add_event(event3)
 local event4 = {
     name="Cafe Counter Check",
     action=function (npc,player_id,dialogue,relay_object)
+        local next_dialouge_options = nil
         if relay_object then
-            local next_dialouge_options = {
+            next_dialouge_options = {
                 wait_for_response=false,
                 id=dialogue.custom_properties["Counter Chat"]
             }
         else
-            local next_dialouge_options = {
+            next_dialouge_options = {
                 wait_for_response=false,
-                id=dialogue.custom_properties["Next 1"]
+                id=dialogue.custom_properties["Direct Chat"]
             }
         end
         return next_dialouge_options
@@ -119,9 +116,8 @@ local gift_zenny = {
         local player_cash = Net.get_player_money(player_id)
         Net.set_player_money(player_id,player_cash+zenny_amount)
         Net.play_sound_for_player(player_id,sfx.item_get)
-        Net.message_player(player_id,"Got "..zenny_amount.. "Zenny!")
-        local next_dialogue_id = dialogue.custom_properties["Next 1"]
-        if next_dialogue_id then
+        Net.message_player(player_id,"Got "..zenny_amount.. " Zenny!")
+        if dialogue.custom_properties["Next 1"] then
             local next_dialouge_options = {
                 wait_for_response=true,
                 id=dialogue.custom_properties["Next 1"]

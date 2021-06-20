@@ -403,10 +403,10 @@ Donkey Kong is here!</property>
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 1" type="object" value="435"/>
-    <property name="Text 1" value="Hey, whats up"/>
+    <property name="Text 1" value="Hey, whats up?"/>
     <property name="Text 2" value="Hows it going?"/>
-    <property name="Text 3" value="Ello, how can I help you?"/>
-    <property name="Text 4" value="Hi, having a nice day?"/>
+    <property name="Text 3" value="What will it be today?"/>
+    <property name="Text 5" value="Welcome..."/>
    </properties>
    <point/>
   </object>
@@ -420,18 +420,17 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="461" name="no money" x="1088" y="176">
+  <object id="461" name="rap complete" x="1088" y="176">
    <properties>
     <property name="Dialogue Type" value="first"/>
     <property name="Next 1" type="object" value="462"/>
-    <property name="Text 1">...Thanks for listening, Im suprised I managed to remember the whole thing.
-Take some Zenny for inspiring me</property>
+    <property name="Text 1" value="...Thanks for listening.\n I'm feeling nice today\n have this..."/>
    </properties>
    <point/>
   </object>
   <object id="462" name="gift zenny" x="1056" y="176">
    <properties>
-    <property name="Amount" type="int" value="10000"/>
+    <property name="Amount" type="int" value="100000"/>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Gift Zenny"/>
     <property name="Next 1" type="object" value="464"/>

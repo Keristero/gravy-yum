@@ -44,14 +44,13 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     local message = ""
     local next_dialogue_id = nil
     if event_name then
-        next_dialogue_info = events[event_name].action(npc,player_id,dialogue)
+        next_dialogue_info = events[event_name].action(npc,player_id,dialogue,relay_object)
         if next_dialogue_info then
             if next_dialogue_info.id then
                 if not next_dialogue_info.wait_for_response then
-                    print('do next dialouge without waiting '..next_dialogue_info.id)
                     local area_id = Net.get_player_area(player_id)
                     local dialogue = Net.get_object_by_id(area_id,next_dialogue_info.id)
-                    DoDialogue(npc,player_id,dialogue)
+                    DoDialogue(npc,player_id,dialogue,relay_object)
                     return
                 end
                 next_dialogue_id = next_dialogue_info.id
@@ -83,6 +82,8 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
 
     if dialogue_type == "first" or  dialogue_type == "question" then
         message = dialogue_texts[1]
+        local next_id = FirstValueFromTable(next_dialogues)
+        next_dialogue_id = next_id
     end
 
     if dialogue_type == "random" then
@@ -103,7 +104,6 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     textbox_responses[player_id] = {
         npc=npc,
         action=function(response)
-            print('[eznpcs] response '..response)
             EndConversation(player_id)
             if dialogue_type == "question" then
                 local next_index = 2
@@ -113,13 +113,19 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
                 next_dialogue_id = next_dialogues[next_index]
             end
             if next_dialogue_id then
-                print('do next dialouge '..next_dialogue_id)
                 local area_id = Net.get_player_area(player_id)
                 local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
-                DoDialogue(npc,player_id,dialogue)
+                DoDialogue(npc,player_id,dialogue,relay_object)
             end
         end
     }
+end
+
+function FirstValueFromTable(tbl)
+    for i, value in pairs(tbl) do
+        return value
+    end
+    return nil
 end
 
 function CreateBotFromObject(area_id,object_id)
@@ -140,7 +146,7 @@ function CreateBotFromObject(area_id,object_id)
 
     local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction)
     placeholder_to_botid[tostring(object_id)] = npc.bot_id
-    print('added placeholder mapping '..object_id..' to '..npc.bot_id)
+    print('[eznpcs] added placeholder mapping '..object_id..' to '..npc.bot_id)
 
     if placeholder_object.custom_properties["Dialogue Type"] then
         --If the placeholder has Chat text, add behaviour to have it respond to interactions
@@ -160,8 +166,8 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name)
     lastBotId = lastBotId + 1
     local texture_path = npc_asset_folder.."sheet/"..asset_name..".png"
     local animation_path = generic_npc_animation_path
-    print('texture path: '..texture_path)
-    print('animation path: '..animation_path)
+    print('[eznpcs] texture path: '..texture_path)
+    print('[eznpcs] animation path: '..animation_path)
     local name = bot_name or nil
     local npc_data = {
         asset_name=asset_name,
@@ -357,7 +363,6 @@ function AddEvent(event_object)
 end
 
 function OnObjectInteract(player_id, object_id)
-    print('object interact')
     local area_id = Net.get_player_area(player_id)
     local relay_object = Net.get_object_by_id(area_id,object_id)
     if relay_object.custom_properties["Interact Relay"] then
