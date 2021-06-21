@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="466">
+<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="480">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -43,26 +43,26 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,18,18,18,18,18,22,0,0,0,18,0,0,18,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,22,18,18,18,18,18,22,18,18,0,18,0,0,18,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,18,18,18,18,18,22,0,18,0,18,0,0,18,0,2147483683,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483724,2147483724,22,17,18,18,18,17,22,0,18,0,18,0,0,18,18,18,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,22,22,22,22,22,22,0,18,18,18,0,0,0,18,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,2147483693,0,0,0,0,0,0,0,0,0,0,2147483693,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,2147483683,0,0,0,0,0,0,0,0,0,18,22,18,22,22,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,22,18,22,22,0,0,0,0,0,0,0,18,18,18,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,22,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,22,22,22,22,22,22,22,22,22,22,22,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,22,22,22,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,0,0,76,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,17,18,18,18,17,22,0,18,0,18,0,0,18,18,18,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,22,22,22,22,22,22,0,18,18,18,0,0,0,18,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483693,0,0,0,0,0,0,0,0,0,0,2147483693,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,18,18,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483683,0,0,0,0,0,0,0,0,0,18,22,18,22,22,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,22,18,22,22,0,0,0,0,0,0,0,18,18,18,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,18,18,18,22,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483724,2147483724,22,18,18,18,22,22,22,22,22,22,22,22,22,22,22,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,22,22,22,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,18,18,18,18,18,18,18,18,18,18,18,18,18,22,0,0,76,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,0,0,76,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,0,0,0,0,0,0,0,76,0,0,0,0,0,0,0,0,0,0,76,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483723,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,75,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="19" name="Ground Objects">
@@ -155,8 +155,9 @@
   <object id="188" gid="72" x="966.061" y="309.121" width="35" height="45"/>
   <object id="247" x="656" y="528">
    <properties>
-    <property name="Next Waypoint" type="object" value="420"/>
+    <property name="Next Waypoint 1" type="object" value="420"/>
     <property name="Wait Time" type="int" value="2"/>
+    <property name="Waypoint Type" value="first"/>
    </properties>
    <point/>
   </object>
@@ -166,7 +167,7 @@
     <property name="Dialogue Type" value="random"/>
     <property name="Direction" value="Down"/>
     <property name="Next 1" type="object" value="430"/>
-    <property name="Next Waypoint" type="object" value="247"/>
+    <property name="Next Waypoint 1" type="object" value="247"/>
     <property name="Text 1" value="You're in my way"/>
     <property name="Text 2" value="I'm walkin here"/>
    </properties>
@@ -175,20 +176,24 @@
   <object id="256" x="528" y="656">
    <properties>
     <property name="Direction" value="Down Left"/>
-    <property name="Next Waypoint" type="object" value="419"/>
+    <property name="Next Waypoint 1" type="object" value="419"/>
     <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="419" x="528" y="528">
+  <object id="419" x="528" y="592">
    <properties>
-    <property name="Next Waypoint" type="object" value="247"/>
+    <property name="Next Waypoint 1" type="object" value="468"/>
+    <property name="Next Waypoint 2" type="object" value="470"/>
+    <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
   <object id="420" x="656" y="656">
    <properties>
-    <property name="Next Waypoint" type="object" value="256"/>
+    <property name="Next Waypoint 1" type="object" value="256"/>
+    <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
@@ -271,8 +276,8 @@
   <object id="438" name="no money" x="1024" y="192">
    <properties>
     <property name="Dialogue Type" value="random"/>
-    <property name="Text 1" value="Sorry, you aint got the zenny"/>
-    <property name="Text 2" value="Come back when you have the zenny"/>
+    <property name="Text 1" value="Sorry, you aint got the monies"/>
+    <property name="Text 2" value="Come back when you have the monies"/>
     <property name="Text 3" value="If you aint got cash. youd better dash"/>
    </properties>
    <point/>
@@ -433,7 +438,7 @@ Donkey Kong is here!</property>
    <properties>
     <property name="Amount" type="int" value="100000"/>
     <property name="Dialogue Type" value="none"/>
-    <property name="Event Name" value="Gift Zenny"/>
+    <property name="Event Name" value="Gift Monies"/>
     <property name="Next 1" type="object" value="464"/>
    </properties>
    <point/>
@@ -448,6 +453,27 @@ Donkey Kong is here!</property>
    <point/>
   </object>
   <object id="465" gid="10" x="792" y="216" width="34" height="52"/>
+  <object id="468" x="528" y="528">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="475"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="475" x="592" y="528">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="247"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="479" x="592" y="480">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="475"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -495,6 +521,48 @@ Donkey Kong is here!</property>
  </layer>
  <objectgroup id="22" name="Floor 2 Objects" offsetx="0" offsety="-16">
   <object id="425" type="Home Warp" gid="1" x="576" y="800" width="60" height="32"/>
+  <object id="470" x="496" y="608">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="476"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="471" x="400" y="400">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="473"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="473" x="592" y="400">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="478"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="476" x="448" y="592">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="477"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="477" x="400" y="592">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="471"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="478" x="592" y="448">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="479"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
  <layer id="16" name="Floor 3" width="40" height="40" offsetx="0" offsety="-32">
   <data encoding="csv">

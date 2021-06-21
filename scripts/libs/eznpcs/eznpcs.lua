@@ -18,7 +18,7 @@ local npc_required_properties = {"Direction","Asset Name"}
 --  Asset Name [string] name of asset in eznpc assets folder, just file name, no extension
 --  Chat [string] NPC will respond with this string when you interact with them
 --  Direction [string] Initial direction this NPC will face
---  Next Waypoint [object] NPC will path to this object
+--  Next Waypoint 1 [object] NPC will path to this object
 --      Wait Time [int] NPC will wait for this period in seconds when it reaches the waypoint
 --      Direction [string] NPC will face this way while waiting
 
@@ -64,21 +64,8 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     local mug_animation_path = generic_npc_mug_animation_path
     local player_pos = Net.get_player_position(player_id)
 
-    local dialogue_texts = {}
-    for i=1,10 do
-        local text = dialogue.custom_properties["Text "..i]
-        if text then
-            dialogue_texts[i] = text
-        end
-    end
-
-    local next_dialogues = {}
-    for i=1,10 do
-        local next_id = dialogue.custom_properties["Next "..i]
-        if next_id then
-            next_dialogues[i] = next_id
-        end
-    end
+    local dialogue_texts = ExtractNumberedProperties(dialogue,"Text ")
+    local next_dialogues = ExtractNumberedProperties(dialogue,"Next ")
 
     if dialogue_type == "first" or  dialogue_type == "question" then
         message = dialogue_texts[1]
@@ -121,6 +108,17 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     }
 end
 
+function ExtractNumberedProperties(object,property_prefix)
+    local out_table = {}
+    for i=1,10 do
+        local text = object.custom_properties[property_prefix..i]
+        if text then
+            out_table[i] = text
+        end
+    end
+    return out_table
+end
+
 function FirstValueFromTable(tbl)
     for i, value in pairs(tbl) do
         return value
@@ -155,9 +153,9 @@ function CreateBotFromObject(area_id,object_id)
         AddBehaviour(npc,chat_behaviour)
     end
 
-    if placeholder_object.custom_properties["Next Waypoint"] then
+    if placeholder_object.custom_properties["Next Waypoint 1"] then
         --If the placeholder has npc_first_waypoint
-        local waypoint_follow_behaviour = WaypointFollowBehaviour(placeholder_object.custom_properties["Next Waypoint"])
+        local waypoint_follow_behaviour = WaypointFollowBehaviour(placeholder_object.custom_properties["Next Waypoint 1"])
         AddBehaviour(npc,waypoint_follow_behaviour)
     end
 end
@@ -334,9 +332,22 @@ function NPCReachedWaypoint(npc,waypoint)
             Net.set_bot_direction(npc.bot_id, waypoint.custom_properties['Direction'])
         end
     end
-    local next_waypoint = Net.get_object_by_id(npc.area_id,waypoint.custom_properties["Next Waypoint"])
-    if next_waypoint then
-        npc.next_waypoint = next_waypoint
+    local waypoint_type = "first"
+    if waypoint.custom_properties["Waypoint Type"] then
+        waypoint_type = waypoint.custom_properties["Waypoint Type"]
+    end
+    --select next waypoint based on Waypoint Type
+    local next_waypoints = ExtractNumberedProperties(waypoint,"Next Waypoint ")
+    local next_waypoint_id = nil
+    if waypoint_type == "first" then
+        next_waypoint_id = FirstValueFromTable(next_waypoints)
+    end
+    if waypoint_type == "random" then
+        local next_waypoint_index = math.random(#next_waypoints)
+        next_waypoint_id = next_waypoints[next_waypoint_index]
+    end
+    if next_waypoint_id then
+        npc.next_waypoint = Net.get_object_by_id(npc.area_id,next_waypoint_id)
     end
 end
 
