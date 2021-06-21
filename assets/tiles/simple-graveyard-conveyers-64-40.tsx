@@ -5,7 +5,7 @@
  <tile id="0" type="Conveyor">
   <properties>
    <property name="Direction" value="Up Left"/>
-   <property name="Sound Effect" value="/server/asset/sfx/dir_tile.ogg"/>
+   <property name="Sound Effect" value="/server/assets/sfx/dir_tile.ogg"/>
    <property name="Speed" type="int" value="6"/>
   </properties>
   <animation>
@@ -17,7 +17,7 @@
  <tile id="1" type="Conveyor">
   <properties>
    <property name="Direction" value="Down Left"/>
-   <property name="Sound Effect" value="/server/asset/sfx/dir_tile.ogg"/>
+   <property name="Sound Effect" value="/server/assets/sfx/dir_tile.ogg"/>
    <property name="Speed" type="int" value="6"/>
   </properties>
   <animation>
