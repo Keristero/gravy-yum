@@ -1,5 +1,5 @@
 local tiles_to_spin = {}
-local delay_till_change = 3
+local delay_till_change = 0
 
 function StartSpinningTiles(area_id)
     --Loop over all objects in area, spawning NPCs for each NPC type object.
@@ -51,7 +51,7 @@ function tick(delta_time)
         delay_till_change = delay_till_change - delta_time
     else
         SpinTiles()
-        delay_till_change = 1
+        delay_till_change = 3
     end
 end
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="523">
+<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="524">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -613,7 +613,7 @@ Donkey Kong is here!</property>
 0,2147483723,75,75,17,17,17,17,2147483724,2147483724,2147483723,0,0,0,0,0,2147483723,0,0,0,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,2147483724,17,17,17,2147483723,0,0,0,0,2147483683,0,0,0,2147483723,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,76,17,17,17,2147483723,0,0,0,16,16,16,16,16,16,16,16,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,76,75,75,17,76,75,17,75,75,75,16,18,18,18,18,18,18,18,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,76,75,75,17,17,75,17,75,75,75,16,18,18,18,18,18,18,18,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,76,0,0,2147483724,2147483724,2147483724,76,0,0,0,16,18,15,16,15,16,15,15,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,76,0,0,0,0,0,22,2147483724,2147483724,2147483724,16,18,16,0,0,0,0,2147483684,0,0,0,0,0,0,0,0,0,0,0,2147483698,0,0,0,0,0,0,0,0,0,
 0,76,0,0,0,0,0,76,0,0,0,16,18,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -685,6 +685,9 @@ Donkey Kong is here!</property>
    <point/>
   </object>
   <object id="522" name="Spinning Conveyor" type="Spinning Conveyor" x="80" y="1072">
+   <point/>
+  </object>
+  <object id="523" name="Spinning Conveyor" type="Spinning Conveyor" x="176" y="400">
    <point/>
   </object>
  </objectgroup>
