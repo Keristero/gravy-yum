@@ -6,7 +6,7 @@ You can create branching dialogue trees for conversations with NPCs all from the
 
 You can create paths using waypoints in the map editor which the NPCs will follow, with optional wait times and random path selection.
 
-## installation
+## Installation
 currently all the files for eznpcs are scattered inside this gravy-yum repository, its inconvenient but you can find all the files you need here.
 
 installation steps
@@ -16,7 +16,7 @@ installation steps
 optional:
     1. there are a bunch of events for this server in the entry script, use them as examples or remove them if you dont want them.
 
-## setup
+## Setup
 add objects to your map with Type=`NPC` on an object layer above the tile layer where you want the NPC to spawn.
 
 ### NPC Type
@@ -31,11 +31,13 @@ add objects to your map with Type=`NPC` on an object layer above the tile layer 
         - see the section on [`Dialogues`](#Dialogues).
     - Next Waypoint 1: string
         - by including this property, this npc will follow waypoints
+        - Indicates the first waypoint that the npc should move to
         - see the section on [`Dialogues`](#Dialogues).
 
 
 
 ### Dialogues
+any object can be a dialogue, you can use these custom properties to define what will happen next in the conversation when the dialogue is reached
 - Custom properties:
     - Dialogue Type: string
         - `first`
@@ -58,6 +60,24 @@ add objects to your map with Type=`NPC` on an object layer above the tile layer 
         - ID of the next dialogue to activate after the corresponding Text is spoken / chosen
     - Event Name: string
         - Name of event to activate when this dialogue starts, events can be added in your eznpcs entry script, see [`Dialogue Events`](#DialogueEvents) for details.
+
+### Waypoints
+any object can be a waypoint, you can use these custom properties to define what the NPC will do once it reaches said object.
+- Custom properties:
+    - Dialogue Type: string
+    - Waypoint Type: string
+        - `first`
+            - after reaching this waypoint, the NPC will head to the waypoint referenced by the first `Next Waypoint #` custom property, usually `Next Waypoint 1`
+        - `random`
+            - after reaching this waypoint, the next one will be selected from a random `Next Waypoint #` custom property.
+    - Wait Time: int
+        - time in seconds to wait before moving to next waypoint
+    - Direction: string
+        - direction to face while waiting
+        - see the section on [`Directions`](#Directions).
+    - Waypoint Event: string
+        - coming soon
+
 
 ### Interact Relay
 - any object with the custom property `Interact Relay` (object) that is interacted with will start a conversation with the NPC that it is referencing
@@ -99,7 +119,7 @@ local some_event = {
 eznpcs.add_event(some_event)
 ```
 ### Waypoint Events
-- coming
+- coming soon
 
 ### Misc
 #### Directions
