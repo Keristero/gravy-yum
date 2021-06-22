@@ -234,7 +234,7 @@ function WaypointFollowBehaviour(first_waypoint_id)
             if first_waypoint then
                 npc.next_waypoint = first_waypoint
             else
-                print('[eznpcs] invalid first_waypoint_id '..first_waypoint_id)
+                print('[eznpcs] invalid Next Waypoint '..first_waypoint_id)
             end
         end,
         action=function(npc,delta_time)

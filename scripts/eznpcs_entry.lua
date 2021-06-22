@@ -35,14 +35,10 @@ function handle_player_join(player_id)
     end
 end
 
---custom events
---custom events need a name and an action
---you can return the information of the next dialouge object that you want to use
---next dialouge options = {id,wait_for_response}
---wait_for_response should be true if your event sends a message
+--custom events, remove them if you dont want them.
 local event1 = {
     name="Punch",
-    action=function (npc,player_id,dialogue)
+    action=function (npc,player_id,dialogue,relay_object)
         local player_mugshot = Net.get_player_mugshot(player_id)
         Net.play_sound_for_player(player_id,sfx.hurt)
         Net.message_player(player_id,"owchie!",player_mugshot.texture_path,player_mugshot.animation_path)
@@ -76,7 +72,7 @@ eznpcs.add_event(event2)
 
 local event3 = {
     name="Drink Gravy",
-    action=function (npc,player_id,dialogue)
+    action=function (npc,player_id,dialogue,relay_object)
         local player_mugshot = Net.get_player_mugshot(player_id)
         Net.play_sound_for_player(player_id,sfx.recover)
         Net.message_player(player_id,"\x01...\x01mmm gravy yum",player_mugshot.texture_path,player_mugshot.animation_path)
