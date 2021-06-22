@@ -14,10 +14,9 @@ function StartSpinningTiles(area_id)
                 z=math.floor(object.z)
             }
             tiles_to_spin[#tiles_to_spin+1] = spin
-            print('[spin] added spin tile '..#tiles_to_spin)
-            print(spin.x,spin.y,spin.z)
         end
     end
+    print('[spin] added '..#tiles_to_spin..' spin tiles')
 end
 
 function LoadSpinTiles()
@@ -30,7 +29,6 @@ function LoadSpinTiles()
 end
 
 function SpinTiles()
-    print('[spin] spinning')
     for k, location in pairs(tiles_to_spin) do
         local randomint = math.random(0, 1)
         local randomint2 = math.random(0, 1)

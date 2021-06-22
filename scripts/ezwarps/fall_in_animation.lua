@@ -7,6 +7,7 @@ local fall_in_animation = {
         y=0,
         z=20
     },
+    duration=1,
     lock_camera_on_landing=true,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
