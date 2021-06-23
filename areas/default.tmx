@@ -129,7 +129,11 @@
     <property name="Navi" value="playerzero"/>
    </properties>
   </object>
-  <object id="171" gid="60" x="688" y="1040" width="64" height="56"/>
+  <object id="171" gid="60" x="688" y="1040" width="64" height="56">
+   <properties>
+    <property name="Navi" value="kyqurikan"/>
+   </properties>
+  </object>
   <object id="172" gid="60" x="752" y="1040" width="64" height="56"/>
   <object id="173" gid="60" x="752" y="1104" width="64" height="56"/>
   <object id="174" gid="60" x="752" y="1168" width="64" height="56"/>
@@ -704,12 +708,10 @@ Donkey Kong is here!</property>
   <object id="525" name="test warp another map" type="Radius Warp" x="336" y="592">
    <properties>
     <property name="Activation Radius" type="float" value="0.5"/>
-    <property name="Arrival Animation" value="lev_beast_in"/>
-    <property name="Leave Animation" value="lev_beast_out"/>
-    <property name="Port" type="int" value="8765"/>
+    <property name="Arrival Animation" value="arrow_up_left_in"/>
+    <property name="Leave Animation" value="arrow_up_left_out"/>
     <property name="Target Area" value="conveyers"/>
     <property name="Target Object" value="1"/>
-    <property name="Warp Out" type="bool" value="false"/>
    </properties>
    <point/>
   </object>

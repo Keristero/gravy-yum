@@ -1,11 +1,20 @@
 --for timed events
 local delay = require('scripts/libs/delay')
+local create_arrow_animation = require('scripts/ezwarps/arrow_animation_factory')
 
 --arrival / leaving animations
 local special_animations = {
     fall_in = require('scripts/ezwarps/fall_in_animation'),
     lev_beast_in = require('scripts/ezwarps/lev_beast_in_animation'),
-    lev_beast_out = require('scripts/ezwarps/lev_beast_out_animation')
+    lev_beast_out = require('scripts/ezwarps/lev_beast_out_animation'),
+    arrow_up_left_out = create_arrow_animation(false,"Up Left"),
+    arrow_up_right_out = create_arrow_animation(false,"Up Right"),
+    arrow_down_left_out = create_arrow_animation(false,"Down Left"),
+    arrow_down_right_out = create_arrow_animation(false,"Down Right"),
+    arrow_up_left_in = create_arrow_animation(true,"Up Left"),
+    arrow_up_right_in = create_arrow_animation(true,"Up Right"),
+    arrow_down_left_in = create_arrow_animation(true,"Down Left"),
+    arrow_down_right_in = create_arrow_animation(true,"Down Right"),
 }
 
 local landings = {}
@@ -93,9 +102,11 @@ function doAnimationForWarp(player_id,animation_name)
     Net.lock_player_input(player_id)
     special_animations[animation_name].animate(player_id)
     players_in_animations[player_id] = true
+    local warp_delay = special_animations[animation_name].duration+0.01
     delay.seconds(function ()
         players_in_animations[player_id] = nil
-    end,special_animations[animation_name].duration)
+        Net.unlock_player_input(player_id)
+    end,warp_delay)
 end
 
 local areas = Net.list_areas()
@@ -225,7 +236,7 @@ function use_warp(player_id,warp_object,warp_meta)
     local warp_delay = 0
     if warp_properties["Leave Animation"] then
         doAnimationForWarp(player_id,warp_properties["Leave Animation"])
-        warp_delay = special_animations[warp_properties["Leave Animation"]].duration
+        warp_delay = special_animations[warp_properties["Leave Animation"]].duration+0.01
     end
     delay.seconds(function ()
         if is_remote_warp then

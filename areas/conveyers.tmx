@@ -49,12 +49,10 @@
   <object id="1" name="warp back" type="Radius Warp" x="880" y="464">
    <properties>
     <property name="Activation Radius" type="float" value="0.5"/>
-    <property name="Arrival Animation" value="lev_beast_in"/>
-    <property name="Leave Animation" value="lev_beast_out"/>
-    <property name="Port" type="int" value="8765"/>
+    <property name="Arrival Animation" value="arrow_down_right_in"/>
+    <property name="Leave Animation" value="arrow_down_right_out"/>
     <property name="Target Area" value="default"/>
     <property name="Target Object" value="525"/>
-    <property name="Warp Out" type="bool" value="false"/>
    </properties>
    <point/>
   </object>
