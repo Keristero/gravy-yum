@@ -15,6 +15,7 @@ local special_animations = {
     arrow_up_right_in = create_arrow_animation(true,"Up Right"),
     arrow_down_left_in = create_arrow_animation(true,"Down Left"),
     arrow_down_right_in = create_arrow_animation(true,"Down Right"),
+    fall_off_2 = require('scripts/ezwarps/fall_off_2'),
 }
 
 local landings = {}
@@ -100,9 +101,10 @@ end
 function doAnimationForWarp(player_id,animation_name)
     print('[ezwarps] doing special animation '..animation_name)
     Net.lock_player_input(player_id)
-    special_animations[animation_name].animate(player_id)
+    local animation_properties = special_animations[animation_name]
+    animation_properties.animate(player_id)
     players_in_animations[player_id] = true
-    local warp_delay = special_animations[animation_name].duration+0.01
+    local warp_delay = animation_properties.duration+0.01
     delay.seconds(function ()
         players_in_animations[player_id] = nil
         Net.unlock_player_input(player_id)
@@ -131,7 +133,8 @@ for i, area_id in next, areas do
             --radius warp, activates when you walk in range
             local target_object = nil
             local target_area = object.custom_properties["Target Area"]
-            if target_area then
+            local dont_teleport = object.custom_properties["Dont Teleport"]
+            if not dont_teleport and target_area then
                 target_object = Net.get_object_by_id(target_area, object.custom_properties["Target Object"])
             end
             local activation_radius = tonumber(object.custom_properties["Activation Radius"])
@@ -225,13 +228,17 @@ function use_warp(player_id,warp_object,warp_meta)
         end
     end
 
+    if warp_object.custom_properties["Dont Teleport"] then
+        is_valid_warp = true
+    end
+
     if is_valid_warp == false then
         print('[ezwarps] warp '..warp_object.id..' is invalid')
         return
     end
 
-    local warp_out = warp_properties["Warp Out"] == "true"
-    local warp_in = warp_properties["Warp In"] == "true"
+    local warp_out = warp_properties["Warp Out"] == "True"
+    local warp_in = warp_properties["Warp In"] == "True"
     local data = warp_properties.Data
     local warp_delay = 0
     if warp_properties["Leave Animation"] then
@@ -245,7 +252,7 @@ function use_warp(player_id,warp_object,warp_meta)
             local direction = "Down"
             local arrival_animation = nil
             local target_object = warp_meta.target_object
-            if target_object then
+            if target_object and not dont_teleport then
                 direction = target_object.custom_properties["Direction"]
                 arrival_animation = target_object.custom_properties["Arrival Animation"]
                 local entry_pos = prepare_player_arrival(player_id,warp_meta.target_object.x,warp_meta.target_object.y,warp_meta.target_object.z,arrival_animation)

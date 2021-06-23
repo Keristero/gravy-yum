@@ -33,12 +33,12 @@ function SpinTiles()
         local randomint = math.random(0, 1)
         local randomint2 = math.random(0, 1)
         local flip_h = false
-        local gid = 75
+        local gid = 64
         if randomint > 0.5 then
             flip_h = true
         end
         if randomint2 > 0.5 then
-            gid = 76
+            gid = 63
         end
         Net.set_tile(location.area_id, location.x, location.y, location.z, gid, flip_h)
     end

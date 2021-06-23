@@ -8,7 +8,6 @@ local lev_beast_in_animation = {
         z=0
     },
     duration=8,
-    lock_camera_on_landing=false,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)

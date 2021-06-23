@@ -10,17 +10,21 @@ Supported warp types:
 - Custom Warp
     - supports arrival animations
 - Interact Warp
-    - (a warp activated by user interaction)
+    - (a warp activated by interaction)
+    - supports arrival animations
+    - supports landing animations
+- Radius Warp
+    - (a warp activated by entering its radius)
     - supports arrival animations
     - supports landing animations
 
 Supported warp custom properties:
-- "IncomingData" (string) secret to share with the server that is linking to you; for their "Data"
+- "Incoming Data" (string) secret to share with the server that is linking to you; for their "Data"
 - "Data" (string) secret to share with the server you are linking to, for their "IncomingData"
 - "Direction" (string) direction the warp will make the player walk on arrival; defaults to "Down"
-- "WarpIn" (boolean) should the warp in animation be shown (laser from sky)
-- "ArrivalAnimation" (string) name of special animation which should play on warp in, not compatible with "WarpIn" (I think)
-- "LeaveAnimation" (string) name of special animation to play on warp out
+- "Warp In" (boolean) should the warp in animation be shown (laser from sky)
+- "Arrival Animation" (string) name of special animation which should play on warp in, not compatible with "Warp In" (I think)
+- "Leave Animation" (string) name of special animation to play on warp out
 
 Special Animations (for arrival / leave animation):
 - fall_in

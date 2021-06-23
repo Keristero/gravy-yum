@@ -1,3 +1,5 @@
+local delay = require('scripts/libs/delay')
+
 local Direction = {
     UP_LEFT = "Up Left",
     UP_RIGHT = "Up Right",
@@ -39,7 +41,6 @@ function create_arrow_animation(is_arriving,direction_str)
             y=y_start_offset,
             z=0
         },
-        lock_camera_on_landing=false,
         duration = 1,--delay in seconds from start of animation till player warps out
         animate=function(player_id)
             local player_pos = Net.get_player_position(player_id)
@@ -70,7 +71,15 @@ function create_arrow_animation(is_arriving,direction_str)
                 }},
                 duration=1
             }
+            if is_arriving then
+                Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 1)
+            else
+                Net.move_player_camera(player_id, player_pos.x, player_pos.y, player_pos.z, 1)
+            end
             Net.animate_player_properties(player_id,player_keyframes)
+            delay.seconds(function ()
+                Net.unlock_player_camera(player_id)
+            end,1)
         end
     }
     return new_animation
