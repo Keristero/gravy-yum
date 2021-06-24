@@ -32,7 +32,7 @@ add objects to your map with Type=`NPC` on an object layer above the tile layer 
     - Next Waypoint 1: string
         - by including this property, this npc will follow waypoints
         - Indicates the first waypoint that the npc should move to
-        - see the section on [`Dialogues`](#Dialogues).
+        - see the section on [`Waypoints`](#Waypoints).
 
 
 
