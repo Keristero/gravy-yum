@@ -46,8 +46,8 @@ any object can be a dialogue, you can use these custom properties to define what
         - `random`
             - this dialogue will choose a random `Text #` custom property to say, it might be `Text 1`, `Text 2`, `Text 5`, etc.
             - If there is a `Next #` property with a matching number, that dialogue will be triggered next, otherwise it will default to `Next 1`
-        - `quiz`
-            - prompts the player to choose between `Text 1` and `Text 2`
+        - `question`
+            - prompts the player to choose yes or no, with `Text 1` as the prompt text
             - afterwards the dialogues `Next 1` or `Next 2` will be triggered, matching the player's choice.
         - `none`
             - usually used with `Event Name`, no dialogue, but the event will still be triggered

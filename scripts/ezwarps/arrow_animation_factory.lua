@@ -14,6 +14,8 @@ local Direction = {
     ["Down Right"] = "Up Left",
   }
 
+local animation_length = 1
+
 function create_arrow_animation(is_arriving,direction_str)
     local x_distance = 0
     local y_distance = 0
@@ -41,7 +43,7 @@ function create_arrow_animation(is_arriving,direction_str)
             y=y_start_offset,
             z=0
         },
-        duration = 1,--delay in seconds from start of animation till player warps out
+        duration = animation_length,--delay in seconds from start of animation till player warps out
         animate=function(player_id)
             local player_pos = Net.get_player_position(player_id)
             local area_id = Net.get_player_area(player_id)
@@ -69,17 +71,17 @@ function create_arrow_animation(is_arriving,direction_str)
                     ease="Linear",
                     value=player_pos.y+y_distance
                 }},
-                duration=1
+                duration=animation_length
             }
             if is_arriving then
-                Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 1)
+                Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, animation_length)
             else
-                Net.move_player_camera(player_id, player_pos.x, player_pos.y, player_pos.z, 1)
+                Net.move_player_camera(player_id, player_pos.x, player_pos.y, player_pos.z, animation_length)
             end
             Net.animate_player_properties(player_id,player_keyframes)
-            delay.seconds(function ()
+            delay.for_player(player_id,function ()
                 Net.unlock_player_camera(player_id)
-            end,1)
+            end,animation_length)
         end
     }
     return new_animation

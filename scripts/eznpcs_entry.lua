@@ -46,6 +46,17 @@ local event1 = {
 }
 eznpcs.add_event(event1)
 
+local rarechance = {
+    name="RareItem",
+    action=function (npc,player_id,dialogue,relay_object)
+        if math.random() > 0.99 then
+            Net.play_sound_for_player(player_id,sfx.item_get)
+            Net.message_player(player_id,"Got net gravy!")
+        end
+    end
+}
+eznpcs.add_event(rarechance)
+
 local event2 = {
     name="Buy Gravy",
     action=function (npc,player_id,dialogue)

@@ -29,7 +29,7 @@ local fall_in_animation = {
             duration=1
         }
         Net.animate_player_properties(player_id, keyframes)
-        delay.seconds(function ()
+        delay.for_player(player_id,function ()
             local sound_path = '/server/assets/landings/earthquake.ogg'
             Net.play_sound(area_id, sound_path)
             Net.shake_player_camera(player_id, 3, 2)
