@@ -204,12 +204,12 @@
   <object id="426" name="Central 3 Pit" type="Server Warp" x="579" y="579">
    <properties>
     <property name="Address" value="99.15.113.82"/>
-    <property name="ArrivalAnimation" value="fall_in"/>
+    <property name="Arrival Animation" value="fall_in"/>
     <property name="Data" value="NA"/>
     <property name="Direction" value="Up Right"/>
-    <property name="IncomingData" value="central3-gravy-yum-warp-xyz"/>
+    <property name="Incoming Data" value="central3-gravy-yum-warp-xyz"/>
     <property name="Port" type="int" value="8765"/>
-    <property name="WarpIn" type="bool" value="false"/>
+    <property name="Warp In" type="bool" value="false"/>
    </properties>
    <point/>
   </object>
