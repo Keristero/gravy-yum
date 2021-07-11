@@ -414,7 +414,7 @@ end
 function eznpcs.create_npc_from_object(area_id,object_id)
     return ( CreateBotFromObject(area_id,object_id) )
 end
-function eznpcs.on_actor_interaction(player_id,actor_id)
+function eznpcs.handle_actor_interaction(player_id,actor_id)
     return ( OnActorInteraction(player_id,actor_id) )
 end
 function eznpcs.on_tick(delta_time)
@@ -424,19 +424,19 @@ function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name)
     return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name) )
 end
 
-function eznpcs.on_player_transfer(player_id)
+function eznpcs.handle_player_transfer(player_id)
     return ( OnPlayerTransfer(player_id))
 end
   
-function eznpcs.on_player_disconnect(player_id)
+function eznpcs.handle_player_disconnect(player_id)
     return ( OnPlayerDisconnect(player_id))
 end
 
-function eznpcs.on_textbox_response(player_id, response)
+function eznpcs.handle_textbox_response(player_id, response)
     return ( OnTextboxResponse(player_id, response))
 end
 
-function eznpcs.on_object_interact(player_id, object_id)
+function eznpcs.handle_object_interaction(player_id, object_id)
     return ( OnObjectInteract(player_id, object_id))
 end
 

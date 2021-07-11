@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="538">
+<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="544">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -22,6 +22,7 @@
  <tileset firstgid="74" source="../assets/objects/crater.tsx"/>
  <tileset firstgid="75" source="../assets/tiles/simple-graveyard-conveyers-64-40.tsx"/>
  <tileset firstgid="81" source="../assets/objects/simple-graveyard-arrows-70-44.tsx"/>
+ <tileset firstgid="89" source="../assets/objects/BlueMysteryData.tsx"/>
  <layer id="1" name="Ground" width="40" height="40">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -156,7 +157,7 @@
     <property name="Interact Relay" type="object" value="434"/>
    </properties>
   </object>
-  <object id="187" gid="71" x="949.561" y="313.621" width="35" height="45"/>
+  <object id="187" type="Shop" gid="71" x="949.561" y="313.621" width="35" height="45"/>
   <object id="188" gid="72" x="966.061" y="309.121" width="35" height="45"/>
   <object id="247" x="656" y="528">
    <properties>
@@ -239,7 +240,7 @@
    </properties>
    <point/>
   </object>
-  <object id="434" name="Net Cafe Guy" type="NPC" x="936" y="288">
+  <object id="434" name="Lil Gravy" type="NPC" x="936" y="288">
    <properties>
     <property name="Asset Name" value="punk-navi-exe6_red"/>
     <property name="Counter Chat" type="object" value="458"/>
@@ -661,6 +662,23 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
+  <object id="542" name="To Farm" type="Radius Warp" x="528" y="736">
+   <properties>
+    <property name="Activation Radius" type="float" value="0.6"/>
+    <property name="Arrival Animation" value="arrow_up_right_in"/>
+    <property name="Leave Animation" value="arrow_up_right_out"/>
+    <property name="Target Area" value="farm"/>
+    <property name="Target Object" value="54"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="543" type="Mystery Datum" gid="89" x="656" y="752" width="14" height="43">
+   <properties>
+    <property name="Description" value="It is emitting a powerful aura..."/>
+    <property name="Name" value="CyberWtrCan"/>
+    <property name="Type" value="keyitem"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="16" name="Floor 3" width="40" height="40" offsetx="0" offsety="-32">
   <data encoding="csv">
@@ -824,10 +842,10 @@ Donkey Kong is here!</property>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,17,17,17,17,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,2147483684,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -871,6 +889,17 @@ Donkey Kong is here!</property>
     <property name="X" type="float" value="33.5"/>
     <property name="Y" type="float" value="24.5"/>
    </properties>
+  </object>
+  <object id="539" gid="2147483730" x="509" y="39" width="70" height="44"/>
+  <object id="540" name="To Farm" type="Radius Warp" x="528" y="64">
+   <properties>
+    <property name="Activation Radius" type="float" value="0.6"/>
+    <property name="Arrival Animation" value="arrow_up_right_in"/>
+    <property name="Leave Animation" value="arrow_up_right_out"/>
+    <property name="Target Area" value="farm"/>
+    <property name="Target Object" value="54"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
 </map>

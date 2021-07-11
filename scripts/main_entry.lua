@@ -1,38 +1,45 @@
 local eznpcs = require('scripts/libs/eznpcs/eznpcs')
+local ezitems = require('scripts/libs/ezitems')
+local ezmystery = require('scripts/libs/ezmystery')
+
+local sfx = {
+    hurt='/server/assets/sfx/hurt.ogg',
+    item_get='/server/assets/sfx/item_get.ogg',
+    recover='/server/assets/sfx/recover.ogg',
+    card_error='/server/assets/sfx/card_error.ogg'
+}
 
 eznpcs.load_npcs()
+
+--Pass handlers on to all the libraries we are using
+function handle_player_join(player_id)
+    ezitems.handle_player_join(player_id)
+    ezmystery.handle_player_join(player_id)
+    --Provide assets for custom events
+    for name,path in pairs(sfx) do
+        Net.provide_asset_for_player(player_id, path)
+    end
+end
 function handle_actor_interaction(player_id, actor_id)
     --handle interactions with NPCs
-    eznpcs.on_actor_interaction(player_id,actor_id)
+    eznpcs.handle_actor_interaction(player_id,actor_id)
 end
 function tick(delta_time)
     --handle on tick behaviours for NPCs
     eznpcs.on_tick(delta_time)
 end
 function handle_player_disconnect(player_id)
-    eznpcs.on_player_disconnect(player_id)
+    eznpcs.handle_player_disconnect(player_id)
 end
 function handle_object_interaction(player_id, object_id)
-    eznpcs.on_object_interact(player_id, object_id)
+    eznpcs.handle_object_interaction(player_id, object_id)
+    ezmystery.handle_object_interaction(player_id,object_id)
 end
 function handle_player_transfer(player_id)
-    eznpcs.on_player_transfer(player_id)
+    eznpcs.handle_player_transfer(player_id)
 end
 function handle_textbox_response(player_id, response)
-    eznpcs.on_textbox_response(player_id,response)
-end
-
-local sfx = {
-    hurt='/server/assets/sfx/hurt.ogg',
-    item_get='/server/assets/sfx/item_get.ogg',
-    recover='/server/assets/sfx/recover.ogg'
-}
-
---Provide assets for custom events
-function handle_player_join(player_id)
-    for name,path in pairs(sfx) do
-        Net.provide_asset_for_player(player_id, path)
-    end
+    eznpcs.handle_textbox_response(player_id,response)
 end
 
 --custom events, remove them if you dont want them.
@@ -134,3 +141,70 @@ local gift_zenny = {
     end
 }
 eznpcs.add_event(gift_zenny)
+
+local plant_data = {
+    Turnip={price=100},
+    Cauliflower={price=150},
+    Garlic={price=175},
+    Tomato={price=200},
+    Chili={price=220},
+    Beetroot={price=180},
+    Star={price=300},
+    Eggplant={price=230},
+    Pumpkin={price=250},
+    Yam={price=90},
+    ["Beetroot 2"]={price=169},
+    ["Ancient"]={price=1000},
+    ["Sweet Gem"]={price=500},
+    Blueberry={price=400}
+}
+
+--Gravy Farm stuff
+
+local players_using_bbs = {}
+
+function handle_post_selection(player_id, post_id)
+    if players_using_bbs[player_id] then
+        if players_using_bbs[player_id] == "Buy Seeds" then
+            try_buy_seed(player_id,post_id)
+        end
+    end
+end
+
+function handle_board_close(player_id)
+    players_using_bbs[player_id] = nil
+end
+
+function try_buy_seed(player_id,plant_name)
+    local player_cash = Net.get_player_money(player_id)
+    local price = plant_data[plant_name].price
+    if player_cash >= price then
+        Net.set_player_money(player_id,player_cash-price)
+        Net.play_sound_for_player(player_id,sfx.item_get)
+        ezitems.give_player_item(player_id, plant_name.." seed", "seed for planting "..plant_name)
+    else
+        Net.message_player(player_id,"Not enough $")
+        Net.play_sound_for_player(player_id,sfx.card_error)
+    end
+end
+
+local seed_stall = {
+    name="seed_stall",
+    action=function (npc,player_id,dialogue)
+        local board_color = { r= 128, g= 255, b= 128 }
+        local posts = {}
+        for plant_name, data in pairs(plant_data) do
+            local seed_name = plant_name.." seed"
+            posts[#posts+1] = { id=plant_name, read=true, title=seed_name , author=tostring(data.price) }
+        end
+        local bbs_name = "Buy Seeds"
+        players_using_bbs[player_id] = bbs_name
+        Net.open_board(player_id, bbs_name, board_color, posts)
+        local next_dialouge_options = {
+            wait_for_response=true,
+            id=dialogue.custom_properties["Next 1"]
+        }
+        return next_dialouge_options
+    end
+}
+eznpcs.add_event(seed_stall)
