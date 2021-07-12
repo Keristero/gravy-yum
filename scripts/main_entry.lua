@@ -1,6 +1,8 @@
 local eznpcs = require('scripts/libs/eznpcs/eznpcs')
-local ezitems = require('scripts/libs/ezitems')
+local ezmemory = require('scripts/libs/ezmemory')
 local ezmystery = require('scripts/libs/ezmystery')
+
+local plugins = {eznpcs,ezmemory,ezmystery}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',
@@ -13,33 +15,59 @@ eznpcs.load_npcs()
 
 --Pass handlers on to all the libraries we are using
 function handle_player_join(player_id)
-    ezitems.handle_player_join(player_id)
-    ezmystery.handle_player_join(player_id)
+    --Run plugins
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_join then
+            plugin.handle_player_join(player_id)
+        end
+    end
     --Provide assets for custom events
     for name,path in pairs(sfx) do
         Net.provide_asset_for_player(player_id, path)
     end
 end
 function handle_actor_interaction(player_id, actor_id)
-    --handle interactions with NPCs
-    eznpcs.handle_actor_interaction(player_id,actor_id)
+    --Run plugins
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_actor_interaction then
+            plugin.handle_actor_interaction(player_id,actor_id)
+        end
+    end
 end
 function tick(delta_time)
-    --handle on tick behaviours for NPCs
-    eznpcs.on_tick(delta_time)
+    for i,plugin in ipairs(plugins)do
+        if plugin.on_tick then
+            plugin.on_tick(delta_time)
+        end
+    end
 end
 function handle_player_disconnect(player_id)
-    eznpcs.handle_player_disconnect(player_id)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_disconnect then
+            plugin.handle_player_disconnect(player_id)
+        end
+    end
 end
 function handle_object_interaction(player_id, object_id)
-    eznpcs.handle_object_interaction(player_id, object_id)
-    ezmystery.handle_object_interaction(player_id,object_id)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_object_interaction then
+            plugin.handle_object_interaction(player_id,object_id)
+        end
+    end
 end
 function handle_player_transfer(player_id)
-    eznpcs.handle_player_transfer(player_id)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_transfer then
+            plugin.handle_player_transfer(player_id)
+        end
+    end
 end
 function handle_textbox_response(player_id, response)
-    eznpcs.handle_textbox_response(player_id,response)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_textbox_response then
+            plugin.handle_textbox_response(player_id,response)
+        end
+    end
 end
 
 --custom events, remove them if you dont want them.
@@ -53,23 +81,12 @@ local event1 = {
 }
 eznpcs.add_event(event1)
 
-local rarechance = {
-    name="RareItem",
-    action=function (npc,player_id,dialogue,relay_object)
-        if math.random() > 0.99 then
-            Net.play_sound_for_player(player_id,sfx.item_get)
-            Net.message_player(player_id,"Got net gravy!")
-        end
-    end
-}
-eznpcs.add_event(rarechance)
-
 local event2 = {
     name="Buy Gravy",
     action=function (npc,player_id,dialogue)
         local player_cash = Net.get_player_money(player_id)
         if player_cash >= 300 then
-            Net.set_player_money(player_id,player_cash-300)
+            ezmemory.set_player_money(player_id,player_cash-300)
             Net.play_sound_for_player(player_id,sfx.item_get)
             Net.message_player(player_id,"Got net gravy!")
             local next_dialouge_options = {
@@ -128,7 +145,7 @@ local gift_zenny = {
     action=function (npc,player_id,dialogue)
         local zenny_amount = tonumber(dialogue.custom_properties["Amount"])
         local player_cash = Net.get_player_money(player_id)
-        Net.set_player_money(player_id,player_cash+zenny_amount)
+        ezmemory.set_player_money(player_id,player_cash+zenny_amount)
         Net.play_sound_for_player(player_id,sfx.item_get)
         Net.message_player(player_id,"Got "..zenny_amount.. "$!")
         if dialogue.custom_properties["Next 1"] then
@@ -179,9 +196,9 @@ function try_buy_seed(player_id,plant_name)
     local player_cash = Net.get_player_money(player_id)
     local price = plant_data[plant_name].price
     if player_cash >= price then
-        Net.set_player_money(player_id,player_cash-price)
+        ezmemory.set_player_money(player_id,player_cash-price)
         Net.play_sound_for_player(player_id,sfx.item_get)
-        ezitems.give_player_item(player_id, plant_name.." seed", "seed for planting "..plant_name)
+        ezmemory.give_player_item(player_id, plant_name.." seed", "seed for planting "..plant_name)
     else
         Net.message_player(player_id,"Not enough $")
         Net.play_sound_for_player(player_id,sfx.card_error)
