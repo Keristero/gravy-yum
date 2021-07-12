@@ -63,9 +63,9 @@
  <objectgroup id="2" name="Object Layer 1">
   <object id="17" name="Position Warp" type="Position Warp" gid="80" x="640" y="576" width="61" height="32">
    <properties>
-    <property name="Direction" value="Down"/>
-    <property name="X" type="float" value="27"/>
-    <property name="Y" type="float" value="8"/>
+    <property name="Direction" value="Up Left"/>
+    <property name="X" type="float" value="27.5"/>
+    <property name="Y" type="float" value="8.5"/>
     <property name="Z" type="float" value="2"/>
    </properties>
   </object>
@@ -173,9 +173,9 @@
   <object id="12" gid="35" x="1109" y="479" width="70" height="44"/>
   <object id="18" name="Position Warp" type="Position Warp" gid="80" x="864" y="256" width="61" height="32">
    <properties>
-    <property name="Direction" value="Up Left"/>
-    <property name="X" type="float" value="21"/>
-    <property name="Y" type="float" value="19"/>
+    <property name="Direction" value="Down"/>
+    <property name="X" type="float" value="20.5"/>
+    <property name="Y" type="float" value="18.5"/>
     <property name="Z" type="float" value="0"/>
    </properties>
   </object>
@@ -328,6 +328,7 @@
    <properties>
     <property name="Description" value="It is emitting a powerful aura..."/>
     <property name="Name" value="CyberHoe"/>
+    <property name="Once" type="bool" value="true"/>
     <property name="Type" value="keyitem"/>
    </properties>
   </object>
@@ -335,6 +336,7 @@
    <properties>
     <property name="Description" value="It is emitting a powerful aura..."/>
     <property name="Name" value="CyberWtrCan"/>
+    <property name="Once" type="bool" value="true"/>
     <property name="Type" value="keyitem"/>
    </properties>
   </object>

@@ -98,14 +98,14 @@
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 1" type="object" value="66"/>
-    <property name="Text 1" value="Hey, Hows it GROWin?"/>
+    <property name="Text 1" value="Hey, hows it GROWin?"/>
    </properties>
    <point/>
   </object>
   <object id="61" name="decline chat" x="640" y="880">
    <properties>
     <property name="Dialogue Type" value="random"/>
-    <property name="Text 1" value="x01...x01"/>
+    <property name="Text 1" value="\x01...\x01"/>
    </properties>
    <point/>
   </object>
@@ -115,7 +115,8 @@
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="67"/>
-    <property name="Text 1" value="You gotta nEED for sEED?"/>
+    <property name="Text 1" value="You gotta need for SEED?"/>
+    <property name="Text 2" value="Want to do some CROPping?"/>
    </properties>
    <point/>
   </object>

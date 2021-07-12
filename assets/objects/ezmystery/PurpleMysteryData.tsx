@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="BlueMysteryData" tilewidth="14" tileheight="43" tilecount="8" columns="8" objectalignment="bottom">
+<tileset version="1.5" tiledversion="1.5.0" name="PurpleMysteryData" tilewidth="14" tileheight="43" tilecount="8" columns="8" objectalignment="bottom">
  <tileoffset x="0" y="3"/>
- <image source="ezmystery/BlueMysteryData.png" width="112" height="43"/>
+ <image source="PurpleMysteryData.png" width="112" height="43"/>
  <tile id="0">
   <properties>
    <property name="Amount" type="int" value="0"/>
    <property name="Description" value="itemdescription"/>
-   <property name="Locked" type="bool" value="false"/>
+   <property name="Locked" type="bool" value="true"/>
    <property name="Name" value="itemname"/>
    <property name="Next 1" type="object" value="0"/>
    <property name="Next 2" type="object" value="0"/>
