@@ -3,8 +3,8 @@
  <tileoffset x="0" y="3"/>
  <image source="BlueMysteryData.png" width="112" height="43"/>
  <tile id="0">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="1" y="38" width="12" height="5">
+  <objectgroup draworder="index" id="4">
+   <object id="5" x="0" y="37" width="14.0909" height="7.27273">
     <ellipse/>
    </object>
   </objectgroup>
