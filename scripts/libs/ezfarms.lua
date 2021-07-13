@@ -9,24 +9,24 @@ local players_using_bbs = {}
 local player_tools = {}
 local farm_area = 'farm'
 local area_memory = nil
-
-local delay_till_update = 1
+local delay_till_update = 1 --wait 1 second between updating all farm tiles
+local reference_seed = Net.get_object_by_name(farm_area,"Reference Seed")
 
 local PlantData = {
-    Turnip={price=100},
-    Cauliflower={price=150},
-    Garlic={price=175},
-    Tomato={price=200},
-    Chili={price=220},
-    Beetroot={price=180},
-    Star={price=300},
-    Eggplant={price=230},
-    Pumpkin={price=250},
-    Yam={price=90},
-    ["Beetroot 2"]={price=169},
-    ["Ancient"]={price=1000},
-    ["Sweet Gem"]={price=500},
-    Blueberry={price=400}
+    Turnip={price=100,local_gid=0},
+    Cauliflower={price=150,local_gid=7},
+    Garlic={price=175,local_gid=14},
+    Tomato={price=200,local_gid=21},
+    Chili={price=220,local_gid=28},
+    Beetroot={price=180,local_gid=35},
+    Star={price=300,local_gid=42},
+    Eggplant={price=230,local_gid=49},
+    Pumpkin={price=250,local_gid=56},
+    Yam={price=90,local_gid=63},
+    ["Beetroot 2"]={price=169,local_gid=70},
+    ["Ancient"]={price=1000,local_gid=77},
+    ["Sweet Gem"]={price=500,local_gid=84},
+    Blueberry={price=400,local_gid=91}
 }
 
 --Key = tool name, value = plant/tool name
@@ -58,6 +58,12 @@ local Period = {
 
 local farm_loaded = false
 
+local function get_plant_gid(plant_name,growth_stage)
+    local first_gid = reference_seed.data.gid
+    local first_plant_gid = first_gid+PlantData[plant_name].local_gid
+    return first_plant_gid+growth_stage
+end
+
 local function update_tile(current_time,loc_string)
     local tile_memory = area_memory.tile_states[loc_string]
     local elpased_since_water = current_time-tile_memory.time.watered
@@ -65,28 +71,37 @@ local function update_tile(current_time,loc_string)
     local elapsed_since_planted = current_time-tile_memory.time.planted
     local new_gid = tile_memory.gid --dont change it by default
     local something_changed = false
-    local plant_bot_id = loc_string.."plant"
+
     if tile_memory.plant ~= nil then
-        if not Net.is_bot(plant_bot_id) then
-            print('creating bot '..plant_bot_id)
-            local new_bot_data = { 
+        if not Net.get_object_by_id(farm_area, tile_memory.plant_object_id) then
+            local growth_stage = 0
+            local tile_data = {
+                type = "tile",
+                gid=get_plant_gid(tile_memory.plant,growth_stage),
+                flipped_horizontally=false,
+                flipped_vertically=false,
+                rotated=false
+            }
+            local new_plant_data = { 
                 name=tile_memory.plant,
-                area_id=farm_area,
-                texture_path="/server/assets/objects/plants.png",
-                animation_path="/server/assets/objects/plants.animation",
+                type="cyberplant",
+                visible=true,
                 x=tile_memory.x+0.5,
                 y=tile_memory.y+0.5,
                 z=tile_memory.z,
-                solid=false
+                width=15,
+                height=30,
+                data=tile_data,
             }
-            Net.create_bot(plant_bot_id, new_bot_data)
-            print('setting animation to IDLE_U')
-            --Grr, seems i can only use real animation names?
-            Net.animate_bot(plant_bot_id, "IDLE_U", true)
+            local new_plant_id = Net.create_object(farm_area, new_plant_data)
+            tile_memory.plant_object_id = new_plant_id
+            something_changed = true
         end
     else
-        if Net.is_bot(plant_bot_id) then
-            Net.remove_bot(plant_bot_id)
+        if Net.get_object_by_id(farm_area, tile_memory.plant_object_id)  then
+            Net.remove_object(farm_area, tile_memory.plant_object_id)
+            tile_memory.plant_object_id = nil
+            something_changed = true
         end
     end
 

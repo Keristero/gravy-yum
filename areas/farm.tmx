@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="74">
+<map version="1.5" tiledversion="2021.03.23" orientation="isometric" renderorder="right-down" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="75">
  <properties>
   <property name="Background" value="grave"/>
   <property name="Background Vel X" type="int" value="-2"/>
@@ -20,6 +20,7 @@
  <tileset firstgid="92" source="../assets/objects/water-thing.tsx"/>
  <tileset firstgid="98" source="../assets/objects/water-thing-spout.tsx"/>
  <tileset firstgid="104" source="../assets/objects/gate.tsx"/>
+ <tileset firstgid="109" source="../assets/objects/plants/plants.tsx"/>
  <layer id="1" name="Tile Layer 1" width="40" height="40">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -159,6 +160,11 @@
     <property name="Text 3" value="All these plants are an eyesore..."/>
    </properties>
    <point/>
+  </object>
+  <object id="74" name="Reference Seed" gid="109" x="728" y="1560" width="15" height="31">
+   <properties>
+    <property name="d" value="This seed is used as a reference by the farm script to determine the first GID for plants"/>
+   </properties>
   </object>
  </objectgroup>
  <layer id="3" name="Tile Layer 2" width="40" height="40" offsetx="0" offsety="-16">
