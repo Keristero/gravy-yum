@@ -18,7 +18,7 @@ eznpcs.load_npcs()
 function handle_tile_interaction(player_id, x, y, z, button)
     for i,plugin in ipairs(plugins)do
         if plugin.handle_tile_interaction then
-            function handle_tile_interaction(player_id, x, y, z, button)
+            plugin.handle_tile_interaction(player_id, x, y, z, button)
         end
     end
 end
@@ -57,6 +57,7 @@ function handle_actor_interaction(player_id, actor_id)
         end
     end
 end
+
 function tick(delta_time)
     for i,plugin in ipairs(plugins)do
         if plugin.on_tick then
@@ -64,6 +65,7 @@ function tick(delta_time)
         end
     end
 end
+
 function handle_player_disconnect(player_id)
     for i,plugin in ipairs(plugins)do
         if plugin.handle_player_disconnect then
