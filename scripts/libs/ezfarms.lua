@@ -26,7 +26,8 @@ local PlantData = {
     ["Beetroot 2"]={price=169,local_gid=70},
     ["Ancient"]={price=1000,local_gid=77},
     ["Sweet Gem"]={price=500,local_gid=84},
-    Blueberry={price=400,local_gid=91}
+    Blueberry={price=400,local_gid=91},
+    Dead={local_gid=98}
 }
 
 --Key = tool name, value = plant/tool name
@@ -58,10 +59,35 @@ local Period = {
 
 local farm_loaded = false
 
-local function get_plant_gid(plant_name,growth_stage)
+local function calculate_plant_gid(plant_name,growth_stage)
     local first_gid = reference_seed.data.gid
-    local first_plant_gid = first_gid+PlantData[plant_name].local_gid
-    return first_plant_gid+growth_stage
+    if growth_stage == 0 then
+        --if the plant is seeds
+        local first_plant_gid = first_gid+PlantData[plant_name].local_gid
+        return first_plant_gid + math.random(0,1)
+    elseif growth_stage > 0 and growth_stage < 5 then
+        --if the plant is growing or grown
+        local first_plant_gid = first_gid+PlantData[plant_name].local_gid
+        return first_plant_gid+growth_stage
+    elseif growth_stage == 5 then
+        --if the plant is dead
+        plant_name = "Dead"
+        local first_plant_gid = first_gid+PlantData[plant_name].local_gid
+        return first_plant_gid + math.random(0,3)
+    end
+end
+
+local function determine_growth_stage(plant_name,elapsed_since_planted)
+    --stage 0 = seeds, stage 1-3 = growing, 4 = grown, 5=dead 
+    local plant = PlantData[plant_name]
+    local stage_time = 5*60
+    local stages = 4
+    local death_time = (stage_time*stages)+10*60
+    local growth_stage = math.floor(elapsed_since_planted/stage_time)
+    if elapsed_since_planted > death_time then
+        growth_stage = 5
+    end
+    return growth_stage
 end
 
 local function update_tile(current_time,loc_string)
@@ -72,15 +98,21 @@ local function update_tile(current_time,loc_string)
     local new_gid = tile_memory.gid --dont change it by default
     local something_changed = false
 
+    --Create or remove plant object when required
     if tile_memory.plant ~= nil then
-        if not Net.get_object_by_id(farm_area, tile_memory.plant_object_id) then
-            local growth_stage = 0
-            local tile_data = {
+        local plant_object = Net.get_object_by_id(farm_area, tile_memory.plant_object_id)
+        local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted)
+        if not plant_object then
+            --create the plant if it does not exist when it should
+            local plant_gid = calculate_plant_gid(tile_memory.plant_object_id,growth_stage)
+            local plant_tile_data = {
                 type = "tile",
-                gid=get_plant_gid(tile_memory.plant,growth_stage),
+                gid=plant_gid,
                 flipped_horizontally=false,
-                flipped_vertically=false,
-                rotated=false
+                flipped_vertically=false
+            }
+            local plant_custom_properties = {
+                ["Growth Stage"] = growth_stage
             }
             local new_plant_data = { 
                 name=tile_memory.plant,
@@ -91,13 +123,29 @@ local function update_tile(current_time,loc_string)
                 z=tile_memory.z,
                 width=15,
                 height=30,
-                data=tile_data,
+                data=plant_tile_data,
+                custom_properties=plant_custom_properties
             }
             local new_plant_id = Net.create_object(farm_area, new_plant_data)
             tile_memory.plant_object_id = new_plant_id
             something_changed = true
+        else
+            if growth_stage ~= plant_object.custom_properties["Growth Stage"] then
+                --if a differenet growth stage has been calculated, update the custom property and gid of the object
+                print('[ezfarms] a plant changed growth stage!')
+                local plant_gid = calculate_plant_gid(tile_memory.plant_object_id,growth_stage)
+                local plant_tile_data = {
+                    type = "tile",
+                    gid=plant_gid,
+                    flipped_horizontally=false,
+                    flipped_vertically=false
+                }
+                plant_object.custom_properties["Growth Stage"] = growth_stage
+                Net.set_object_data(farm_area, tile_memory.plant_object_id, plant_tile_data)
+            end
         end
     else
+        --remove the plant if it exists when it should not
         if Net.get_object_by_id(farm_area, tile_memory.plant_object_id)  then
             Net.remove_object(farm_area, tile_memory.plant_object_id)
             tile_memory.plant_object_id = nil
@@ -105,6 +153,7 @@ local function update_tile(current_time,loc_string)
         end
     end
 
+    --Change tile between Grass/Dirt/DirtWet when required
     if tile_memory.gid == Tiles.DirtWet then
         if tile_memory.plant then
             if elpased_since_water > Period.PlantedDirtWetToDirt then
@@ -214,8 +263,11 @@ local seed_stall = {
         local board_color = { r= 128, g= 255, b= 128 }
         local posts = {}
         for plant_name, data in pairs(PlantData) do
-            local seed_name = plant_name.." seed"
-            posts[#posts+1] = { id=plant_name, read=true, title=seed_name , author=tostring(data.price) }
+            if data.price then
+                --If the plant is for sale (has a price)
+                local seed_name = plant_name.." seed"
+                posts[#posts+1] = { id=plant_name, read=true, title=seed_name , author=tostring(data.price) }
+            end
         end
         local bbs_name = "Buy Seeds"
         players_using_bbs[player_id] = bbs_name
@@ -276,10 +328,11 @@ local function till_tile(tile,x,y,z)
             y=y,
             z=z,
             plant=nil,
+            growth=0,
             time={
                 tilled=current_time,
                 watered=0,
-                planted=0
+                planted=0,
             }
         }
         update_tile(current_time,tile_loc_string)
