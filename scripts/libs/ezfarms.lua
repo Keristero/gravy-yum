@@ -12,6 +12,8 @@ local area_memory = nil
 local delay_till_update = 1 --wait 1 second between updating all farm tiles
 local reference_seed = Net.get_object_by_name(farm_area,"Reference Seed")
 
+local plant_ram = {}--non persisted plant related values, keyed by loc_string
+
 local PlantData = {
     Turnip={price=100,local_gid=0},
     Cauliflower={price=150,local_gid=7},
@@ -61,15 +63,16 @@ local farm_loaded = false
 
 local function calculate_plant_gid(plant_name,growth_stage)
     local first_gid = reference_seed.data.gid
+    print('plant name '..plant_name)
     if growth_stage == 0 then
         --if the plant is seeds
         local first_plant_gid = first_gid+PlantData[plant_name].local_gid
         return first_plant_gid + math.random(0,1)
     elseif growth_stage > 0 and growth_stage < 5 then
         --if the plant is growing or grown
-        local first_plant_gid = first_gid+PlantData[plant_name].local_gid
+        local first_plant_gid = (first_gid+1)+PlantData[plant_name].local_gid
         return first_plant_gid+growth_stage
-    elseif growth_stage == 5 then
+    else
         --if the plant is dead
         plant_name = "Dead"
         local first_plant_gid = first_gid+PlantData[plant_name].local_gid
@@ -80,10 +83,10 @@ end
 local function determine_growth_stage(plant_name,elapsed_since_planted)
     --stage 0 = seeds, stage 1-3 = growing, 4 = grown, 5=dead 
     local plant = PlantData[plant_name]
-    local stage_time = 5*60
+    local stage_time = 10
     local stages = 4
-    local death_time = (stage_time*stages)+10*60
-    local growth_stage = math.floor(elapsed_since_planted/stage_time)
+    local death_time = (stage_time*stages)+60
+    local growth_stage = math.min(4,math.floor(elapsed_since_planted/stage_time))
     if elapsed_since_planted > death_time then
         growth_stage = 5
     end
@@ -100,55 +103,54 @@ local function update_tile(current_time,loc_string)
 
     --Create or remove plant object when required
     if tile_memory.plant ~= nil then
-        local plant_object = Net.get_object_by_id(farm_area, tile_memory.plant_object_id)
         local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted)
-        if not plant_object then
+        if not plant_ram[loc_string] then
             --create the plant if it does not exist when it should
-            local plant_gid = calculate_plant_gid(tile_memory.plant_object_id,growth_stage)
+            local plant_gid = calculate_plant_gid(tile_memory.plant,growth_stage)
             local plant_tile_data = {
                 type = "tile",
                 gid=plant_gid,
                 flipped_horizontally=false,
                 flipped_vertically=false
             }
-            local plant_custom_properties = {
-                ["Growth Stage"] = growth_stage
-            }
             local new_plant_data = { 
                 name=tile_memory.plant,
                 type="cyberplant",
                 visible=true,
-                x=tile_memory.x+0.5,
-                y=tile_memory.y+0.5,
+                x=tile_memory.x+0.8,
+                y=tile_memory.y+0.8,
                 z=tile_memory.z,
-                width=15,
-                height=30,
-                data=plant_tile_data,
-                custom_properties=plant_custom_properties
+                width=0.5,
+                height=1,
+                data=plant_tile_data
             }
             local new_plant_id = Net.create_object(farm_area, new_plant_data)
-            tile_memory.plant_object_id = new_plant_id
+            plant_ram[loc_string] = {
+                growth_stage=growth_stage,
+                id=new_plant_id
+            }
             something_changed = true
         else
-            if growth_stage ~= plant_object.custom_properties["Growth Stage"] then
+            if growth_stage ~= plant_ram[loc_string].growth_stage then
                 --if a differenet growth stage has been calculated, update the custom property and gid of the object
-                print('[ezfarms] a plant changed growth stage!')
-                local plant_gid = calculate_plant_gid(tile_memory.plant_object_id,growth_stage)
+                print('[ezfarms] a plant changed growth stage! '..growth_stage..' from '..plant_ram[loc_string].growth_stage)
+                local plant_gid = calculate_plant_gid(tile_memory.plant,growth_stage)
                 local plant_tile_data = {
                     type = "tile",
                     gid=plant_gid,
                     flipped_horizontally=false,
                     flipped_vertically=false
                 }
-                plant_object.custom_properties["Growth Stage"] = growth_stage
-                Net.set_object_data(farm_area, tile_memory.plant_object_id, plant_tile_data)
+                plant_ram[loc_string].growth_stage = growth_stage
+                Net.set_object_data(farm_area, plant_ram[loc_string].id, plant_tile_data)
             end
         end
     else
-        --remove the plant if it exists when it should not
-        if Net.get_object_by_id(farm_area, tile_memory.plant_object_id)  then
-            Net.remove_object(farm_area, tile_memory.plant_object_id)
-            tile_memory.plant_object_id = nil
+        if plant_ram[loc_string] then
+            --remove the plant if it exists when it should not
+            print('trying to delete plant by id '..plant_ram[loc_string].id)
+            Net.remove_object(farm_area, plant_ram[loc_string].id)
+            plant_ram[loc_string] = nil
             something_changed = true
         end
     end
@@ -182,7 +184,7 @@ local function update_tile(current_time,loc_string)
 end
 
 function load_farm()
-    print('[ezfarms] farm area memory loaded')
+    print('[ezfarms] farm area loading')
     area_memory = ezmemory.get_area_memory(farm_area)
     --create tile states if it does not exist
     if not area_memory.tile_states then
@@ -351,16 +353,65 @@ local function water_tile(tile,x,y,z)
     end
 end
 
-local function plant(tile,x,y,z,player_id,seed)
+local function plant(tile_loc_string,player_id,plant_to_plant,current_time)
+    print('[ezfarms] planting '..plant_to_plant)
+    local safe_secret = helpers.get_safe_player_secret(player_id)
+    area_memory.tile_states[tile_loc_string].time.planted = current_time
+    area_memory.tile_states[tile_loc_string].plant = plant_to_plant
+    area_memory.tile_states[tile_loc_string].owner = safe_secret
+    update_tile(current_time,tile_loc_string)
+    ezmemory.save_area_memory(farm_area)
+end
+
+local function harvest(tile_loc_string,player_id,safe_secret,current_time)
+    local harvest_count = 1
+    Net.message_player(player_id,"Harvested "..harvest_count.." "..area_memory.tile_states[tile_loc_string].plant.."!")
+    ezmemory.give_player_item(player_id, area_memory.tile_states[tile_loc_string].plant, "mmm, yummy "..area_memory.tile_states[tile_loc_string].plant)
+    area_memory.tile_states[tile_loc_string].plant = nil
+    area_memory.tile_states[tile_loc_string].owner = nil
+    area_memory.tile_states[tile_loc_string].time.tilled = current_time -- so the dirt does not immediately go back to being grass
+    update_tile(current_time,tile_loc_string)
+    ezmemory.save_area_memory(farm_area)
+end
+
+local function describe_growth_state(growth_stage)
+    if growth_stage == 5 then
+        return "dead as bro"
+    elseif growth_stage == 4 then
+        return "ready for harvest!"
+    elseif growth_stage == 3 then
+        return "almost ripe for picking!"
+    elseif growth_stage == 2 then
+        return "to be healthy"
+    elseif growth_stage == 1 then
+        return "to be growing steadily"
+    elseif growth_stage == 0 then
+        return "like it was just planted"
+    end
+end
+
+local function try_plant_seed(tile,x,y,z,player_id,seed)
     if tile.gid == Tiles.Dirt or tile.gid == Tiles.DirtWet then
+        local safe_secret = helpers.get_safe_player_secret(player_id)
         local plant_to_plant = player_tools[player_id]
-        print('[ezfarms] planting '..plant_to_plant)
         local tile_loc_string = get_location_string(x,y,z)
         local current_time = os.time()
-        area_memory.tile_states[tile_loc_string].time.planted = current_time
-        area_memory.tile_states[tile_loc_string].plant = plant_to_plant
-        update_tile(current_time,tile_loc_string)
-        ezmemory.save_area_memory(farm_area)
+        local prexisting_plant = plant_ram[tile_loc_string]
+        if not prexisting_plant or prexisting_plant.growth_stage == 5 then
+            plant(tile_loc_string,player_id,plant_to_plant,current_time)
+        else
+            local existing_plant_name = area_memory.tile_states[tile_loc_string].plant
+            if area_memory.tile_states[tile_loc_string].owner == safe_secret then
+                if prexisting_plant.growth_stage == 4 then
+                    harvest(tile_loc_string,player_id,safe_secret,current_time)
+                else
+                    Net.message_player(player_id,"the "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
+                end
+            else
+                local owner_name = ezmemory.get_player_name_from_safesecret(area_memory.tile_states[tile_loc_string].owner)
+                Net.message_player(player_id,owner_name.."'s "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
+            end
+        end
     end
 end
 
@@ -390,7 +441,7 @@ function ezfarms.handle_tile_interaction(player_id, x, y, z, button)
     elseif player_tool == "CyberWtrCan" then
         water_tile(tile,x,y,z)
     else
-        plant(tile,x,y,z,player_id)
+        try_plant_seed(tile,x,y,z,player_id)
     end
 end
 

@@ -94,6 +94,13 @@ function update_player_list(safe_secret,name)
     Async.write_file('./memory/player_list.json', json.encode(player_list))
 end
 
+function ezmemory.get_player_name_from_safesecret(safe_secret)
+    if player_list[safe_secret] then
+        return player_list[safe_secret]
+    end
+    return "Unknown"
+end
+
 function ezmemory.give_player_item(player_id, name, description)
     print('[ezmemory] gave '..player_id..' a '..name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
