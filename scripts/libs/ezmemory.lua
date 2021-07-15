@@ -108,28 +108,35 @@ function ezmemory.give_player_item(player_id, name, description)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     Net.give_player_item(player_id, name, description)
     if player_memory.items[name] then
-        --If the player already has the item, increase the qunatity
+        --If the player already has the item, increase the quantity
         player_memory.items[name].quantity = player_memory.items[name].quantity + 1
+    else
+        --Otherwise create the item
+        player_memory.items[name] = {name=name,description=description,quantity=1}
     end
-    --Otherwise create the item
-    player_memory.items[name] = {name=name,description=description,quantity=1}
+    print('[ezmemory] gave '..player_id..' a '..name..' now they have '..player_memory.items[name].quantity)
     ezmemory.save_player_memory(safe_secret)
 end
 
-function ezmemory.remove_player_item(player_id, name)
+function ezmemory.remove_player_item(player_id, name, remove_quant)
     print('[ezmemory] removed a '..name..' from '..player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     if player_memory.items[name] then
         --If the player has the item
-        Net.remove_player_item(player_id, name)
-        player_memory.items[name].quantity = player_memory.items[name] - 1
+        for i=1,remove_quant do
+            Net.remove_player_item(player_id, name)
+        end
+        player_memory.items[name].quantity = player_memory.items[name].quantity - remove_quant
         if player_memory.items[name].quantity < 1 then
             --if the quantity drops below 1, remove the item completely
             player_memory.items[name] = nil
+            return 0
         end
         ezmemory.save_player_memory(safe_secret)
+        return player_memory.items[name].quantity
     end
+    return 0
 end
 
 function ezmemory.set_player_money(player_id, money)
@@ -140,11 +147,11 @@ function ezmemory.set_player_money(player_id, money)
     ezmemory.save_player_memory(safe_secret)
 end
 
-function ezmemory.player_has_item(player_id, item_name)
+function ezmemory.count_player_item(player_id, item_name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     if player_memory.items[item_name] then
-        return true
+        return player_memory.items[item_name].quantity
     end
     return false
 end
@@ -157,8 +164,10 @@ function ezmemory.handle_player_join(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     update_player_list(safe_secret,player_name)
     --Send player items
-    for i, item in ipairs(player_memory.items) do
-        Net.give_player_item(player_id, item.name, item.description)
+    for item_name, item in pairs(player_memory.items) do
+        for i=1,item.quantity do
+            Net.give_player_item(player_id, item.name, item.description)
+        end
     end
     --Send player money
     Net.set_player_money(player_id, player_memory.money)

@@ -33,10 +33,19 @@ local PlantData = {
 }
 
 --Key = tool name, value = plant/tool name
-local ToolNames = {CyberHoe="CyberHoe",CyberWtrCan="CyberWtrCan"}
+local ToolNames = {CyberHoe="CyberHoe",CyberWtrCan="CyberWtrCan",CyberScythe="CyberScythe"}
 for plant_name, plant in pairs(PlantData) do
     ToolNames[plant_name.." seed"] = plant_name
 end
+
+local growth_stage_descriptions = {
+    ["0"]="like it was just planted",
+    ["1"]="to be growing steadily",
+    ["2"]="to be healthy",
+    ["3"]="almost ripe for picking!",
+    ["4"]="ready for harvest!",
+    ["5"]="very sad..."
+}
 
 local Tiles = {
     Dirt=85,
@@ -63,7 +72,6 @@ local farm_loaded = false
 
 local function calculate_plant_gid(plant_name,growth_stage)
     local first_gid = reference_seed.data.gid
-    print('plant name '..plant_name)
     if growth_stage == 0 then
         --if the plant is seeds
         local first_plant_gid = first_gid+PlantData[plant_name].local_gid
@@ -233,10 +241,19 @@ function ezfarms.handle_post_selection(player_id, post_id)
         if players_using_bbs[player_id] == "Buy Seeds" then
             try_buy_seed(player_id,post_id)
         elseif players_using_bbs[player_id] == "Select Tool" then
-            player_tools[player_id] = ToolNames[post_id]
+            player_tools[player_id] = post_id
             players_using_bbs[player_id] = nil
             Net.message_player(player_id,"You are now holding "..post_id)
             Net.close_bbs(player_id)
+        elseif players_using_bbs[player_id] == "Sell Veggies" then
+            local player_money = Net.get_player_money(player_id)
+            local item_count = ezmemory.count_player_item(player_id, post_id)
+            local plant = PlantData[post_id]
+            local worth = (plant.price*item_count)*2
+            ezmemory.set_player_money(player_id,player_money+worth)
+            ezmemory.remove_player_item(player_id,post_id,item_count)
+            Net.remove_post(player_id, post_id)
+            Net.message_player(player_id,"Sold all "..post_id.." for "..worth.."$!")
         end
     end
 end
@@ -274,17 +291,42 @@ local seed_stall = {
         local bbs_name = "Buy Seeds"
         players_using_bbs[player_id] = bbs_name
         Net.open_board(player_id, bbs_name, board_color, posts)
-        local next_dialouge_options = {
-            wait_for_response=true,
-            id=dialogue.custom_properties["Next 1"]
-        }
-        return next_dialouge_options
+        return nil
     end
 }
 eznpcs.add_event(seed_stall)
 
+local function list_plants(player_id)
+    local safe_secret = helpers.get_safe_player_secret(player_id)
+    local player_memory = ezmemory.get_player_memory(safe_secret)
+    local plant_counts = {}
+    for item_name, item in pairs(player_memory.items) do
+        for plant_name, plant in pairs(PlantData) do
+            if plant_name == item_name and plant.price then
+                --TODO, give plants differnet growth times that affect sell price and regrowths
+                plant_counts[plant_name] = item.quantity
+            end
+        end
+    end
+    return plant_counts
+end
 
---Farming stuff
+local veggie_stall = {
+    name="veggie_stall",
+    action=function (npc,player_id,dialogue)
+        local board_color = { r= 128, g= 255, b= 128 }
+        local posts = {}
+        local player_plants = list_plants(player_id)
+        for plant_name, sell_price in pairs(player_plants) do
+            posts[#posts+1] = { id=plant_name, read=true, title=plant_name , author=tostring(sell_price) }
+        end
+        local bbs_name = "Sell Veggies"
+        players_using_bbs[player_id] = bbs_name
+        Net.open_board(player_id, bbs_name, board_color, posts)
+        return nil
+    end
+}
+eznpcs.add_event(veggie_stall)
 
 function ezfarms.list_player_tools(player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
@@ -338,31 +380,56 @@ local function till_tile(tile,x,y,z)
     end
 end
 
-local function water_tile(tile,x,y,z)
-    if tile.gid == Tiles.Dirt or tile.gid == Tiles.DirtWet then
-        local tile_loc_string = get_location_string(x,y,z)
-        local current_time = os.time()
-        area_memory.tile_states[tile_loc_string].time.watered = current_time
-        area_memory.tile_states[tile_loc_string].gid = Tiles.DirtWet
-        update_tile(current_time,tile_loc_string)
-        ezmemory.save_area_memory(farm_area)
+function ezfarms.handle_object_interaction(player_id, object_id)
+    local player_area = Net.get_player_area(player_id)
+    if player_area ~= farm_area then
+        return
+    end
+    local object = Net.get_object_by_id(player_area,object_id)
+    if object.type == "Water Refill" then
+        local safe_secret = helpers.get_safe_player_secret(player_id)
+        local player_memory = ezmemory.get_player_memory(safe_secret)
+        player_memory.farming = {water=50}        
+        Net.message_player(player_id,"Filled CyberWtrCan")
     end
 end
 
-local function plant(tile_loc_string,player_id,plant_to_plant,current_time)
-    print('[ezfarms] planting '..plant_to_plant)
+local function water_tile(tile,tile_loc_string,player_id,safe_secret)
+    if tile.gid == Tiles.Dirt or tile.gid == Tiles.DirtWet then
+        local current_time = os.time()
+        local player_memory = ezmemory.get_player_memory(safe_secret)
+        if not player_memory.farming then
+            player_memory.farming = {water=0}
+        end
+        if player_memory.farming.water > 0 then
+            player_memory.farming.water = player_memory.farming.water - 1
+            area_memory.tile_states[tile_loc_string].time.watered = current_time
+            area_memory.tile_states[tile_loc_string].gid = Tiles.DirtWet
+            update_tile(current_time,tile_loc_string)
+            ezmemory.save_area_memory(farm_area)
+        else
+            Net.message_player(player_id,"CyberWtrCan is out of water...")
+        end
+    end
+end
+
+local function plant(tile_loc_string,player_id,seed,current_time)
+    print('[ezfarms] planting '..seed)
     local safe_secret = helpers.get_safe_player_secret(player_id)
+    local plant_to_plant = ToolNames[seed]
     area_memory.tile_states[tile_loc_string].time.planted = current_time
     area_memory.tile_states[tile_loc_string].plant = plant_to_plant
     area_memory.tile_states[tile_loc_string].owner = safe_secret
+    local seeds_remaining = ezmemory.remove_player_item(player_id,seed,1)
+    if seeds_remaining < 1 then
+        Net.message_player(player_id,"You ran out of "..seed)
+        player_tools[player_id] = nil
+    end
     update_tile(current_time,tile_loc_string)
     ezmemory.save_area_memory(farm_area)
 end
 
-local function harvest(tile_loc_string,player_id,safe_secret,current_time)
-    local harvest_count = 1
-    Net.message_player(player_id,"Harvested "..harvest_count.." "..area_memory.tile_states[tile_loc_string].plant.."!")
-    ezmemory.give_player_item(player_id, area_memory.tile_states[tile_loc_string].plant, "mmm, yummy "..area_memory.tile_states[tile_loc_string].plant)
+local function deleet_plant(tile_loc_string,current_time)
     area_memory.tile_states[tile_loc_string].plant = nil
     area_memory.tile_states[tile_loc_string].owner = nil
     area_memory.tile_states[tile_loc_string].time.tilled = current_time -- so the dirt does not immediately go back to being grass
@@ -370,43 +437,51 @@ local function harvest(tile_loc_string,player_id,safe_secret,current_time)
     ezmemory.save_area_memory(farm_area)
 end
 
-local function describe_growth_state(growth_stage)
-    if growth_stage == 5 then
-        return "dead as bro"
-    elseif growth_stage == 4 then
-        return "ready for harvest!"
-    elseif growth_stage == 3 then
-        return "almost ripe for picking!"
-    elseif growth_stage == 2 then
-        return "to be healthy"
-    elseif growth_stage == 1 then
-        return "to be growing steadily"
-    elseif growth_stage == 0 then
-        return "like it was just planted"
+local function scythe_plant(tile_loc_string,current_time,prexisting_plant,player_id)
+    if prexisting_plant then
+        if prexisting_plant.growth_stage == 5 then
+            deleet_plant(tile_loc_string,current_time)
+        else
+            Net.message_player(player_id,"Professor Oak says there's a time and place for everything")
+        end
     end
 end
 
-local function try_plant_seed(tile,x,y,z,player_id,seed)
+local function harvest(tile_loc_string,player_id,safe_secret,current_time)
+    local harvest_count = 1
+    Net.message_player(player_id,"Harvested "..harvest_count.." "..area_memory.tile_states[tile_loc_string].plant.."!")
+    ezmemory.give_player_item(player_id, area_memory.tile_states[tile_loc_string].plant, "mmm, yummy "..area_memory.tile_states[tile_loc_string].plant)
+    deleet_plant(tile_loc_string,current_time)
+end
+
+local function describe_growth_state(growth_stage)
+    return growth_stage_descriptions[tostring(growth_stage)]
+end
+
+local function try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
+    local existing_plant_name = area_memory.tile_states[tile_loc_string].plant
+    if area_memory.tile_states[tile_loc_string].owner == safe_secret then
+        if prexisting_plant.growth_stage == 4 then
+            harvest(tile_loc_string,player_id,safe_secret,current_time)
+        else
+            Net.message_player(player_id,"the "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
+        end
+    else
+        local owner_name = ezmemory.get_player_name_from_safesecret(area_memory.tile_states[tile_loc_string].owner)
+        Net.message_player(player_id,owner_name.."'s "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
+    end
+end
+
+local function try_plant_seed(tile,tile_loc_string,player_id,seed)
     if tile.gid == Tiles.Dirt or tile.gid == Tiles.DirtWet then
+        print("Trying to plant "..seed)
         local safe_secret = helpers.get_safe_player_secret(player_id)
-        local plant_to_plant = player_tools[player_id]
-        local tile_loc_string = get_location_string(x,y,z)
         local current_time = os.time()
         local prexisting_plant = plant_ram[tile_loc_string]
         if not prexisting_plant or prexisting_plant.growth_stage == 5 then
-            plant(tile_loc_string,player_id,plant_to_plant,current_time)
+            plant(tile_loc_string,player_id,seed,current_time)
         else
-            local existing_plant_name = area_memory.tile_states[tile_loc_string].plant
-            if area_memory.tile_states[tile_loc_string].owner == safe_secret then
-                if prexisting_plant.growth_stage == 4 then
-                    harvest(tile_loc_string,player_id,safe_secret,current_time)
-                else
-                    Net.message_player(player_id,"the "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
-                end
-            else
-                local owner_name = ezmemory.get_player_name_from_safesecret(area_memory.tile_states[tile_loc_string].owner)
-                Net.message_player(player_id,owner_name.."'s "..existing_plant_name.." looks "..describe_growth_state(prexisting_plant.growth_stage))
-            end
+            try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
         end
     end
 end
@@ -432,12 +507,25 @@ function ezfarms.handle_tile_interaction(player_id, x, y, z, button)
     local player_tool = player_tools[player_id]
     local tile = Net.get_tile(area_id, x, y, z)
 
+    local tile_loc_string = get_location_string(x,y,z)
+    local prexisting_plant = plant_ram[tile_loc_string]
+    local safe_secret = helpers.get_safe_player_secret(player_id)
+    local current_time = os.time()
+
     if player_tool == "CyberHoe" then
-        till_tile(tile,x,y,z)
+        if prexisting_plant then
+            try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
+        else
+            till_tile(tile,x,y,z)
+        end
     elseif player_tool == "CyberWtrCan" then
-        water_tile(tile,x,y,z)
+        water_tile(tile,tile_loc_string,player_id,safe_secret)
+    elseif player_tool == "CyberScythe" then
+        scythe_plant(tile_loc_string,current_time,prexisting_plant,player_id)
+    elseif prexisting_plant then
+        try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
     else
-        try_plant_seed(tile,x,y,z,player_id)
+        try_plant_seed(tile,tile_loc_string,player_id,player_tool)
     end
 end
 

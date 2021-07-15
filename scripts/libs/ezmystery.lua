@@ -61,7 +61,7 @@ function ezmystery.handle_textbox_response(player_id, response)
             unlocker_questions[player_id].state = 'ask_unlock'
         elseif unlocker_questions[player_id].state == 'ask_unlock' then
             if response == 1 then
-                ezmemory.remove_player_item(player_id, "Unlocker")
+                ezmemory.remove_player_item(player_id, "Unlocker",1)
                 collect_datum(player_id,unlocker_questions[player_id].object,unlocker_questions[player_id].object.id)
                 unlocker_questions[player_id] = nil
             end
@@ -72,10 +72,9 @@ function ezmystery.handle_textbox_response(player_id, response)
 end
 
 function try_collect_datum(player_id,object)
-
     if object.custom_properties["Locked"] == "true" then
         Net.message_player(player_id,"The Mystery Data is locked.")
-        if ezmemory.player_has_item(player_id, "Unlocker") then
+        if ezmemory.count_player_item(player_id, "Unlocker") then
             unlocker_questions[player_id] = {state="say_locked",object=object}
         end
     else
