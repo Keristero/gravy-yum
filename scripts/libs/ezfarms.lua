@@ -290,14 +290,10 @@ function ezfarms.list_player_tools(player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     local tool_counts = {}
-    for i, item in ipairs(player_memory.items) do
+    for item_name, item in pairs(player_memory.items) do
         for tool_name, tool_key in pairs(ToolNames) do
-            if item.name == tool_name then
-                if tool_counts[tool_name] then
-                    tool_counts[tool_name] = tool_counts[tool_name] + 1
-                else
-                    tool_counts[tool_name] = 1
-                end
+            if item_name == tool_name then
+                tool_counts[item_name] = item.quantity
             end
         end
     end

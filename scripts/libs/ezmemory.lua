@@ -102,11 +102,17 @@ function ezmemory.get_player_name_from_safesecret(safe_secret)
 end
 
 function ezmemory.give_player_item(player_id, name, description)
+    --TODO index items with player_memory.items[item_id]
     print('[ezmemory] gave '..player_id..' a '..name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     Net.give_player_item(player_id, name, description)
-    player_memory.items[#player_memory.items+1] = {name=name,description=description}
+    if player_memory.items[name] then
+        --If the player already has the item, increase the qunatity
+        player_memory.items[name].quantity = player_memory.items[name].quantity + 1
+    end
+    --Otherwise create the item
+    player_memory.items[name] = {name=name,description=description,quantity=1}
     ezmemory.save_player_memory(safe_secret)
 end
 
@@ -114,12 +120,16 @@ function ezmemory.remove_player_item(player_id, name)
     print('[ezmemory] removed a '..name..' from '..player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    local item_index = ezmemory.get_first_index_of_item_of_player(player_id, name)
-    if item_index ~= nil then
-        table.remove(player_memory.items, item_index)
+    if player_memory.items[name] then
+        --If the player has the item
         Net.remove_player_item(player_id, name)
+        player_memory.items[name].quantity = player_memory.items[name] - 1
+        if player_memory.items[name].quantity < 1 then
+            --if the quantity drops below 1, remove the item completely
+            player_memory.items[name] = nil
+        end
+        ezmemory.save_player_memory(safe_secret)
     end
-    ezmemory.save_player_memory(safe_secret)
 end
 
 function ezmemory.set_player_money(player_id, money)
@@ -130,15 +140,13 @@ function ezmemory.set_player_money(player_id, money)
     ezmemory.save_player_memory(safe_secret)
 end
 
-function ezmemory.get_first_index_of_item_of_player(player_id, item_name)
+function ezmemory.player_has_item(player_id, item_name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    for i, item in ipairs(player_memory.items) do
-        if item_name == item.name then
-            return i
-        end
+    if player_memory.items[item_name] then
+        return true
     end
-    return nil
+    return false
 end
 
 function ezmemory.handle_player_join(player_id)

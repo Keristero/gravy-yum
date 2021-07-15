@@ -75,8 +75,7 @@ function try_collect_datum(player_id,object)
 
     if object.custom_properties["Locked"] == "true" then
         Net.message_player(player_id,"The Mystery Data is locked.")
-        local unlocker_index = ezmemory.get_first_index_of_item_of_player(player_id, "Unlocker")
-        if unlocker_index ~= nil then
+        if ezmemory.player_has_item(player_id, "Unlocker") then
             unlocker_questions[player_id] = {state="say_locked",object=object}
         end
     else
