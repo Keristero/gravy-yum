@@ -15,20 +15,20 @@ local reference_seed = Net.get_object_by_name(farm_area,"Reference Seed")
 local plant_ram = {}--non persisted plant related values, keyed by loc_string
 
 local PlantData = {
-    Turnip={price=100,local_gid=0},
-    Cauliflower={price=150,local_gid=7},
-    Garlic={price=175,local_gid=14},
-    Tomato={price=200,local_gid=21},
-    Chili={price=220,local_gid=28},
-    Beetroot={price=180,local_gid=35},
-    Star={price=300,local_gid=42},
-    Eggplant={price=230,local_gid=49},
-    Pumpkin={price=250,local_gid=56},
-    Yam={price=90,local_gid=63},
-    ["Beetroot 2"]={price=169,local_gid=70},
-    ["Ancient"]={price=1000,local_gid=77},
-    ["Sweet Gem"]={price=500,local_gid=84},
-    Blueberry={price=400,local_gid=91},
+    Parsnip={price=300,growth_time_multi=0.4,local_gid=0,harvest={1,2}},
+    Cauliflower={price=1200,growth_time_multi=1.2,local_gid=7,harvest={1,1}},
+    Garlic={price=600,growth_time_multi=0.4,local_gid=14,harvest={2,3}},
+    Tomato={price=350,growth_time_multi=1.1,local_gid=21,harvest={1,3}},
+    Chili={price=600,growth_time_multi=0.5,local_gid=28,harvest={1,1}},
+    Radish={price=550,growth_time_multi=0.6,local_gid=35,harvest={1,1}},
+    ["Star Fruit"]={price=1800,growth_time_multi=1.3,local_gid=42,harvest={1,2}},
+    Eggplant={price=320,growth_time_multi=0.5,local_gid=49,harvest={1,1}},
+    Pumpkin={price=1200,growth_time_multi=1.3,local_gid=56,harvest={1,1}},
+    Yam={price=900,growth_time_multi=1,local_gid=63,harvest={2,4}},
+    Beetroot={price=400,growth_time_multi=1.8,local_gid=70,harvest={1,1}},
+    ["Ancient Fruit"]={price=2800,growth_time_multi=2.8,local_gid=77,harvest={1,1}},
+    ["Sweet Gem"]={price=3000,growth_time_multi=2.4,local_gid=84,harvest={1,1}},
+    Blueberry={price=800,growth_time_multi=1.5,local_gid=91,harvest={2,6}},
     Dead={local_gid=98}
 }
 
@@ -63,12 +63,31 @@ local sfx = {
 
 --periods before certain things happen to tiles
 local Period = {
-    EmptyDirtToGrass=600,
-    EmptyDirtWetToDirt=60*60,
-    PlantedDirtWetToDirt=60*60*12,
+    Minute=60,
+    Hour=60*60,
 }
+Period.EmptyDirtToGrass=Period.Minute*10
+Period.GrowthStageTime=Period.Hour*4
+Period.PlantedDirtWetToDirt=Period.Hour*4
+Period.UnwateredPlantDeath=Period.Hour*36
+Period.EmptyDirtWetToDirt=Period.Hour
+Period.WitherTime=Period.Hour*48--Time for a plant to wither after it is fully grown
 
 local farm_loaded = false
+
+local function calculate_plant_sell_price(plant_name)
+    local plant = PlantData[plant_name]
+    local av_harvest = (plant.harvest[1]+plant.harvest[2])/2
+    local price = plant.price*(((plant.growth_time_multi^1.05)+1)/av_harvest)
+    return price
+end
+
+for plant_name, plant in pairs(PlantData) do
+    if plant_name ~= "Dead" then
+        PlantData[plant_name].sell_price = calculate_plant_sell_price(plant_name)
+        print(plant_name.." will sell for $"..PlantData[plant_name].sell_price)
+    end
+end
 
 local function calculate_plant_gid(plant_name,growth_stage)
     local first_gid = reference_seed.data.gid
@@ -88,13 +107,16 @@ local function calculate_plant_gid(plant_name,growth_stage)
     end
 end
 
-local function determine_growth_stage(plant_name,elapsed_since_planted)
+local function determine_growth_stage(plant_name,elapsed_since_planted,elpased_since_water)
     --stage 0 = seeds, stage 1-3 = growing, 4 = grown, 5=dead 
     local plant = PlantData[plant_name]
-    local stage_time = 10
     local stages = 4
-    local death_time = (stage_time*stages)+60
-    local growth_stage = math.min(4,math.floor(elapsed_since_planted/stage_time))
+    local unique_growth_stage_time = plant.growth_time_multi*Period.GrowthStageTime
+    local death_time = (unique_growth_stage_time*stages)+Period.WitherTime
+    local growth_stage = math.min(4,math.floor(elapsed_since_planted/unique_growth_stage_time))
+    if elpased_since_water > Period.UnwateredPlantDeath then
+        growth_stage = 5
+    end
     if elapsed_since_planted > death_time then
         growth_stage = 5
     end
@@ -111,7 +133,7 @@ local function update_tile(current_time,loc_string)
 
     --Create or remove plant object when required
     if tile_memory.plant ~= nil then
-        local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted)
+        local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted,elpased_since_water)
         if not plant_ram[loc_string] then
             --create the plant if it does not exist when it should
             local plant_gid = calculate_plant_gid(tile_memory.plant,growth_stage)
@@ -156,7 +178,6 @@ local function update_tile(current_time,loc_string)
     else
         if plant_ram[loc_string] then
             --remove the plant if it exists when it should not
-            print('trying to delete plant by id '..plant_ram[loc_string].id)
             Net.remove_object(farm_area, plant_ram[loc_string].id)
             plant_ram[loc_string] = nil
             something_changed = true
@@ -249,7 +270,7 @@ function ezfarms.handle_post_selection(player_id, post_id)
             local player_money = Net.get_player_money(player_id)
             local item_count = ezmemory.count_player_item(player_id, post_id)
             local plant = PlantData[post_id]
-            local worth = (plant.price*item_count)*2
+            local worth = (plant.sell_price*item_count)*2
             ezmemory.set_player_money(player_id,player_money+worth)
             ezmemory.remove_player_item(player_id,post_id,item_count)
             Net.remove_post(player_id, post_id)
