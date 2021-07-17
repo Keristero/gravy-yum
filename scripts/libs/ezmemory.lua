@@ -101,20 +101,24 @@ function ezmemory.get_player_name_from_safesecret(safe_secret)
     return "Unknown"
 end
 
-function ezmemory.give_player_item(player_id, name, description)
+function ezmemory.give_player_item(player_id, name, description, amount)
+    if not amount then
+        amount = 1
+    end
     --TODO index items with player_memory.items[item_id]
-    print('[ezmemory] gave '..player_id..' a '..name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    Net.give_player_item(player_id, name, description)
+    for i=1,amount do
+        Net.give_player_item(player_id, name, description)
+    end
     if player_memory.items[name] then
         --If the player already has the item, increase the quantity
-        player_memory.items[name].quantity = player_memory.items[name].quantity + 1
+        player_memory.items[name].quantity = player_memory.items[name].quantity + amount
     else
         --Otherwise create the item
-        player_memory.items[name] = {name=name,description=description,quantity=1}
+        player_memory.items[name] = {name=name,description=description,quantity=amount}
     end
-    print('[ezmemory] gave '..player_id..' a '..name..' now they have '..player_memory.items[name].quantity)
+    print('[ezmemory] gave '..player_id..' '..amount..' '..name..' now they have '..player_memory.items[name].quantity)
     ezmemory.save_player_memory(safe_secret)
 end
 

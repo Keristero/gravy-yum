@@ -9,7 +9,8 @@ local players_using_bbs = {}
 local player_tools = {}
 local farm_area = 'farm'
 local area_memory = nil
-local delay_till_update = 1 --wait 1 second between updating all farm tiles
+local delay_till_update = 5 --wait 1 second between updating all farm tiles
+local period_multiplier = 0.01 --1.0 is real time, 0.5 is double speed
 local reference_seed = Net.get_object_by_name(farm_area,"Reference Seed")
 
 local plant_ram = {}--non persisted plant related values, keyed by loc_string
@@ -70,15 +71,20 @@ Period.EmptyDirtToGrass=Period.Minute*10
 Period.GrowthStageTime=Period.Hour*4
 Period.PlantedDirtWetToDirt=Period.Hour*4
 Period.UnwateredPlantDeath=Period.Hour*36
-Period.EmptyDirtWetToDirt=Period.Hour
+Period.JustPlantedGracePeriod=Period.Hour*4
 Period.WitherTime=Period.Hour*48--Time for a plant to wither after it is fully grown
+
+--for testing, make things take a fraction of the time by reducing all periods!
+for period_name, period in pairs(Period) do
+    Period[period_name] = period*period_multiplier
+end
 
 local farm_loaded = false
 
 local function calculate_plant_sell_price(plant_name)
     local plant = PlantData[plant_name]
     local av_harvest = (plant.harvest[1]+plant.harvest[2])/2
-    local price = plant.price*(((plant.growth_time_multi^1.05)+1)/av_harvest)
+    local price = math.floor(plant.price*(((plant.growth_time_multi^1.05)+1)/av_harvest))
     return price
 end
 
@@ -107,17 +113,23 @@ local function calculate_plant_gid(plant_name,growth_stage)
     end
 end
 
-local function determine_growth_stage(plant_name,elapsed_since_planted,elpased_since_water)
+local function determine_growth_stage(plant_name,elapsed_since_planted,elpased_since_water,death_time)
+    if death_time ~= 0 then
+        print("[ezfarms] "..plant_name.." already dead")
+        return 5
+    end
     --stage 0 = seeds, stage 1-3 = growing, 4 = grown, 5=dead 
     local plant = PlantData[plant_name]
     local stages = 4
     local unique_growth_stage_time = plant.growth_time_multi*Period.GrowthStageTime
     local death_time = (unique_growth_stage_time*stages)+Period.WitherTime
     local growth_stage = math.min(4,math.floor(elapsed_since_planted/unique_growth_stage_time))
-    if elpased_since_water > Period.UnwateredPlantDeath then
+    if elpased_since_water > Period.UnwateredPlantDeath and elapsed_since_planted > Period.JustPlantedGracePeriod then
+        print("[ezfarms] a "..plant_name.." dried up and died")
         growth_stage = 5
     end
     if elapsed_since_planted > death_time then
+        print("[ezfarms] a "..plant_name.." died of old age")
         growth_stage = 5
     end
     return growth_stage
@@ -128,12 +140,18 @@ local function update_tile(current_time,loc_string)
     local elpased_since_water = current_time-tile_memory.time.watered
     local elapsed_since_tilled = current_time-tile_memory.time.tilled
     local elapsed_since_planted = current_time-tile_memory.time.planted
+    local elapsed_since_death = current_time-tile_memory.time.death
     local new_gid = tile_memory.gid --dont change it by default
     local something_changed = false
 
     --Create or remove plant object when required
     if tile_memory.plant ~= nil then
-        local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted,elpased_since_water)
+        --If there is a plant here
+        local growth_stage = determine_growth_stage(tile_memory.plant,elapsed_since_planted,elpased_since_water,tile_memory.time.death)
+        if tile_memory.time.death == 0 and growth_stage == 5 then
+            --plant has just died, so sad, am cry :(
+            tile_memory.time.death = current_time
+        end
         if not plant_ram[loc_string] then
             --create the plant if it does not exist when it should
             local plant_gid = calculate_plant_gid(tile_memory.plant,growth_stage)
@@ -186,17 +204,11 @@ local function update_tile(current_time,loc_string)
 
     --Change tile between Grass/Dirt/DirtWet when required
     if tile_memory.gid == Tiles.DirtWet then
-        if tile_memory.plant then
-            if elpased_since_water > Period.PlantedDirtWetToDirt then
-                new_gid = Tiles.Dirt
-                something_changed = true
-            end
-        else
-            if elpased_since_water > Period.EmptyDirtWetToDirt then
-                tile_memory.time.tilled = current_time
-                new_gid = Tiles.Dirt
-                something_changed = true
-            end
+        if elpased_since_water > Period.PlantedDirtWetToDirt then
+            print('[ezfarms] dirt dried out')
+            tile_memory.time.tilled = current_time
+            new_gid = Tiles.Dirt
+            something_changed = true
         end
     elseif tile_memory.gid == Tiles.Dirt then
         if tile_memory.plant then
@@ -208,6 +220,7 @@ local function update_tile(current_time,loc_string)
         end
     end
     --TODO might need to do something with something_changed here? where what was I doing...
+    tile_memory.gid = new_gid
     Net.set_tile(farm_area, tile_memory.x, tile_memory.y, tile_memory.z, new_gid)
     return something_changed
 end
@@ -270,7 +283,7 @@ function ezfarms.handle_post_selection(player_id, post_id)
             local player_money = Net.get_player_money(player_id)
             local item_count = ezmemory.count_player_item(player_id, post_id)
             local plant = PlantData[post_id]
-            local worth = (plant.sell_price*item_count)*2
+            local worth = plant.sell_price*item_count
             ezmemory.set_player_money(player_id,player_money+worth)
             ezmemory.remove_player_item(player_id,post_id,item_count)
             Net.remove_post(player_id, post_id)
@@ -389,11 +402,11 @@ local function till_tile(tile,x,y,z)
             y=y,
             z=z,
             plant=nil,
-            growth=0,
             time={
                 tilled=current_time,
                 watered=0,
                 planted=0,
+                death=0
             }
         }
         update_tile(current_time,tile_loc_string)
@@ -439,6 +452,7 @@ local function plant(tile_loc_string,player_id,seed,current_time)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local plant_to_plant = ToolNames[seed]
     area_memory.tile_states[tile_loc_string].time.planted = current_time
+    area_memory.tile_states[tile_loc_string].time.death = 0
     area_memory.tile_states[tile_loc_string].plant = plant_to_plant
     area_memory.tile_states[tile_loc_string].owner = safe_secret
     local seeds_remaining = ezmemory.remove_player_item(player_id,seed,1)
@@ -453,7 +467,9 @@ end
 local function deleet_plant(tile_loc_string,current_time)
     area_memory.tile_states[tile_loc_string].plant = nil
     area_memory.tile_states[tile_loc_string].owner = nil
+    area_memory.tile_states[tile_loc_string].time.planted = 0
     area_memory.tile_states[tile_loc_string].time.tilled = current_time -- so the dirt does not immediately go back to being grass
+    area_memory.tile_states[tile_loc_string].time.death = 0
     update_tile(current_time,tile_loc_string)
     ezmemory.save_area_memory(farm_area)
 end
@@ -469,9 +485,11 @@ local function scythe_plant(tile_loc_string,current_time,prexisting_plant,player
 end
 
 local function harvest(tile_loc_string,player_id,safe_secret,current_time)
-    local harvest_count = 1
-    Net.message_player(player_id,"Harvested "..harvest_count.." "..area_memory.tile_states[tile_loc_string].plant.."!")
-    ezmemory.give_player_item(player_id, area_memory.tile_states[tile_loc_string].plant, "mmm, yummy "..area_memory.tile_states[tile_loc_string].plant)
+    local plant_name = area_memory.tile_states[tile_loc_string].plant
+    local plant_info = PlantData[plant_name]
+    local harvest_count = math.random(plant_info.harvest[1],plant_info.harvest[2])
+    Net.message_player(player_id,"Harvested "..harvest_count.." "..plant_name.."!")
+    ezmemory.give_player_item(player_id, plant_name, "mmm, yummy "..plant_name,harvest_count)
     deleet_plant(tile_loc_string,current_time)
 end
 
