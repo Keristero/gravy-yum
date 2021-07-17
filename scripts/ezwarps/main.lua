@@ -106,8 +106,11 @@ function doAnimationForWarp(player_id,animation_name)
     players_in_animations[player_id] = true
     Net.lock_player_input(player_id)
     local animation_properties = special_animations[animation_name]
-    animation_properties.animate(player_id)
-    local warp_delay = animation_properties.duration+clear_animation_delay
+    local warp_delay = clear_animation_delay
+    if animation_properties then
+        animation_properties.animate(player_id)
+        warp_delay = warp_delay + animation_properties.duration
+    end
     delay.for_player(player_id,function ()
         players_in_animations[player_id] = nil
         Net.unlock_player_input(player_id)
@@ -244,7 +247,7 @@ function use_warp(player_id,warp_object,warp_meta)
     local warp_in = warp_properties["Warp In"] == "True"
     local data = warp_properties.Data
     local warp_delay = 0
-    if warp_properties["Leave Animation"] then
+    if warp_properties["Leave Animation"] and warp_properties["Leave Animation"] ~= "" then
         doAnimationForWarp(player_id,warp_properties["Leave Animation"])
         warp_delay = special_animations[warp_properties["Leave Animation"]].duration
     end
