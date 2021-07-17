@@ -34,7 +34,7 @@ function ezmystery.handle_player_transfer(player_id)
     --Load sound effects for mystery data interaction
     local area_id = Net.get_player_area(player_id)
     if data_hidden_till_rejoin_for_player[player_id][area_id] then
-        for i, object_id in ipairs(data_hidden_till_rejoin_for_player[player_id][area_id]) do
+        for object_id, is_hidden in pairs(data_hidden_till_rejoin_for_player[player_id][area_id]) do
             Net.exclude_object_for_player(player_id, object_id)
         end
     else
@@ -88,12 +88,17 @@ function collect_datum(player_id,object,datum_id_override)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     local area_id = Net.get_player_area(player_id)
+    local player_area_memory = ezmemory.get_player_area_memory(safe_secret,area_id)
+    if player_area_memory.hidden_objects[datum_id_override] or data_hidden_till_rejoin_for_player[player_id][area_id][datum_id_override] then
+        --Anti spam protection
+        return
+    end
     if object.custom_properties["Type"] == "random" then
         local random_options = ExtractNumberedProperties(object,"Next ")
         local random_selection_id = random_options[math.random(#random_options)]
         if random_selection_id then
             randomly_selected_datum = Net.get_object_by_id(area_id,random_selection_id)
-            collect_datum(player_id,randomly_selected_datum,random_selection_id)
+            collect_datum(player_id,randomly_selected_datum,datum_id_override)
         end
     elseif object.custom_properties["Type"] == "keyitem" then
         local name = object.custom_properties["Name"]
@@ -121,14 +126,13 @@ function collect_datum(player_id,object,datum_id_override)
 
     if object.custom_properties["Once"] == "true" then
         --If this mystery data should only be available once (not respawning)
-        local player_area_memory = ezmemory.get_player_area_memory(safe_secret,area_id)
-        player_area_memory.hidden_objects[#player_area_memory.hidden_objects+1] = datum_id_override
+        player_area_memory.hidden_objects[tostring(datum_id_override)] = true
         ezmemory.save_player_memory(safe_secret)
     end
 
     --Now remove the mystery data
     --TODO make this line shorter lol
-    data_hidden_till_rejoin_for_player[player_id][area_id][#data_hidden_till_rejoin_for_player[player_id][area_id]+1] = datum_id_override
+    data_hidden_till_rejoin_for_player[player_id][area_id][tostring(datum_id_override)] = true
     Net.exclude_object_for_player(player_id, datum_id_override)
 end
 

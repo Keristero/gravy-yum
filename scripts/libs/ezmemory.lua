@@ -191,12 +191,12 @@ function ezmemory.handle_player_transfer(player_id)
     --assumes that player memory has already been read from disk
     --load memory of area
     local area_memory = ezmemory.get_area_memory(area_id)
-    for i, object_id in pairs(area_memory.hidden_objects) do
+    for object_id, is_hidden in pairs(area_memory.hidden_objects) do
         Net.exclude_object_for_player(player_id, object_id)
     end
     --load player's memory of area
     local player_area_memory = ezmemory.get_player_area_memory(safe_secret,area_id)
-    for i, object_id in pairs(player_area_memory.hidden_objects) do
+    for object_id, is_hidden in pairs(player_area_memory.hidden_objects) do
         Net.exclude_object_for_player(player_id, object_id)
     end
     print('[ezmemory] hid '..#player_area_memory.hidden_objects..' objects from '..player_name)

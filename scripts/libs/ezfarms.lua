@@ -28,7 +28,7 @@ local PlantData = {
     Yam={price=900,growth_time_multi=1,local_gid=63,harvest={2,4}},
     Beetroot={price=400,growth_time_multi=1.8,local_gid=70,harvest={1,1}},
     ["Ancient Fruit"]={price=2800,growth_time_multi=2.8,local_gid=77,harvest={1,1}},
-    ["Sweet Gem"]={price=3000,growth_time_multi=2.4,local_gid=84,harvest={1,1}},
+    ["Sweet Gem"]={price=3000,growth_time_multi=2.4,local_gid=84,harvest={1,2}},
     Blueberry={price=800,growth_time_multi=1.5,local_gid=91,harvest={2,6}},
     Dead={local_gid=98}
 }
@@ -84,14 +84,13 @@ local farm_loaded = false
 local function calculate_plant_sell_price(plant_name)
     local plant = PlantData[plant_name]
     local av_harvest = (plant.harvest[1]+plant.harvest[2])/2
-    local price = math.floor(plant.price*(((plant.growth_time_multi^1.05)+1)/av_harvest))
+    local price = math.floor(plant.price*((((plant.growth_time_multi*0.4)^1.1)+1)/av_harvest))
     return price
 end
 
 for plant_name, plant in pairs(PlantData) do
     if plant_name ~= "Dead" then
         PlantData[plant_name].sell_price = calculate_plant_sell_price(plant_name)
-        print(plant_name.." will sell for $"..PlantData[plant_name].sell_price)
     end
 end
 
@@ -115,7 +114,6 @@ end
 
 local function determine_growth_stage(plant_name,elapsed_since_planted,elpased_since_water,death_time)
     if death_time ~= 0 then
-        print("[ezfarms] "..plant_name.." already dead")
         return 5
     end
     --stage 0 = seeds, stage 1-3 = growing, 4 = grown, 5=dead 
@@ -181,7 +179,7 @@ local function update_tile(current_time,loc_string)
         else
             if growth_stage ~= plant_ram[loc_string].growth_stage then
                 --if a differenet growth stage has been calculated, update the custom property and gid of the object
-                print('[ezfarms] a plant changed growth stage! '..growth_stage..' from '..plant_ram[loc_string].growth_stage)
+                print('[ezfarms] a plant changed growth stage! from '..plant_ram[loc_string].growth_stage..' to '..growth_stage)
                 local plant_gid = calculate_plant_gid(tile_memory.plant,growth_stage)
                 local plant_tile_data = {
                     type = "tile",
@@ -284,10 +282,12 @@ function ezfarms.handle_post_selection(player_id, post_id)
             local item_count = ezmemory.count_player_item(player_id, post_id)
             local plant = PlantData[post_id]
             local worth = plant.sell_price*item_count
-            ezmemory.set_player_money(player_id,player_money+worth)
-            ezmemory.remove_player_item(player_id,post_id,item_count)
-            Net.remove_post(player_id, post_id)
-            Net.message_player(player_id,"Sold all "..post_id.." for "..worth.."$!")
+            if worth > 0 then
+                ezmemory.set_player_money(player_id,player_money+worth)
+                ezmemory.remove_player_item(player_id,post_id,item_count)
+                Net.remove_post(player_id, post_id)
+                Net.message_player(player_id,"Sold all "..post_id.." for "..worth.."$!")
+            end
         end
     end
 end
@@ -421,10 +421,14 @@ function ezfarms.handle_object_interaction(player_id, object_id)
     end
     local object = Net.get_object_by_id(player_area,object_id)
     if object.type == "Water Refill" then
-        local safe_secret = helpers.get_safe_player_secret(player_id)
-        local player_memory = ezmemory.get_player_memory(safe_secret)
-        player_memory.farming = {water=50}        
-        Net.message_player(player_id,"Filled CyberWtrCan")
+        if player_tools[player_id] == "CyberWtrCan" then
+            local safe_secret = helpers.get_safe_player_secret(player_id)
+            local player_memory = ezmemory.get_player_memory(safe_secret)
+            player_memory.farming = {water=50}        
+            Net.message_player(player_id,"Filled CyberWtrCan")
+        else
+            Net.message_player(player_id,"\x01I could fill something here...\x01")
+        end
     end
 end
 
