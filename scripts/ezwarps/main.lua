@@ -61,10 +61,8 @@ function check_radius_warps()
 
                 if distance < radius_warp.activation_radius then
                     radius_warp.in_range[player_id] = true
-                    if players_in_animations[player_id] ~= nil then
-                        goto continue
-                    end
                     if not in_range then
+                        print('player entered warp range')
                         entered_range = true
                     end
                 else
@@ -72,8 +70,14 @@ function check_radius_warps()
                 end
 
                 if entered_range == true then
-                    print('[ezwarps] using radius warp')
-                    use_warp(player_id,radius_warp.object,radius_warp)
+                    if not players_in_animations[player_id] then
+                        print('[ezwarps] using radius warp')
+                        use_warp(player_id,radius_warp.object,radius_warp)
+                    else
+                        print('player arrived in radius warp range')
+                        players_in_animations[player_id] = nil
+                        Net.unlock_player_input(player_id)
+                    end
                 end
                 ::continue::
             end
@@ -100,21 +104,17 @@ function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, arriva
 end
 
 
-function doAnimationForWarp(player_id,animation_name)
+function doAnimationForWarp(player_id,animation_name,is_leave_animation)
     print('[ezwarps] doing special animation '..animation_name)
-    local clear_animation_delay = 0
+    local bonus_arrival_delay = 2
     players_in_animations[player_id] = true
     Net.lock_player_input(player_id)
     local animation_properties = special_animations[animation_name]
-    local warp_delay = clear_animation_delay
+    local warp_delay = 0
     if animation_properties then
         animation_properties.animate(player_id)
         warp_delay = warp_delay + animation_properties.duration
     end
-    delay.for_player(player_id,function ()
-        players_in_animations[player_id] = nil
-        Net.unlock_player_input(player_id)
-    end,warp_delay)
 end
 
 local areas = Net.list_areas()
@@ -248,7 +248,7 @@ function use_warp(player_id,warp_object,warp_meta)
     local data = warp_properties.Data
     local warp_delay = 0
     if warp_properties["Leave Animation"] and warp_properties["Leave Animation"] ~= "" then
-        doAnimationForWarp(player_id,warp_properties["Leave Animation"])
+        doAnimationForWarp(player_id,warp_properties["Leave Animation"],true)
         warp_delay = special_animations[warp_properties["Leave Animation"]].duration
     end
     delay.for_player(player_id,function ()

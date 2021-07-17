@@ -2,8 +2,9 @@ local eznpcs = require('scripts/libs/eznpcs/eznpcs')
 local ezmemory = require('scripts/libs/ezmemory')
 local ezmystery = require('scripts/libs/ezmystery')
 local ezfarms = require('scripts/libs/ezfarms')
+local ezweather = require('scripts/libs/ezweather')
 
-local plugins = {eznpcs,ezmemory,ezmystery,ezfarms}
+local plugins = {eznpcs,ezmemory,ezmystery,ezfarms,ezweather}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',

@@ -160,7 +160,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="Object Layer 3" offsetx="0" offsety="-32">
-  <object id="11" name="To Default" type="Radius Warp" x="1118" y="496">
+  <object id="11" name="To Default" type="Radius Warp" x="1112" y="496">
    <properties>
     <property name="Activation Radius" type="float" value="0.6"/>
     <property name="Arrival Animation" value="arrow_down_right_in"/>
@@ -323,22 +323,6 @@
     <property name="Wait Time" type="int" value="5"/>
    </properties>
    <point/>
-  </object>
-  <object id="54" type="Mystery Datum" gid="85" x="432" y="176" width="14" height="43">
-   <properties>
-    <property name="Description" value="It is emitting a powerful aura..."/>
-    <property name="Name" value="CyberHoe"/>
-    <property name="Once" type="bool" value="true"/>
-    <property name="Type" value="keyitem"/>
-   </properties>
-  </object>
-  <object id="55" type="Mystery Datum" gid="85" x="368" y="112" width="14" height="43">
-   <properties>
-    <property name="Description" value="It is emitting a powerful aura..."/>
-    <property name="Name" value="CyberWtrCan"/>
-    <property name="Once" type="bool" value="true"/>
-    <property name="Type" value="keyitem"/>
-   </properties>
   </object>
  </objectgroup>
 </map>

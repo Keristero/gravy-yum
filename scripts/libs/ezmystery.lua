@@ -72,6 +72,14 @@ function ezmystery.handle_textbox_response(player_id, response)
 end
 
 function try_collect_datum(player_id,object)
+    local safe_secret = helpers.get_safe_player_secret(player_id)
+    local player_memory = ezmemory.get_player_memory(safe_secret)
+    local area_id = Net.get_player_area(player_id)
+    local player_area_memory = ezmemory.get_player_area_memory(safe_secret,area_id)
+    if player_area_memory.hidden_objects[tostring(object.id)] or data_hidden_till_rejoin_for_player[player_id][area_id][tostring(object.id)] then
+        --Anti spam protection
+        return
+    end
     if object.custom_properties["Locked"] == "true" then
         Net.message_player(player_id,"The Mystery Data is locked.")
         if ezmemory.count_player_item(player_id, "Unlocker") then
@@ -89,7 +97,7 @@ function collect_datum(player_id,object,datum_id_override)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     local area_id = Net.get_player_area(player_id)
     local player_area_memory = ezmemory.get_player_area_memory(safe_secret,area_id)
-    if player_area_memory.hidden_objects[datum_id_override] or data_hidden_till_rejoin_for_player[player_id][area_id][datum_id_override] then
+    if player_area_memory.hidden_objects[tostring(datum_id_override)] or data_hidden_till_rejoin_for_player[player_id][area_id][tostring(datum_id_override)] then
         --Anti spam protection
         return
     end

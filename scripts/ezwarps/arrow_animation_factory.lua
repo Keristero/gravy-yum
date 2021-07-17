@@ -68,7 +68,7 @@ function create_arrow_animation(is_arriving,direction_str)
                     }},
                     duration=0
                 }
-                Net.fade_player_camera(player_id, Fade.OUT, 0.8, {r=0, g=0, b=0, a=255})
+                Net.fade_player_camera(player_id, Fade.IN, 0.8, {r=0, g=0, b=0, a=0})
                 Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, animation_length)
                 Net.unlock_player_camera(player_id)
             else

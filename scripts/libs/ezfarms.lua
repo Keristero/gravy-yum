@@ -1,6 +1,7 @@
 local ezfarms = {}
 
 local eznpcs = require('scripts/libs/eznpcs/eznpcs')
+local ezweather = require('scripts/libs/ezweather')
 local ezmemory = require('scripts/libs/ezmemory')
 local table = require('table')
 local helpers = require('scripts/libs/helpers')
@@ -8,6 +9,7 @@ local helpers = require('scripts/libs/helpers')
 local players_using_bbs = {}
 local player_tools = {}
 local farm_area = 'farm'
+local rain_music_path = '/server/assets/sfx/ezfarms/wet_hands_raining.ogg'
 local area_memory = nil
 local delay_till_update = 5 --wait 1 second between updating all farm tiles
 local period_multiplier = 0.01 --1.0 is real time, 0.5 is double speed
@@ -84,6 +86,8 @@ end
 
 local farm_loaded = false
 
+ezweather.start_rain_in_area(farm_area,rain_music_path)
+
 local function calculate_plant_sell_price(plant_name)
     local plant = PlantData[plant_name]
     local av_harvest = (plant.harvest[1]+plant.harvest[2])/2
@@ -136,7 +140,7 @@ local function determine_growth_stage(plant_name,elapsed_since_planted,elpased_s
     return growth_stage
 end
 
-local function update_tile(current_time,loc_string)
+local function update_tile(current_time,loc_string,area_weather)
     local tile_memory = area_memory.tile_states[loc_string]
     local elpased_since_water = current_time-tile_memory.time.watered
     local elapsed_since_tilled = current_time-tile_memory.time.tilled
@@ -164,7 +168,6 @@ local function update_tile(current_time,loc_string)
             }
             local new_plant_data = { 
                 name=tile_memory.plant,
-                type="cyberplant",
                 visible=true,
                 x=tile_memory.x+0.8,
                 y=tile_memory.y+0.8,
@@ -203,6 +206,11 @@ local function update_tile(current_time,loc_string)
         end
     end
 
+    --If it is raining, keep the ground wet
+    if area_weather and area_weather.type == "rain" then
+        tile_memory.time.watered = current_time
+    end
+
     --Change tile between Grass/Dirt/DirtWet when required
     if tile_memory.gid == Tiles.DirtWet then
         if elpased_since_water > Period.PlantedDirtWetToDirt then
@@ -212,6 +220,10 @@ local function update_tile(current_time,loc_string)
             something_changed = true
         end
     elseif tile_memory.gid == Tiles.Dirt then
+        if elpased_since_water < Period.PlantedDirtWetToDirt then
+            new_gid = Tiles.DirtWet
+            something_changed = true
+        end
         if tile_memory.plant then
         else
             if elapsed_since_tilled > Period.EmptyDirtToGrass then
@@ -244,8 +256,9 @@ end
 function update_all_tiles()
     local current_time = os.time()
     local something_changed = false
+    local area_weather = ezweather.get_area_weather(farm_area)
     for loc_string, tile_memory in pairs(area_memory.tile_states) do
-        if update_tile(current_time,loc_string) then
+        if update_tile(current_time,loc_string,area_weather) then
             something_changed = true
         end
     end
@@ -272,7 +285,7 @@ function ezfarms.on_tick(delta_time)
         if something_changed then
             ezmemory.save_area_memory(farm_area)
         end
-        delay_till_update = 1
+        delay_till_update = 5
     end
 end
 
@@ -443,7 +456,7 @@ function ezfarms.handle_object_interaction(player_id, object_id)
             end
         else
             local mugshot = Net.get_player_mugshot(player_id)
-            Net.message_player(player_id,"\x01I could fill something here...\x01",mugshot.texture_path,mugshot.animation_path)
+            Net.message_player(player_id,"\x02I could fill something here...\x02",mugshot.texture_path,mugshot.animation_path)
         end
     end
 end
