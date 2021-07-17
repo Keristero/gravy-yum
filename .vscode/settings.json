@@ -1,5 +1,10 @@
 {
     "Lua.diagnostics.disable": [
-        "unused-local"
+        "unused-local",
+        "lowercase-global"
+    ],
+    "Lua.diagnostics.globals": [
+        "Net",
+        "Async"
     ]
 }

@@ -255,6 +255,7 @@ function use_warp(player_id,warp_object,warp_meta)
             local direction = "Down"
             local arrival_animation_name = nil
             local target_object = warp_meta.target_object
+            local dont_teleport = warp_object.custom_properties["Dont Teleport"]
             if target_object and not dont_teleport then
                 direction = target_object.custom_properties["Direction"]
                 arrival_animation_name = target_object.custom_properties["Arrival Animation"]

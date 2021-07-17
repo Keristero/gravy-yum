@@ -442,7 +442,7 @@ local function scythe_plant(tile_loc_string,current_time,prexisting_plant,player
         if prexisting_plant.growth_stage == 5 then
             deleet_plant(tile_loc_string,current_time)
         else
-            Net.message_player(player_id,"Professor Oak says there's a time and place for everything")
+            Net.message_player(player_id,"Oak's words echoed... There's a time and place for everything, but not now.")
         end
     end
 end

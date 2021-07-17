@@ -306,7 +306,7 @@ function MoveNPC(npc,delta_time)
     local vel_x = math.cos(angle) * npc.speed
     local vel_y = math.sin(angle) * npc.speed
 
-    local new_pos = {x,y,z=npc.z,size=npc.size}
+    local new_pos = {x=0,y=0,z=npc.z,size=npc.size}
 
     new_pos.x = npc.x + vel_x * delta_time
     new_pos.y = npc.y + vel_y * delta_time
