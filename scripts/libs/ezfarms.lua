@@ -54,13 +54,16 @@ local Tiles = {
     DirtWet=87
 }
 
---These resources are not actually loaded here, but are currently loaded by entry script anyway.
 local sfx = {
-    hurt='/server/assets/sfx/hurt.ogg',
     item_get='/server/assets/sfx/item_get.ogg',
-    recover='/server/assets/sfx/recover.ogg',
-    card_error='/server/assets/sfx/card_error.ogg'
+    card_error='/server/assets/sfx/card_error.ogg',
+    hoe='/server/assets/sfx/ezfarms/hoe.ogg',
+    rain='/server/assets/sfx/ezfarms/rain.ogg',
+    scythe='/server/assets/sfx/ezfarms/scythe.ogg',
+    swap_tool='/server/assets/sfx/ezfarms/swap_tool.ogg',
+    water_tile='/server/assets/sfx/ezfarms/water_tile.ogg'
 }
+
 
 --periods before certain things happen to tiles
 local Period = {
@@ -250,6 +253,11 @@ function update_all_tiles()
 end
 
 function ezfarms.handle_player_join(player_id)
+    --Load sound effects for player
+    for name,path in pairs(sfx) do
+        Net.provide_asset_for_player(player_id, path)
+    end
+    --Load farm, will skip if it is already loaded.
     load_farm()
 end
 
@@ -287,6 +295,7 @@ function ezfarms.handle_post_selection(player_id, post_id)
                 ezmemory.remove_player_item(player_id,post_id,item_count)
                 Net.remove_post(player_id, post_id)
                 Net.message_player(player_id,"Sold all "..post_id.." for "..worth.."$!")
+                Net.play_sound_for_player(player_id,sfx.item_get)
             end
         end
     end
@@ -392,7 +401,7 @@ local function get_location_string(x,y,z)
     return tostring(x)..','..tostring(y)..','..tostring(z)
 end
 
-local function till_tile(tile,x,y,z)
+local function till_tile(tile,x,y,z,player_id)
     if tile.gid == Tiles.Grass then
         local tile_loc_string = get_location_string(x,y,z)
         local current_time = os.time()
@@ -409,6 +418,7 @@ local function till_tile(tile,x,y,z)
                 death=0
             }
         }
+        Net.play_sound_for_player(player_id,sfx.hoe)
         update_tile(current_time,tile_loc_string)
         ezmemory.save_area_memory(farm_area)
     end
@@ -424,10 +434,16 @@ function ezfarms.handle_object_interaction(player_id, object_id)
         if player_tools[player_id] == "CyberWtrCan" then
             local safe_secret = helpers.get_safe_player_secret(player_id)
             local player_memory = ezmemory.get_player_memory(safe_secret)
-            player_memory.farming = {water=50}        
-            Net.message_player(player_id,"Filled CyberWtrCan")
+            if player_memory.farming and player_memory.farming.water == 50 then
+                Net.message_player(player_id,"CyberWtrCan is already full...")
+            else
+                player_memory.farming = {water=50}
+                Net.play_sound_for_player(player_id,sfx.water_tile)
+                Net.message_player(player_id,"Filled CyberWtrCan")
+            end
         else
-            Net.message_player(player_id,"\x01I could fill something here...\x01")
+            local mugshot = Net.get_player_mugshot(player_id)
+            Net.message_player(player_id,"\x01I could fill something here...\x01",mugshot.texture_path,mugshot.animation_path)
         end
     end
 end
@@ -443,6 +459,7 @@ local function water_tile(tile,tile_loc_string,player_id,safe_secret)
             player_memory.farming.water = player_memory.farming.water - 1
             area_memory.tile_states[tile_loc_string].time.watered = current_time
             area_memory.tile_states[tile_loc_string].gid = Tiles.DirtWet
+            Net.play_sound_for_player(player_id,sfx.water_tile)
             update_tile(current_time,tile_loc_string)
             ezmemory.save_area_memory(farm_area)
         else
@@ -481,6 +498,7 @@ end
 local function scythe_plant(tile_loc_string,current_time,prexisting_plant,player_id)
     if prexisting_plant then
         if prexisting_plant.growth_stage == 5 then
+            Net.play_sound_for_player(player_id,sfx.scythe)
             deleet_plant(tile_loc_string,current_time)
         else
             Net.message_player(player_id,"Oak's words echoed... There's a time and place for everything, but not now.")
@@ -493,6 +511,7 @@ local function harvest(tile_loc_string,player_id,safe_secret,current_time)
     local plant_info = PlantData[plant_name]
     local harvest_count = math.random(plant_info.harvest[1],plant_info.harvest[2])
     Net.message_player(player_id,"Harvested "..harvest_count.." "..plant_name.."!")
+    Net.play_sound_for_player(player_id,sfx.item_get)
     ezmemory.give_player_item(player_id, plant_name, "mmm, yummy "..plant_name,harvest_count)
     deleet_plant(tile_loc_string,current_time)
 end
@@ -559,7 +578,7 @@ function ezfarms.handle_tile_interaction(player_id, x, y, z, button)
         if prexisting_plant then
             try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
         else
-            till_tile(tile,x,y,z)
+            till_tile(tile,x,y,z,player_id)
         end
     elseif player_tool == "CyberWtrCan" then
         water_tile(tile,tile_loc_string,player_id,safe_secret)

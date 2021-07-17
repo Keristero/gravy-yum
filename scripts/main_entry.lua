@@ -50,6 +50,7 @@ function handle_player_join(player_id)
         Net.provide_asset_for_player(player_id, path)
     end
 end
+
 function handle_actor_interaction(player_id, actor_id)
     for i,plugin in ipairs(plugins)do
         if plugin.handle_actor_interaction then
