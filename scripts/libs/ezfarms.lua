@@ -9,7 +9,6 @@ local helpers = require('scripts/libs/helpers')
 local players_using_bbs = {}
 local player_tools = {}
 local farm_area = 'farm'
-local rain_music_path = '/server/assets/sfx/ezfarms/wet_hands_raining.ogg'
 local area_memory = nil
 local delay_till_update = 5 --wait 1 second between updating all farm tiles
 local period_multiplier = 0.01 --1.0 is real time, 0.5 is double speed
@@ -86,7 +85,7 @@ end
 
 local farm_loaded = false
 
-ezweather.start_rain_in_area(farm_area,rain_music_path)
+ezweather.start_rain_in_area(farm_area)
 
 local function calculate_plant_sell_price(plant_name)
     local plant = PlantData[plant_name]
@@ -214,7 +213,6 @@ local function update_tile(current_time,loc_string,area_weather)
     --Change tile between Grass/Dirt/DirtWet when required
     if tile_memory.gid == Tiles.DirtWet then
         if elpased_since_water > Period.PlantedDirtWetToDirt then
-            print('[ezfarms] dirt dried out')
             tile_memory.time.tilled = current_time
             new_gid = Tiles.Dirt
             something_changed = true

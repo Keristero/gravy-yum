@@ -5,36 +5,49 @@ local memory = {}
 local Fade = {
     NONE = 0,
     OUT = 1,
-    IN = 3
+    IN = 2,
+    TO = 3,
 }
 
-function ezweather.start_rain_in_area(area_id,weather_song_path)
-    local original_song_path = Net.get_song(area_id)
-    memory[area_id] = {music_path=weather_song_path,camera_tint={r=10, g=10, b=40, a=75},type="rain"}
-    Net.set_song(area_id, weather_song_path)
-    --TODO, Loop over players in area and fade weather in
+function ezweather.start_rain_in_area(area_id)
+    print('[ezweather] starting rain in '..area_id)
+
+    memory[area_id] = {camera_tint={r=10, g=10, b=40, a=150},type="rain"}
+
+    local area_custom_properties = Net.get_area_custom_properties(area_id)
+    if area_custom_properties["Rain Song"] then
+        Net.set_song(area_id, area_custom_properties["Rain Song"])
+    end
+
+    local players_in_area = Net.list_players(area_id)
+    for i, player_id in ipairs(players_in_area) do
+        Net.fade_player_camera(player_id, 1, memory[area_id].camera_tint)
+    end
 end
 
 function ezweather.get_area_weather(area_id)
     if not memory[area_id] then
         local original_song_path = Net.get_song(area_id)
-        memory[area_id] = {music_path=original_song_path,camera_tint={r=0, g=0, b=0, a=0},type="clear"}
-    else
-        return memory[area_id]
+        memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
     end
+    return memory[area_id]
 end
 
-function ezweather.stop_rain_in_area(area_id,weather_song_path)
-    local original_song_path = memory[area_id].music_path
-    memory[area_id] = {music_path=original_song_path,camera_tint={r=0, g=0, b=0, a=0},type="clear"}
-    Net.set_song(area_id, original_song_path)
+function ezweather.clear_weather_in_area(area_id,weather_song_path)
+    print('[ezweather] stopping rain in'..area_id)
+    memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
+
+    local area_custom_properties = Net.get_area_custom_properties(area_id)
+    if area_custom_properties["Song"] then
+        Net.set_song(area_id, area_custom_properties["Song"])
+    end
 end
 
 function ezweather.handle_player_transfer(player_id)
+    print('[ezweather] player transfered '..player_id)
     local area_id = Net.get_player_area(player_id)
-    if memory[area_id] then
-        Net.fade_player_camera(player_id, Fade.IN, 1, memory[area_id].camera_tint)
-    end
+    local area_weather = ezweather.get_area_weather(area_id)
+    Net.fade_player_camera(player_id, 1, area_weather.camera_tint)
 end
 
 return ezweather

@@ -1,10 +1,5 @@
 local delay = require('scripts/libs/delay')
-
-local Fade = {
-    NONE = 0,
-    OUT = 1,
-    IN = 3
-}
+local ezweather = require('scripts/libs/ezweather')
 
 local Direction = {
     UP_LEFT = "Up Left",
@@ -53,6 +48,7 @@ function create_arrow_animation(is_arriving,direction_str)
         animate=function(player_id)
             local player_pos = Net.get_player_position(player_id)
             local area_id = Net.get_player_area(player_id)
+            local weather = ezweather.get_area_weather(area_id)
             local player_keyframes = {}
             if is_arriving then
                 player_keyframes[#player_keyframes+1] = {
@@ -68,11 +64,11 @@ function create_arrow_animation(is_arriving,direction_str)
                     }},
                     duration=0
                 }
-                Net.fade_player_camera(player_id, Fade.IN, 0.8, {r=0, g=0, b=0, a=0})
+                Net.fade_player_camera(player_id, 0.5, weather.camera_tint)
                 Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, animation_length)
                 Net.unlock_player_camera(player_id)
             else
-                Net.fade_player_camera(player_id, Fade.IN, 0.8, {r=0, g=0, b=0, a=255})
+                Net.fade_player_camera(player_id, 0.5, {r=0, g=0, b=0, a=255})
                 Net.slide_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 0.2)
                 Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 0.8)
                 Net.unlock_player_camera(player_id)

@@ -1,12 +1,14 @@
 --for timed events
 local delay = require('scripts/libs/delay')
-local create_arrow_animation = require('scripts/ezwarps/arrow_animation_factory')
+local create_arrow_animation = require('scripts/libs/ezwarps/arrow_animation_factory')
+
+local ezwarps = {}
 
 --arrival / leaving animations
 local special_animations = {
-    fall_in = require('scripts/ezwarps/fall_in_animation'),
-    lev_beast_in = require('scripts/ezwarps/lev_beast_in_animation'),
-    lev_beast_out = require('scripts/ezwarps/lev_beast_out_animation'),
+    fall_in = require('scripts/libs/ezwarps/fall_in_animation'),
+    lev_beast_in = require('scripts/libs/ezwarps/lev_beast_in_animation'),
+    lev_beast_out = require('scripts/libs/ezwarps/lev_beast_out_animation'),
     arrow_up_left_out = create_arrow_animation(false,"Up Left"),
     arrow_up_right_out = create_arrow_animation(false,"Up Right"),
     arrow_down_left_out = create_arrow_animation(false,"Down Left"),
@@ -15,7 +17,7 @@ local special_animations = {
     arrow_up_right_in = create_arrow_animation(true,"Up Right"),
     arrow_down_left_in = create_arrow_animation(true,"Down Left"),
     arrow_down_right_in = create_arrow_animation(true,"Down Right"),
-    fall_off_2 = require('scripts/ezwarps/fall_off_2'),
+    fall_off_2 = require('scripts/libs/ezwarps/fall_off_2'),
 }
 
 local landings = {}
@@ -34,7 +36,7 @@ function table_has_value (table, val)
     return false
 end
 
-function tick(delta_time)
+function ezwarps.on_tick(delta_time)
     delay.on_tick(delta_time)
     check_radius_warps()
 end
@@ -175,7 +177,7 @@ function prepare_player_arrival(player_id,x,y,z,special_animation_name)
     return {x=entry_x,y=entry_y,z=entry_z}
 end
 
-function handle_player_request(player_id, data)
+function ezwarps.handle_player_request(player_id, data)
     print('[ezwarps] player '..player_id..' requested connection with data: '..data)
     if data == nil or data == "" then
         return
@@ -199,7 +201,7 @@ function duplicate_player_interaction(player_id,object_id)
     end
 end
 
-function handle_object_interaction(player_id, object_id)
+function ezwarps.handle_object_interaction(player_id, object_id)
     if duplicate_player_interaction(player_id, object_id) then
         return
     end
@@ -272,21 +274,23 @@ function use_warp(player_id,warp_object,warp_meta)
     end,warp_delay)
 end
 
-function handle_player_join(player_id)
+function ezwarps.handle_player_join(player_id)
     if player_animations[player_id] then
         doAnimationForWarp(player_id,player_animations[player_id])
         player_animations[player_id] = nil
     end
 end
 
-function handle_player_disconnect(player_id)
+function ezwarps.handle_player_disconnect(player_id)
     delay.clear_player_events(player_id)
 end
 
-function handle_player_transfer(player_id)
+function ezwarps.handle_player_transfer(player_id)
     if player_animations[player_id] then
         doAnimationForWarp(player_id,player_animations[player_id])
     end
 end
 
 print('[ezwarps] Loaded')
+
+return ezwarps

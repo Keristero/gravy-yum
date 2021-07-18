@@ -3,8 +3,9 @@ local ezmemory = require('scripts/libs/ezmemory')
 local ezmystery = require('scripts/libs/ezmystery')
 local ezfarms = require('scripts/libs/ezfarms')
 local ezweather = require('scripts/libs/ezweather')
+local ezwarps = require('scripts/libs/ezwarps/main')
 
-local plugins = {eznpcs,ezmemory,ezmystery,ezfarms,ezweather}
+local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',
@@ -185,3 +186,5 @@ local gift_zenny = {
     end
 }
 eznpcs.add_event(gift_zenny)
+
+ezweather.start_rain_in_area("default")
