@@ -21,7 +21,7 @@ function ezweather.start_rain_in_area(area_id)
 
     local players_in_area = Net.list_players(area_id)
     for i, player_id in ipairs(players_in_area) do
-        Net.fade_player_camera(player_id, 1, memory[area_id].camera_tint)
+        Net.fade_player_camera(player_id, memory[area_id].camera_tint, 1)
     end
 end
 
@@ -47,7 +47,7 @@ function ezweather.handle_player_transfer(player_id)
     print('[ezweather] player transfered '..player_id)
     local area_id = Net.get_player_area(player_id)
     local area_weather = ezweather.get_area_weather(area_id)
-    Net.fade_player_camera(player_id, 1, area_weather.camera_tint)
+    Net.fade_player_camera(player_id, area_weather.camera_tint, 1)
 end
 
 return ezweather

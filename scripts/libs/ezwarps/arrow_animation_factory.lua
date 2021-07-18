@@ -64,13 +64,12 @@ function create_arrow_animation(is_arriving,direction_str)
                     }},
                     duration=0
                 }
-                Net.fade_player_camera(player_id, 0.5, weather.camera_tint)
+                Net.fade_player_camera(player_id, weather.camera_tint, 0.5)
                 Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, animation_length)
                 Net.unlock_player_camera(player_id)
             else
-                Net.fade_player_camera(player_id, 0.5, {r=0, g=0, b=0, a=255})
-                Net.slide_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 0.2)
-                Net.move_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, 0.8)
+                Net.fade_player_camera(player_id, {r=0, g=0, b=0, a=255}, 0.5)
+                Net.slide_player_camera(player_id, player_pos.x+x_distance, player_pos.y+y_distance, player_pos.z, animation_length)
                 Net.unlock_player_camera(player_id)
             end
             player_keyframes[#player_keyframes+1] = {
