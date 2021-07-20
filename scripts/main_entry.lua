@@ -112,9 +112,7 @@ eznpcs.add_event(event1)
 local event2 = {
     name="Buy Gravy",
     action=function (npc,player_id,dialogue)
-        local player_cash = Net.get_player_money(player_id)
-        if player_cash >= 300 then
-            ezmemory.set_player_money(player_id,player_cash-300)
+        if ezmemory.spend_player_money(player_id,300) then
             Net.play_sound_for_player(player_id,sfx.item_get)
             Net.message_player(player_id,"Got net gravy!")
             local next_dialouge_options = {
@@ -172,8 +170,7 @@ local gift_zenny = {
     name="Gift Zenny",
     action=function (npc,player_id,dialogue)
         local zenny_amount = tonumber(dialogue.custom_properties["Amount"])
-        local player_cash = Net.get_player_money(player_id)
-        ezmemory.set_player_money(player_id,player_cash+zenny_amount)
+        ezmemory.spend_player_money(player_id,-zenny_amount)
         Net.play_sound_for_player(player_id,sfx.item_get)
         Net.message_player(player_id,"Got "..zenny_amount.. "$!")
         if dialogue.custom_properties["Next 1"] then

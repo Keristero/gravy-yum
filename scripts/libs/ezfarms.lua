@@ -297,12 +297,11 @@ function ezfarms.handle_post_selection(player_id, post_id)
             Net.message_player(player_id,"You are now holding "..post_id)
             Net.close_bbs(player_id)
         elseif players_using_bbs[player_id] == "Sell Veggies" then
-            local player_money = Net.get_player_money(player_id)
             local item_count = ezmemory.count_player_item(player_id, post_id)
             local plant = PlantData[post_id]
             local worth = plant.sell_price*item_count
             if worth > 0 then
-                ezmemory.set_player_money(player_id,player_money+worth)
+                ezmemory.spend_player_money(player_id,-worth)
                 ezmemory.remove_player_item(player_id,post_id,item_count)
                 Net.remove_post(player_id, post_id)
                 Net.message_player(player_id,"Sold all "..post_id.." for "..worth.."$!")
@@ -317,10 +316,8 @@ function ezfarms.handle_board_close(player_id)
 end
 
 function try_buy_seed(player_id,plant_name)
-    local player_cash = Net.get_player_money(player_id)
     local price = PlantData[plant_name].price
-    if player_cash >= price then
-        ezmemory.set_player_money(player_id,player_cash-price)
+    if ezmemory.spend_player_money(player_id,price) then
         Net.play_sound_for_player(player_id,sfx.item_get)
         ezmemory.give_player_item(player_id, plant_name.." seed", "seed for planting "..plant_name)
     else

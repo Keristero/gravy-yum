@@ -143,6 +143,19 @@ function ezmemory.remove_player_item(player_id, name, remove_quant)
     return 0
 end
 
+function ezmemory.spend_player_money(player_id, amount)
+    local safe_secret = helpers.get_safe_player_secret(player_id)
+    local player_memory = ezmemory.get_player_memory(safe_secret)
+    if player_memory.money >= amount then
+        local new_balance = player_memory.money-amount
+        Net.set_player_money(player_id, new_balance)
+        player_memory.money = new_balance
+        ezmemory.save_player_memory(safe_secret)
+        return true
+    end
+    return false
+end
+
 function ezmemory.set_player_money(player_id, money)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)

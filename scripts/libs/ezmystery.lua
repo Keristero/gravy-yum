@@ -126,8 +126,7 @@ function collect_datum(player_id,object,datum_id_override)
             return
         end
         --Give the player money
-        local player_money = Net.get_player_money(player_id)
-        ezmemory.set_player_money(player_id,player_money+amount)
+        ezmemory.spend_player_money(player_id,-amount)
         Net.message_player(player_id,"Got "..amount.."$!")
         Net.play_sound_for_player(player_id,sfx.item_get)
     end
