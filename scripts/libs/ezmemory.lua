@@ -6,6 +6,10 @@ local ezmemory = {}
 local player_memory = {}
 local area_memory = {}
 local player_list = {}
+local key_items = {}
+local key_item_table = {}
+
+local highest_item_id = 1
 
 local function load_file_and_then(filename,callback)
     local read_file_promise = Async.read_file(filename)
@@ -35,6 +39,37 @@ for i, area_id in ipairs(net_areas) do
         area_memory[area_id] = json.decode(value)
         print('[ezmemory] loaded area memory for '..area_id)
     end)
+end
+
+--Load items and their descriptions
+load_file_and_then('./memory/key_items.json',function(value)
+    key_items = json.decode(value)
+    for item_id, item_data in pairs(key_items) do
+        Net.create_item(item_id,item_data)
+        key_item_table[item_data.name] = item_id
+        if item_id > highest_item_id then
+            highest_item_id = item_id
+        end
+        print('[ezmemory] loaded key item '..item_data.name)
+    end
+end)
+
+function ezmemory.get_or_create_item_id(item_name,item_description)
+    if not item_name or not item_description then
+        print('[ezmemory] item not created, missing name or description')
+        return
+    end
+    if key_item_table[item_name] then
+        if key_item_table[item_name][item_description] then
+            --If there is already an item with this name and description
+            return key_item_table[item_name][item_description]
+        end
+        key_item_table[item_name] = {}
+    end
+    local new_item_id = highest_item_id + 1
+    key_items[new_item_id] = {name=item_name,description=item_description}
+    key_item_table[item_name] = new_item_id
+    Net.create_item(item_id,item_data)
 end
 
 function ezmemory.save_area_memory(area_id)
