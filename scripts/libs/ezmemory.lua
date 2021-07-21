@@ -6,14 +6,20 @@ local ezmemory = {}
 local player_memory = {}
 local area_memory = {}
 local player_list = {}
-local key_items = {}
-local key_item_table = {}
+local items = {}
+local item_name_table = {}
+
+local players_path = './memory/players.json'
+local items_path = './memory/items.json'
+local area_path_prefix = './memory/area/'
+local player_path_prefix = './memory/player/'
 
 local highest_item_id = 1
 
 local function load_file_and_then(filename,callback)
     local read_file_promise = Async.read_file(filename)
     read_file_promise.and_then(function(value)
+        print('[ezmemory] loaded file '..filename)
         if value then
             callback(value)
         end
@@ -21,11 +27,11 @@ local function load_file_and_then(filename,callback)
 end
 
 --Load list of players that have existed
-load_file_and_then('./memory/player_list.json',function(value)
+load_file_and_then(players_path,function(value)
     player_list = json.decode(value)
     --Load memory files for every player
     for safe_secret, name in pairs(player_list) do
-        load_file_and_then('./memory/player/'..safe_secret..'.json',function (value)
+        load_file_and_then(player_path_prefix..safe_secret..'.json',function (value)
             player_memory[safe_secret] = json.decode(value)
             print('[ezmemory] loaded memory for '..name)
         end)
@@ -35,41 +41,57 @@ end)
 --Load area memory for every area
 local net_areas = Net.list_areas()
 for i, area_id in ipairs(net_areas) do
-    load_file_and_then('./memory/area/'..area_id..'.json',function(value)
+    load_file_and_then(area_path_prefix..area_id..'.json',function(value)
         area_memory[area_id] = json.decode(value)
         print('[ezmemory] loaded area memory for '..area_id)
     end)
 end
 
 --Load items and their descriptions
-load_file_and_then('./memory/key_items.json',function(value)
-    key_items = json.decode(value)
-    for item_id, item_data in pairs(key_items) do
-        Net.create_item(item_id,item_data)
-        key_item_table[item_data.name] = item_id
-        if item_id > highest_item_id then
-            highest_item_id = item_id
+load_file_and_then(items_path,function(value)
+    items = json.decode(value)
+    for item_id, item_data in pairs(items) do
+        if item_data.key_item then
+            Net.create_item(item_id,item_data)
         end
-        print('[ezmemory] loaded key item '..item_data.name)
+        item_name_table[item_data.name] = item_id
+        local number_item_id = tonumber(item_id)
+        if number_item_id > highest_item_id then
+            highest_item_id = number_item_id
+        end
+        print('[ezmemory] loaded item '..item_id..' = '..item_data.name.." is key = "..item_data.key_item)
     end
 end)
 
-function ezmemory.get_or_create_item_id(item_name,item_description)
+function ezmemory.get_or_create_item_id(item_name,item_description,is_key)
+    if item_name_table[item_name] then
+        --If there is already an item with this name
+        print('got id '..item_name_table[item_name]..' for '..item_name)
+        return item_name_table[item_name]
+    end
+    print('[ezmemory] item '..item_name..' does not exist')
     if not item_name or not item_description then
         print('[ezmemory] item not created, missing name or description')
         return
     end
-    if key_item_table[item_name] then
-        if key_item_table[item_name][item_description] then
-            --If there is already an item with this name and description
-            return key_item_table[item_name][item_description]
-        end
-        key_item_table[item_name] = {}
+    local new_item_id = tostring(highest_item_id + 1)
+    local new_item = {name=item_name,description=item_description,key_item=is_key}
+    items[new_item_id] = new_item
+    item_name_table[item_name] = new_item_id
+    ezmemory.save_items()
+    if is_key then
+        print('its key!!!!')
+        Net.create_item(new_item_id,new_item)
+        print(Net.get_item_name(new_item_id))
+        print(Net.get_item_description(new_item_id))
     end
-    local new_item_id = highest_item_id + 1
-    key_items[new_item_id] = {name=item_name,description=item_description}
-    key_item_table[item_name] = new_item_id
-    Net.create_item(item_id,item_data)
+    highest_item_id = tonumber(new_item_id)
+    print('[ezmemory] added new item: '..item_name)
+    return new_item_id
+end
+
+function ezmemory.save_items()
+    Async.write_file(items_path, json.encode(items))
 end
 
 function ezmemory.save_area_memory(area_id)
@@ -136,24 +158,27 @@ function ezmemory.get_player_name_from_safesecret(safe_secret)
     return "Unknown"
 end
 
-function ezmemory.give_player_item(player_id, name, description, amount)
+function ezmemory.give_player_item(player_id, name, description, amount, is_key)
     if not amount then
         amount = 1
     end
     --TODO index items with player_memory.items[item_id]
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    for i=1,amount do
-        Net.give_player_item(player_id, name, description)
+    local item_id = ezmemory.get_or_create_item_id(name,description,is_key)
+    if is_key then
+        for i=1,amount do
+            Net.give_player_item(player_id, item_id)
+        end
     end
-    if player_memory.items[name] then
+    if player_memory.items[item_id] then
         --If the player already has the item, increase the quantity
-        player_memory.items[name].quantity = player_memory.items[name].quantity + amount
+        player_memory.items[item_id] = player_memory.items[item_id] + amount
     else
         --Otherwise create the item
-        player_memory.items[name] = {name=name,description=description,quantity=amount}
+        player_memory.items[item_id] = amount
     end
-    print('[ezmemory] gave '..player_id..' '..amount..' '..name..' now they have '..player_memory.items[name].quantity)
+    print('[ezmemory] gave '..player_id..' '..amount..' '..name..' now they have '..player_memory.items[item_id])
     ezmemory.save_player_memory(safe_secret)
 end
 
@@ -161,19 +186,20 @@ function ezmemory.remove_player_item(player_id, name, remove_quant)
     print('[ezmemory] removed a '..name..' from '..player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    if player_memory.items[name] then
+    local item_id = ezmemory.get_or_create_item_id(name)
+    if player_memory.items[item_id] then
         --If the player has the item
         for i=1,remove_quant do
-            Net.remove_player_item(player_id, name)
+            Net.remove_player_item(player_id, item_id)
         end
-        player_memory.items[name].quantity = player_memory.items[name].quantity - remove_quant
-        if player_memory.items[name].quantity < 1 then
+        player_memory.items[item_id] = player_memory.items[item_id] - remove_quant
+        if player_memory.items[item_id] < 1 then
             --if the quantity drops below 1, remove the item completely
-            player_memory.items[name] = nil
+            player_memory.items[item_id] = nil
             return 0
         end
         ezmemory.save_player_memory(safe_secret)
-        return player_memory.items[name].quantity
+        return player_memory.items[item_id]
     end
     return 0
 end
@@ -202,10 +228,11 @@ end
 function ezmemory.count_player_item(player_id, item_name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    if player_memory.items[item_name] then
-        return player_memory.items[item_name].quantity
+    local item_id = ezmemory.get_or_create_item_id(item_name)
+    if player_memory.items[item_id] then
+        return player_memory.items[item_id]
     end
-    return false
+    return 0
 end
 
 function ezmemory.handle_player_join(player_id)
@@ -215,10 +242,12 @@ function ezmemory.handle_player_join(player_id)
     --assumes that player memory has already been read from disk
     local player_memory = ezmemory.get_player_memory(safe_secret)
     update_player_list(safe_secret,player_name)
-    --Send player items
-    for item_name, item in pairs(player_memory.items) do
-        for i=1,item.quantity do
-            Net.give_player_item(player_id, item.name, item.description)
+    --Send player key items
+    for item_id, quantity in pairs(player_memory.items) do
+        if items[item_id].key_item then
+            for i=1,quantity do
+                Net.give_player_item(player_id, item_id)
+            end
         end
     end
     --Send player money
