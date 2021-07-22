@@ -26,6 +26,23 @@ local function load_file_and_then(filename,callback)
     end)
 end
 
+-- LOAD MEMORY, the order of these files loading matters
+--Load items and their descriptions
+load_file_and_then(items_path,function(value)
+    items = json.decode(value)
+    for item_id, item_data in pairs(items) do
+        if item_data.key_item then
+            Net.create_item(item_id,item_data)
+        end
+        item_name_table[item_data.name] = item_id
+        local number_item_id = tonumber(item_id)
+        if number_item_id > highest_item_id then
+            highest_item_id = number_item_id
+        end
+        print('[ezmemory] loaded item '..item_id..' = '..item_data.name)
+    end
+end)
+
 --Load list of players that have existed
 load_file_and_then(players_path,function(value)
     player_list = json.decode(value)
@@ -47,26 +64,16 @@ for i, area_id in ipairs(net_areas) do
     end)
 end
 
---Load items and their descriptions
-load_file_and_then(items_path,function(value)
-    items = json.decode(value)
-    for item_id, item_data in pairs(items) do
-        if item_data.key_item then
-            Net.create_item(item_id,item_data)
-        end
-        item_name_table[item_data.name] = item_id
-        local number_item_id = tonumber(item_id)
-        if number_item_id > highest_item_id then
-            highest_item_id = number_item_id
-        end
-        print('[ezmemory] loaded item '..item_id..' = '..item_data.name.." is key = "..item_data.key_item)
+function ezmemory.get_item_info(item_id)
+    if items[item_id] then
+        return items[item_id]
     end
-end)
+    return nil
+end
 
 function ezmemory.get_or_create_item_id(item_name,item_description,is_key)
     if item_name_table[item_name] then
         --If there is already an item with this name
-        print('got id '..item_name_table[item_name]..' for '..item_name)
         return item_name_table[item_name]
     end
     print('[ezmemory] item '..item_name..' does not exist')
@@ -80,10 +87,7 @@ function ezmemory.get_or_create_item_id(item_name,item_description,is_key)
     item_name_table[item_name] = new_item_id
     ezmemory.save_items()
     if is_key then
-        print('its key!!!!')
         Net.create_item(new_item_id,new_item)
-        print(Net.get_item_name(new_item_id))
-        print(Net.get_item_description(new_item_id))
     end
     highest_item_id = tonumber(new_item_id)
     print('[ezmemory] added new item: '..item_name)
@@ -148,7 +152,7 @@ end
 
 function update_player_list(safe_secret,name)
     player_list[safe_secret] = name
-    Async.write_file('./memory/player_list.json', json.encode(player_list))
+    Async.write_file(players_path, json.encode(player_list))
 end
 
 function ezmemory.get_player_name_from_safesecret(safe_secret)
@@ -189,8 +193,10 @@ function ezmemory.remove_player_item(player_id, name, remove_quant)
     local item_id = ezmemory.get_or_create_item_id(name)
     if player_memory.items[item_id] then
         --If the player has the item
-        for i=1,remove_quant do
-            Net.remove_player_item(player_id, item_id)
+        if items[item_id].key_item then
+            for i=1,remove_quant do
+                Net.remove_player_item(player_id, item_id)
+            end
         end
         player_memory.items[item_id] = player_memory.items[item_id] - remove_quant
         if player_memory.items[item_id] < 1 then

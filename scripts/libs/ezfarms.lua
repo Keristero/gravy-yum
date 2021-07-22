@@ -24,7 +24,7 @@ local PlantData = {
     Chili={price=600,growth_time_multi=0.5,local_gid=28,harvest={1,1}},
     Radish={price=550,growth_time_multi=0.6,local_gid=35,harvest={1,1}},
     ["Star Fruit"]={price=1800,growth_time_multi=1.3,local_gid=42,harvest={1,2}},
-    Eggplant={price=320,growth_time_multi=0.5,local_gid=49,harvest={1,1}},
+    Eggplant={price=320,growth_time_multi=0.5,local_gid=49,harvest={2,3}},
     Pumpkin={price=1200,growth_time_multi=1.3,local_gid=56,harvest={1,1}},
     Yam={price=900,growth_time_multi=1,local_gid=63,harvest={2,4}},
     Beetroot={price=400,growth_time_multi=1.8,local_gid=70,harvest={1,1}},
@@ -351,11 +351,12 @@ local function list_plants(player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     local plant_counts = {}
-    for item_name, item in pairs(player_memory.items) do
+    for item_id, quantity in pairs(player_memory.items) do
+        local item_info = ezmemory.get_item_info(item_id)
         for plant_name, plant in pairs(PlantData) do
-            if plant_name == item_name and plant.price then
+            if plant_name == item_info.name and plant.price then
                 --TODO, give plants differnet growth times that affect sell price and regrowths
-                plant_counts[plant_name] = item.quantity
+                plant_counts[plant_name] = quantity
             end
         end
     end
@@ -383,10 +384,11 @@ function ezfarms.list_player_tools(player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
     local tool_counts = {}
-    for item_name, item in pairs(player_memory.items) do
+    for item_id, quantity in pairs(player_memory.items) do
+        local tool_info = ezmemory.get_item_info(item_id)
         for tool_name, tool_key in pairs(ToolNames) do
-            if item_name == tool_name then
-                tool_counts[item_name] = item.quantity
+            if tool_info.name == tool_name then
+                tool_counts[tool_info.name] = quantity
             end
         end
     end
