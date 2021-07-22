@@ -254,14 +254,6 @@ function OnActorInteraction(player_id,actor_id,relay_object)
     end
 end
 
-function OnTick(delta_time)
-    for bot_id, npc in pairs(npcs) do
-        if npc.on_tick then
-            npc.on_tick.action(npc,delta_time)
-        end
-    end
-end
-
 function position_overlaps_something(position,area_id)
     --Returns true if a position (with a size) overlaps something important
     local player_ids = Net.list_players(area_id)
@@ -418,7 +410,11 @@ function eznpcs.handle_actor_interaction(player_id,actor_id)
     return ( OnActorInteraction(player_id,actor_id) )
 end
 function eznpcs.on_tick(delta_time)
-    return ( OnTick(delta_time) )
+    for bot_id, npc in pairs(npcs) do
+        if npc.on_tick then
+            npc.on_tick.action(npc,delta_time)
+        end
+    end
 end
 function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name)
     return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name) )
