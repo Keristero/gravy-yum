@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="simple-graveyard-stairs-63-55" tilewidth="63" tileheight="55" tilecount="10" columns="2">
+<tileset version="1.5" tiledversion="2021.03.23" name="simple-graveyard-stairs-63-55" tilewidth="63" tileheight="55" tilecount="10" columns="2">
  <tileoffset x="0" y="7"/>
  <image source="simple-graveyard-stairs-63-55.png" width="126" height="275"/>
  <tile id="0" type="Stairs">
