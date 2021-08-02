@@ -8,10 +8,14 @@ local fall_off_2 = {
         z=0
     },
     duration=1,
-    animate=function(player_id)
+    animate=function(player_id,warp_object)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
-        local landing_z = player_pos.z-2
+        local fall_layers = 2
+        if warp_object and warp_object.custom_properties["Fall Layers"] ~= nil then
+            fall_layers = warp_object.custom_properties["Fall Layers"]
+        end
+        local landing_z = player_pos.z-fall_layers
         local fall_duration = 0.3
         local keyframes = {{
             properties={{

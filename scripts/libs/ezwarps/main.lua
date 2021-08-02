@@ -106,7 +106,7 @@ function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, arriva
 end
 
 
-function doAnimationForWarp(player_id,animation_name,is_leave_animation)
+function doAnimationForWarp(player_id,animation_name,is_leave_animation,warp_object)
     print('[ezwarps] doing special animation '..animation_name)
     local bonus_arrival_delay = 2
     players_in_animations[player_id] = true
@@ -114,7 +114,7 @@ function doAnimationForWarp(player_id,animation_name,is_leave_animation)
     local animation_properties = special_animations[animation_name]
     local warp_delay = 0
     if animation_properties then
-        animation_properties.animate(player_id)
+        animation_properties.animate(player_id,warp_object)
         warp_delay = warp_delay + animation_properties.duration
     end
 end
@@ -250,7 +250,7 @@ function use_warp(player_id,warp_object,warp_meta)
     local data = warp_properties.Data
     local warp_delay = 0
     if warp_properties["Leave Animation"] and warp_properties["Leave Animation"] ~= "" then
-        doAnimationForWarp(player_id,warp_properties["Leave Animation"],true)
+        doAnimationForWarp(player_id,warp_properties["Leave Animation"],true,warp_object)
         warp_delay = special_animations[warp_properties["Leave Animation"]].duration
     end
     delay.for_player(player_id,function ()
