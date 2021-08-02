@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="cursed-stairs-2" tilewidth="92" tileheight="40" tilecount="15" columns="5" objectalignment="top">
- <tileoffset x="-16" y="8"/>
+<tileset version="1.5" tiledversion="2021.03.23" name="cursed-stairs-2" tilewidth="92" tileheight="40" tilecount="15" columns="5" objectalignment="top">
+ <tileoffset x="-14" y="8"/>
  <image source="cursed-stairs-2.png" width="460" height="120"/>
  <tile id="0" type="Stairs">
   <properties>
