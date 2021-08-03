@@ -108,8 +108,10 @@ end
 
 function doAnimationForWarp(player_id,animation_name,is_leave_animation,warp_object)
     print('[ezwarps] doing special animation '..animation_name)
-    local bonus_arrival_delay = 2
     players_in_animations[player_id] = true
+    if warp_object and warp_object.custom_properties["Dont Teleport"] == "true" then
+        players_in_animations[player_id] = nil
+    end
     Net.lock_player_input(player_id)
     local animation_properties = special_animations[animation_name]
     local warp_delay = 0

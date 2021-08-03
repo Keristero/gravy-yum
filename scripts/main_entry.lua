@@ -183,5 +183,3 @@ local gift_zenny = {
     end
 }
 eznpcs.add_event(gift_zenny)
-
-ezweather.start_rain_in_area("default")

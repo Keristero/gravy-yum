@@ -35,7 +35,7 @@ local PlantData = {
 }
 
 --Key = tool name, value = plant/tool name
-local ToolNames = {CyberHoe="CyberHoe",CyberWtrCan="CyberWtrCan",CyberScythe="CyberScythe"}
+local ToolNames = {CyberHoe="CyberHoe",CyberWtrCan="CyberWtrCan",CyberScythe="CyberScythe",GigFreez="GigFreez"}
 for plant_name, plant in pairs(PlantData) do
     ToolNames[plant_name.." seed"] = plant_name
 end
@@ -76,6 +76,7 @@ Period.GrowthStageTime=Period.Hour*4
 Period.PlantedDirtWetToDirt=Period.Hour*4
 Period.UnwateredPlantDeath=Period.Hour*36
 Period.JustPlantedGracePeriod=Period.Hour*4
+Period.RainDuration=Period.Hour*1
 Period.WitherTime=Period.Hour*48--Time for a plant to wither after it is fully grown
 
 --for testing, make things take a fraction of the time by reducing all periods!
@@ -84,8 +85,6 @@ for period_name, period in pairs(Period) do
 end
 
 local farm_loaded = false
-
-ezweather.start_rain_in_area(farm_area)
 
 local function calculate_plant_sell_price(plant_name)
     local plant = PlantData[plant_name]
@@ -255,6 +254,13 @@ function update_all_tiles()
     local current_time = os.time()
     local something_changed = false
     local area_weather = ezweather.get_area_weather(farm_area)
+    if area_weather.type == "rain" then
+        if area_memory.rain_started then
+            if current_time-area_memory.rain_started > Period.RainDuration then
+                ezweather.clear_weather_in_area(farm_area)
+            end
+        end
+    end
     for loc_string, tile_memory in pairs(area_memory.tile_states) do
         if update_tile(current_time,loc_string,area_weather) then
             something_changed = true
@@ -584,7 +590,15 @@ function ezfarms.handle_tile_interaction(player_id, x, y, z, button)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local current_time = os.time()
 
-    if player_tool == "CyberHoe" then
+    if player_tool == "GigFreez" then
+        if ezmemory.count_player_item(player_id,"GigFreez") then
+            ezweather.start_rain_in_area(farm_area)
+            area_memory.rain_started = current_time
+            ezmemory.remove_player_item(player_id,"GigFreez",1)
+            local mugshot = Net.get_player_mugshot(player_id)
+            Net.message_player(player_id,"\x02I cant help but feel like I just wasted something important...\x02",mugshot.texture_path,mugshot.animation_path)
+        end
+    elseif player_tool == "CyberHoe" then
         if prexisting_plant then
             try_harvest(tile_loc_string,prexisting_plant,player_id,safe_secret,current_time)
         else

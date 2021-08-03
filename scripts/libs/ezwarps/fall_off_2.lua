@@ -12,8 +12,8 @@ local fall_off_2 = {
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
         local fall_layers = 2
-        if warp_object and warp_object.custom_properties["Fall Layers"] ~= nil then
-            fall_layers = warp_object.custom_properties["Fall Layers"]
+        if warp_object and warp_object.custom_properties["Layers"] ~= nil then
+            fall_layers = warp_object.custom_properties["Layers"]
         end
         local landing_z = player_pos.z-fall_layers
         local fall_duration = 0.3

@@ -202,6 +202,7 @@ function ezmemory.remove_player_item(player_id, name, remove_quant)
         if player_memory.items[item_id] < 1 then
             --if the quantity drops below 1, remove the item completely
             player_memory.items[item_id] = nil
+            ezmemory.save_player_memory(safe_secret)
             return 0
         end
         ezmemory.save_player_memory(safe_secret)
