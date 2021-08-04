@@ -2,6 +2,7 @@ local ezweather = {}
 
 local memory = {}
 
+--TODO, support areas being added during server runtime
 local og_songs = {}
 local areas = Net.list_areas()
 for i, area_id in ipairs(areas) do
