@@ -16,6 +16,7 @@ local npc_required_properties = {"Direction","Asset Name"}
 --Type [string] must be NPC
 --NPC custom_properties:
 --  Asset Name [string] name of asset in eznpc assets folder, just file name, no extension
+--  Animation Name [string] name of animation in eznpc assets folder, not usually required
 --  Chat [string] NPC will respond with this string when you interact with them
 --  Direction [string] Initial direction this NPC will face
 --  Next Waypoint 1 [object] NPC will path to this object
@@ -37,6 +38,8 @@ local npc_required_properties = {"Direction","Asset Name"}
 --  Next 1 (first id of next dialogue, used differently for different dialogue types)
 --  Next 2, etc
 --  Event Name (npc,player_id)
+
+--TODO load all waypoints / dialogues on server start and delete them from the map to save bandwidth
 
 function DoDialogue(npc,player_id,dialogue,relay_object)
     local dialogue_type = dialogue.custom_properties["Dialogue Type"]
@@ -140,9 +143,10 @@ function CreateBotFromObject(area_id,object_id)
     end  
 
     local npc_asset_name = placeholder_object.custom_properties["Asset Name"]
+    local npc_animation_name = placeholder_object.custom_properties["Animation Name"] or false
     local direction = placeholder_object.custom_properties.Direction
 
-    local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction)
+    local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction,placeholder_object.name,npc_animation_name)
     placeholder_to_botid[tostring(object_id)] = npc.bot_id
     print('[eznpcs] added placeholder mapping '..object_id..' to '..npc.bot_id)
 
@@ -160,13 +164,16 @@ function CreateBotFromObject(area_id,object_id)
     end
 end
 
-function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name)
+function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
     lastBotId = lastBotId + 1
     local texture_path = npc_asset_folder.."sheet/"..asset_name..".png"
     local animation_path = generic_npc_animation_path
     print('[eznpcs] texture path: '..texture_path)
     print('[eznpcs] animation path: '..animation_path)
     local name = bot_name or nil
+    if animation_name then
+        animation_path = npc_asset_folder..'sheet/'..animation_name
+    end
     local npc_data = {
         asset_name=asset_name,
         bot_id=lastBotId, 
@@ -416,8 +423,8 @@ function eznpcs.on_tick(delta_time)
         end
     end
 end
-function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name)
-    return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name) )
+function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
+    return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name) )
 end
 
 function eznpcs.handle_player_transfer(player_id)

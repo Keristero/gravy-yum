@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="isometric" renderorder="right-down" width="40" height="31" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="108">
+<map version="1.5" tiledversion="2021.03.23" orientation="isometric" renderorder="right-down" width="40" height="31" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="144">
  <properties>
   <property name="Background" value="grave"/>
   <property name="Background Vel X" type="int" value="-2"/>
@@ -184,7 +184,7 @@
    </properties>
    <point/>
   </object>
-  <object id="103" name="shop" x="520" y="616">
+  <object id="103" name="shop" x="560" y="584">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="veggie_stall"/>
@@ -199,13 +199,267 @@
   </object>
   <object id="105" type="Shop" gid="89" x="596.5" y="656.5" width="35" height="45"/>
   <object id="106" gid="90" x="613" y="652" width="35" height="45"/>
-  <object id="107" name="To Default" type="Radius Warp" x="576" y="368">
+  <object id="108" name="JOE.EXE" type="NPC" x="752" y="368">
    <properties>
-    <property name="Activation Radius" type="float" value="0.6"/>
-    <property name="Arrival Animation" value="arrow_up_left_in"/>
-    <property name="Leave Animation" value="arrow_up_left_out"/>
-    <property name="Target Area" value="default"/>
-    <property name="Target Object" value="566"/>
+    <property name="Animation Name" value="prog-farmer"/>
+    <property name="Asset Name" value="prog-farmer"/>
+    <property name="Dialogue Type" value="question"/>
+    <property name="Direction" value="Down Left"/>
+    <property name="Next 1" type="object" value="109"/>
+    <property name="Next Waypoint 1" type="object" value="111"/>
+    <property name="Text 1" value="WANNA KNOW HOW TO FARM?"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="109" name="yes" x="720" y="400">
+   <properties>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Text 1">ALRIGHT
+YOU CAN SELECT A TOOL WITH THE L BUTTON.
+PLANT SEEDS IN TILLED SOIL.
+MAKE SURE YOU WATER YOUR PLANTS EVERY DAY... OR ELSE...
+I HID MY SPARE TOOLS IN GRAVY POT AREA.
+GOOD LUCK!</property>
+   </properties>
+   <point/>
+  </object>
+  <object id="111" x="656" y="368">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="139"/>
+    <property name="Next Waypoint 2" type="object" value="126"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="112" x="592" y="464">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="113"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="113" x="464" y="464">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="136"/>
+    <property name="Next Waypoint 2" type="object" value="127"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="114" x="464" y="688">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="115"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="115" x="528" y="688">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="116"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="116" x="528" y="720">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="117"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="117" x="752" y="720">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="118"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="118" x="752" y="656">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="137"/>
+    <property name="Next Waypoint 2" type="object" value="119"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="119" x="912" y="656">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="122"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="120" x="912" y="528">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="121"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="121" x="752" y="528">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="108"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="122" x="912" y="624">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="120"/>
+    <property name="Next Waypoint 2" type="object" value="123"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="123" x="1136" y="624">
+   <properties>
+    <property name="Direction" value="Down Left"/>
+    <property name="Next Waypoint 1" type="object" value="124"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="124" x="1136" y="400">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="125"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="125" x="912" y="400">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="120"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="126" x="656" y="240">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="127"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="127" x="464" y="240">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="128"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="128" x="464" y="208">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="129"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="129" x="272" y="208">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="130"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="130" x="272" y="656">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="131"/>
+    <property name="Next Waypoint 2" type="object" value="135"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="131" x="208" y="656">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="132"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="132" x="208" y="816">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="133"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="133" x="464" y="816">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="114"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="134" x="432" y="688">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="114"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="135" x="432" y="656">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="134"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="136" x="432" y="464">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="135"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="137" x="752" y="616">
+   <properties>
+    <property name="Next Waypoint 1" type="object" value="138"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="138" x="528" y="616">
+   <properties>
+    <property name="Direction" value="Up Right"/>
+    <property name="Next Waypoint 1" type="object" value="115"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="139" x="592" y="368">
+   <properties>
+    <property name="Direction" value="Up Right"/>
+    <property name="Next Waypoint 1" type="object" value="112"/>
+    <property name="Next Waypoint 2" type="object" value="111"/>
+    <property name="Wait Time" type="int" value="5"/>
+    <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="141" name="BOB.MP3.EXE" type="NPC" x="560" y="816">
+   <properties>
+    <property name="Animation Name" value="prog-farmer"/>
+    <property name="Asset Name" value="prog-farmer"/>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Direction" value="Down Left"/>
+    <property name="Next Waypoint 1" type="object" value="133"/>
+    <property name="Text 1" value="NICE DAY FOR FARMING AINT IT!? AHU HA!"/>
+    <property name="Text 2" value="JOE WILL GIVE YOU A LECTURE IF YOU WANT ONE"/>
+    <property name="Text 3" value="LETS EXPLOIT NATURE TOGETHER!"/>
+    <property name="Text 4" value="CROPS THAT TAKE LONGER TO GROW GIVE BETTER RETURNS!"/>
+    <property name="Text 5" value="HMMM WHERE DOES THE GRAVY COME FROM?"/>
+    <property name="Text 6" value="I LOVE SEEING OTHER FARMERS OUT AND ABOUT"/>
+    <property name="Text 7" value="DO YOU REMEMBER WHEN THIS WAS ALL JUST GRASS? GRAVY FARM REMEMBERS"/>
+    <property name="Text 8" value="I WISH THERE WERE SOME FISHING SPOTS AROUND HERE"/>
+    <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
