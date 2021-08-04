@@ -172,7 +172,7 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
     print('[eznpcs] animation path: '..animation_path)
     local name = bot_name or nil
     if animation_name then
-        animation_path = npc_asset_folder..'sheet/'..animation_name
+        animation_path = npc_asset_folder..'sheet/'..animation_name..".animation"
     end
     local npc_data = {
         asset_name=asset_name,
