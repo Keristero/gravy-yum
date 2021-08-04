@@ -2,12 +2,14 @@ local ezweather = {}
 
 local memory = {}
 
-local Fade = {
-    NONE = 0,
-    OUT = 1,
-    IN = 2,
-    TO = 3,
-}
+local og_songs = {}
+local areas = Net.list_areas()
+for i, area_id in ipairs(areas) do
+    local area_custom_properties = Net.get_area_custom_properties(area_id)
+    if area_custom_properties["Song"] then
+        og_songs[area_id] = area_custom_properties["Song"]
+    end
+end
 
 function ezweather.start_rain_in_area(area_id)
     print('[ezweather] starting rain in '..area_id)
@@ -43,10 +45,9 @@ function ezweather.clear_weather_in_area(area_id)
 
     fade_camera_for_players_in_area(area_id)
     local area_custom_properties = Net.get_area_custom_properties(area_id)
-    if area_custom_properties["Song"] then
-        --TODO this does not work, setting the area song overrides the original song
-        print('[ezweather] restoring original music '..area_custom_properties["Song"])
-        Net.set_song(area_id, area_custom_properties["Song"])
+    if og_songs[area_id] then
+        print('[ezweather] restoring default song for '..area_id)
+        Net.set_song(og_songs[area_id])
     end
 end
 
