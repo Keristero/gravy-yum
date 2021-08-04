@@ -3,7 +3,7 @@ local ezmemory = require('scripts/libs/ezmemory')
 local helpers = require('scripts/libs/helpers')
 local math = require('math')
 
-local unlocker_questions = {}
+local data_dialogues = {}
 local data_hidden_till_rejoin_for_player = {}
 
 local sfx = {
@@ -54,19 +54,23 @@ function ExtractNumberedProperties(object,property_prefix)
 end
 
 function ezmystery.handle_textbox_response(player_id, response)
-    if unlocker_questions[player_id] then
-        print('[ezmystery] '..player_id..' responded '..response..' about unlocking data')
-        if unlocker_questions[player_id].state == 'say_locked' then
+    if data_dialogues[player_id] then
+        print('[ezmystery] '..player_id..' responded '..response..' in data dialogue')
+        if data_dialogues[player_id].state == 'accessing' then
+            --If player collects an item
+            collect_datum(player_id,data_dialogues[player_id].object,data_dialogues[player_id].object.id)
+            data_dialogues[player_id] = nil
+        elseif data_dialogues[player_id].state == 'say_locked' then
             Net.question_player(player_id, "Use an Unlocker to open it?")
-            unlocker_questions[player_id].state = 'ask_unlock'
-        elseif unlocker_questions[player_id].state == 'ask_unlock' then
+            data_dialogues[player_id].state = 'ask_unlock'
+        elseif data_dialogues[player_id].state == 'ask_unlock' then
             if response == 1 then
                 ezmemory.remove_player_item(player_id, "Unlocker",1)
-                collect_datum(player_id,unlocker_questions[player_id].object,unlocker_questions[player_id].object.id)
-                unlocker_questions[player_id] = nil
+                collect_datum(player_id,data_dialogues[player_id].object,data_dialogues[player_id].object.id)
+                data_dialogues[player_id] = nil
             end
         else
-            unlocker_questions[player_id] = nil
+            data_dialogues[player_id] = nil
         end
     end
 end
@@ -83,12 +87,12 @@ function try_collect_datum(player_id,object)
     if object.custom_properties["Locked"] == "true" then
         Net.message_player(player_id,"The Mystery Data is locked.")
         if ezmemory.count_player_item(player_id, "Unlocker") > 0 then
-            unlocker_questions[player_id] = {state="say_locked",object=object}
+            data_dialogues[player_id] = {state="say_locked",object=object}
         end
     else
         --If the data is not locked, collect it
         Net.message_player(player_id,"Accessing the mystery data\x01...\x01")
-        collect_datum(player_id,object,object.id)
+        data_dialogues[player_id] = {state="accessing",object=object}
     end
 end
 
@@ -138,7 +142,6 @@ function collect_datum(player_id,object,datum_id_override)
     end
 
     --Now remove the mystery data
-    --TODO make this line shorter lol
     data_hidden_till_rejoin_for_player[player_id][area_id][tostring(datum_id_override)] = true
     Net.exclude_object_for_player(player_id, datum_id_override)
 end
