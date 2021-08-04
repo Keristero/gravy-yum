@@ -278,7 +278,7 @@ end
 
 function ezwarps.handle_player_join(player_id)
     if player_animations[player_id] then
-        doAnimationForWarp(player_id,player_animations[player_id])
+        doAnimationForWarp(player_id,player_animations[player_id],false)
         player_animations[player_id] = nil
     end
 end
