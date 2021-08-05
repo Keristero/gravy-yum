@@ -48,7 +48,7 @@ function ezweather.clear_weather_in_area(area_id)
     local area_custom_properties = Net.get_area_custom_properties(area_id)
     if og_songs[area_id] then
         print('[ezweather] restoring default song for '..area_id)
-        Net.set_song(og_songs[area_id])
+        Net.set_song(area_id,og_songs[area_id])
     end
 end
 

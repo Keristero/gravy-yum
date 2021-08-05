@@ -11,7 +11,7 @@ local player_tools = {}
 local farm_area = 'farm'
 local area_memory = nil
 local delay_till_update = 5 --wait 1 second between updating all farm tiles
-local period_multiplier = 0.01 --1.0 is real time, 0.5 is double speed
+local period_multiplier = 1 --1.0 is real time, 0.5 is double speed
 local reference_seed = Net.get_object_by_name(farm_area,"Reference Seed")
 
 local plant_ram = {}--non persisted plant related values, keyed by loc_string
