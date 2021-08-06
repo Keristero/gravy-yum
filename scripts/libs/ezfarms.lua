@@ -62,7 +62,8 @@ local sfx = {
     rain='/server/assets/sfx/ezfarms/rain.ogg',
     scythe='/server/assets/sfx/ezfarms/scythe.ogg',
     swap_tool='/server/assets/sfx/ezfarms/swap_tool.ogg',
-    water_tile='/server/assets/sfx/ezfarms/water_tile.ogg'
+    water_tile='/server/assets/sfx/ezfarms/water_tile.ogg',
+    wind='/server/assets/sfx/ezfarms/wind.ogg'
 }
 
 
@@ -72,7 +73,7 @@ local Period = {
     Hour=60*60,
 }
 Period.EmptyDirtToGrass=Period.Minute*10
-Period.GrowthStageTime=Period.Hour*4
+Period.GrowthStageTime=Period.Hour*12
 Period.PlantedDirtWetToDirt=Period.Hour*4
 Period.UnwateredPlantDeath=Period.Hour*36
 Period.JustPlantedGracePeriod=Period.Hour*4
@@ -592,11 +593,13 @@ function ezfarms.handle_tile_interaction(player_id, x, y, z, button)
 
     if player_tool == "GigFreez" then
         if ezmemory.count_player_item(player_id,"GigFreez") then
+            Net.play_sound(farm_area,sfx.wind)
             ezweather.start_rain_in_area(farm_area)
             area_memory.rain_started = current_time
             ezmemory.remove_player_item(player_id,"GigFreez",1)
             local mugshot = Net.get_player_mugshot(player_id)
-            Net.message_player(player_id,"\x02I cant help but feel like I just wasted something important...\x02",mugshot.texture_path,mugshot.animation_path)
+            Net.message_player(player_id,"\x02\x01...\x01\x02",mugshot.texture_path,mugshot.animation_path)
+            Net.message_player(player_id,"\x02I cant help but feel like I just wasted something...\x02",mugshot.texture_path,mugshot.animation_path)
         end
     elseif player_tool == "CyberHoe" then
         if prexisting_plant then
