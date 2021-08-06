@@ -127,7 +127,11 @@
     <property name="Navi" value="no381"/>
    </properties>
   </object>
-  <object id="169" gid="60" x="688" y="1168" width="64" height="56"/>
+  <object id="169" gid="60" x="688" y="1168" width="64" height="56">
+   <properties>
+    <property name="Navi" value="Gray Nine"/>
+   </properties>
+  </object>
   <object id="170" gid="60" x="688" y="1104" width="64" height="56">
    <properties>
     <property name="Navi" value="playerzero"/>
@@ -138,9 +142,21 @@
     <property name="Navi" value="kyqurikan"/>
    </properties>
   </object>
-  <object id="172" gid="60" x="752" y="1040" width="64" height="56"/>
-  <object id="173" gid="60" x="752" y="1104" width="64" height="56"/>
-  <object id="174" gid="60" x="752" y="1168" width="64" height="56"/>
+  <object id="172" gid="60" x="752" y="1040" width="64" height="56">
+   <properties>
+    <property name="Navi" value="Kuri"/>
+   </properties>
+  </object>
+  <object id="173" gid="60" x="752" y="1104" width="64" height="56">
+   <properties>
+    <property name="Navi" value="Learn2fly"/>
+   </properties>
+  </object>
+  <object id="174" gid="60" x="752" y="1168" width="64" height="56">
+   <properties>
+    <property name="Navi" value="Claris"/>
+   </properties>
+  </object>
   <object id="175" gid="60" x="816" y="1168" width="64" height="56"/>
   <object id="176" gid="60" x="816" y="1104" width="64" height="56"/>
   <object id="177" gid="60" x="816" y="1040" width="64" height="56"/>
