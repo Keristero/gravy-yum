@@ -1,8 +1,8 @@
-local announcement_file_path = "./annoucement.txt"
+local announcement_file_path = "./announcement.txt"
 local delay_till_check = 0
 local last_announcement = ""
 
-function TryAnnoucement()
+function TryAnnouncement()
     local areas = Net.list_areas()
     local all_players = {}
     local player_count = 0
@@ -35,7 +35,7 @@ function tick(delta_time)
     if delay_till_check > 0 then
         delay_till_check = delay_till_check - delta_time
     else
-        if TryAnnoucement() then
+        if TryAnnouncement() then
             
         else
             print('err reading '..announcement_file_path)
