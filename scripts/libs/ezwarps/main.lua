@@ -1,4 +1,5 @@
 --for timed events
+local json = require('scripts/libs/json')
 local delay = require('scripts/libs/delay')
 local create_arrow_animation = require('scripts/libs/ezwarps/arrow_animation_factory')
 
@@ -102,7 +103,7 @@ function add_landing(area_id, incoming_data, x, y, z, direction, warp_in, arriva
     }
     landings[incoming_data] = new_landing
 
-    print('[ezwarps] added landing in '..area_id)
+    print('[ezwarps] added landing for '..incoming_data.." = "..json.encode(new_landing))
 end
 
 
@@ -193,6 +194,7 @@ function ezwarps.handle_player_request(player_id, data)
         if data == key then
             local entry_pos = prepare_player_arrival(player_id,l["x"],l["y"],l["z"],l["arrival_animation"])
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_pos.x, entry_pos.y, entry_pos.z, l["direction"])
+            print('[ezwarps] transfering player to landing'..l)
             return
         end
     end
