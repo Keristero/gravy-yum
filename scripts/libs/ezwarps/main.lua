@@ -118,7 +118,7 @@ function doAnimationForWarp(player_id,animation_name,is_leave_animation,warp_obj
     local animation_duration = 0
     if animation_properties then
         animation_properties.animate(player_id,warp_object)
-        animation_duration = animation_duration + animation_properties.duration
+        animation_duration = animation_duration + animation_properties.duration-0.1
         delay.for_player(player_id,function ()
             print('[ezwarps] animation complete '..animation_name)
             player_animations[player_id] = nil
