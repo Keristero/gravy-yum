@@ -310,6 +310,12 @@ function MoveNPC(npc,delta_time)
 
     local area_id = Net.get_bot_area(npc.bot_id)
     local waypoint = npc.next_waypoint
+
+    local distance = math.sqrt((waypoint.x - npc.x) ^ 2 + (waypoint.y - npc.y) ^ 2)
+    if distance < npc.size then
+        NPCReachedWaypoint(npc,waypoint)
+        return
+    end
     
     local angle = math.atan(waypoint.y - npc.y, waypoint.x - npc.x)
     local vel_x = math.cos(angle) * npc.speed
@@ -328,10 +334,6 @@ function MoveNPC(npc,delta_time)
     npc.x = new_pos.x
     npc.y = new_pos.y
 
-    local distance = math.sqrt((waypoint.x - npc.x) ^ 2 + (waypoint.y - npc.y) ^ 2)
-    if distance < npc.size then
-        NPCReachedWaypoint(npc,waypoint)
-    end
 end
 
 function NPCReachedWaypoint(npc,waypoint)
