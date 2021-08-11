@@ -167,7 +167,7 @@ local event4 = {
 eznpcs.add_event(event4)
 
 local gift_zenny = {
-    name="Gift Zenny",
+    name="Gift Monies",
     action=function (npc,player_id,dialogue)
         local zenny_amount = tonumber(dialogue.custom_properties["Amount"])
         ezmemory.spend_player_money(player_id,-zenny_amount)

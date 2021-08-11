@@ -64,7 +64,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
         return
     end
     local mug_texture_path = npc_asset_folder.."mug/"..npc.asset_name..".png"
-    local mug_animation_path = generic_npc_mug_animation_path
+    local mug_animation_path = npc.mug_animation_path
     local player_pos = Net.get_player_position(player_id)
 
     local dialogue_texts = ExtractNumberedProperties(dialogue,"Text ")
@@ -144,9 +144,10 @@ function CreateBotFromObject(area_id,object_id)
 
     local npc_asset_name = placeholder_object.custom_properties["Asset Name"]
     local npc_animation_name = placeholder_object.custom_properties["Animation Name"] or false
+    local npc_mug_animation_name = placeholder_object.custom_properties["Mug Animation Name"] or false
     local direction = placeholder_object.custom_properties.Direction
 
-    local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction,placeholder_object.name,npc_animation_name)
+    local npc = CreateNPC(area_id,npc_asset_name,x,y,z,direction,placeholder_object.name,npc_animation_name,npc_mug_animation_name)
     placeholder_to_botid[tostring(object_id)] = npc.bot_id
     print('[eznpcs] added placeholder mapping '..object_id..' to '..npc.bot_id)
 
@@ -164,16 +165,24 @@ function CreateBotFromObject(area_id,object_id)
     end
 end
 
-function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
+function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mug_animation_name)
     lastBotId = lastBotId + 1
     local texture_path = npc_asset_folder.."sheet/"..asset_name..".png"
     local animation_path = generic_npc_animation_path
-    print('[eznpcs] texture path: '..texture_path)
-    print('[eznpcs] animation path: '..animation_path)
+    local mug_animation_path = generic_npc_mug_animation_path
     local name = bot_name or nil
+    --Override animations if they were provided as custom properties
     if animation_name then
         animation_path = npc_asset_folder..'sheet/'..animation_name..".animation"
     end
+    if mug_animation_name then
+        mug_animation_path = npc_asset_folder..'mug/'..mug_animation_name..".animation"
+    end
+    --Log final paths
+    print('[eznpcs] texture path: '..texture_path)
+    print('[eznpcs] animation path: '..animation_path)
+    print('[eznpcs] mug animation path: '..mug_animation_path)
+    --Create bot
     local npc_data = {
         asset_name=asset_name,
         bot_id=lastBotId, 
@@ -181,6 +190,7 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
         area_id=area_id, 
         texture_path=texture_path, 
         animation_path=animation_path, 
+        mug_animation_path=mug_animation_path,
         x=x, 
         y=y, 
         z=z, 
@@ -300,6 +310,12 @@ function MoveNPC(npc,delta_time)
 
     local area_id = Net.get_bot_area(npc.bot_id)
     local waypoint = npc.next_waypoint
+
+    local distance = math.sqrt((waypoint.x - npc.x) ^ 2 + (waypoint.y - npc.y) ^ 2)
+    if distance < npc.size then
+        NPCReachedWaypoint(npc,waypoint)
+        return
+    end
     
     local angle = math.atan(waypoint.y - npc.y, waypoint.x - npc.x)
     local vel_x = math.cos(angle) * npc.speed
@@ -318,10 +334,6 @@ function MoveNPC(npc,delta_time)
     npc.x = new_pos.x
     npc.y = new_pos.y
 
-    local distance = math.sqrt((waypoint.x - npc.x) ^ 2 + (waypoint.y - npc.y) ^ 2)
-    if distance < npc.size then
-        NPCReachedWaypoint(npc,waypoint)
-    end
 end
 
 function NPCReachedWaypoint(npc,waypoint)
@@ -423,8 +435,8 @@ function eznpcs.on_tick(delta_time)
         end
     end
 end
-function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name,animation_name)
-    return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name) )
+function eznpcs.create_npc(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mug_animation_name)
+    return ( CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mug_animation_name) )
 end
 
 function eznpcs.handle_player_transfer(player_id)
