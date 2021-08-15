@@ -49,6 +49,9 @@ function check_radius_warps()
         for i, player_id in next, players do
             for index, radius_warp in ipairs(radius_warps) do
                 if radius_warp.area_id ~= area_id then
+                    if radius_warp.in_range[player_id] then
+                        radius_warp.in_range[player_id] = false
+                    end
                     goto continue
                 end
                 local player_pos = Net.get_player_position(player_id)
