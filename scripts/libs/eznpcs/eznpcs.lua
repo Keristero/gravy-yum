@@ -7,7 +7,6 @@ local placeholder_to_botid = {}
 local npc_asset_folder = '/server/assets/eznpcs/'
 local generic_npc_animation_path = npc_asset_folder..'sheet/npc.animation'
 local generic_npc_mug_animation_path = npc_asset_folder..'mug/mug.animation'
-local lastBotId = 0
 local npcs = {}
 local events = {}
 local textbox_responses = {}
@@ -166,7 +165,6 @@ function CreateBotFromObject(area_id,object_id)
 end
 
 function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mug_animation_name)
-    lastBotId = lastBotId + 1
     local texture_path = npc_asset_folder.."sheet/"..asset_name..".png"
     local animation_path = generic_npc_animation_path
     local mug_animation_path = generic_npc_mug_animation_path
@@ -185,7 +183,7 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mu
     --Create bot
     local npc_data = {
         asset_name=asset_name,
-        bot_id=lastBotId, 
+        bot_id=nil, 
         name=name, 
         area_id=area_id, 
         texture_path=texture_path, 
@@ -199,7 +197,8 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mu
         size=0.2,
         speed=1,
     }
-    Net.create_bot(lastBotId, npc_data)
+    local lastBotId = Net.create_bot(npc_data)
+    npc_data.bot_id = lastBotId
     npcs[lastBotId] = npc_data
     print('[eznpcs] created npc '..lastBotId..' at ('..x..','..y..','..z..')')
     return npc_data
@@ -262,7 +261,7 @@ function WaypointFollowBehaviour(first_waypoint_id)
 end
 
 function OnActorInteraction(player_id,actor_id,relay_object)
-    local npc_id = tonumber(actor_id)
+    local npc_id = actor_id
     if npcs[npc_id] then
         local npc = npcs[npc_id]
         if npc.on_interact then
