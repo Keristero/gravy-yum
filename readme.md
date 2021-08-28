@@ -18,3 +18,10 @@ get pkg-config
 now compile and run the server
 `cd gravy-yum`
 `./update-and-run.sh`
+
+### auto backups
+you will need nodejs
+`npm install zip-a-folder`
+`node autobackup.js`
+
+every day at 1am a new zip will be created in backups/
