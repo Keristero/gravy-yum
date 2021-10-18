@@ -19,3 +19,5 @@ setInterval(()=>{
         main(d)
     }
 },hour_ms)
+
+main()
