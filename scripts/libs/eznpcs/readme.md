@@ -11,7 +11,7 @@ currently all the files for eznpcs are scattered inside this gravy-yum repositor
 
 installation steps
 1. copy eznpcs.lua to `yourserver/scripts/libs/eznpcs/eznpcs.lua`
-2. copy eznpcs_entry.lua to `yourserver/scripts/eznpcs_entry.lua`
+2. copy main_entry.lua to `yourserver/scripts/main_entry.lua`
 3. copy the eznpcs folder from the assets folder to `yourserver/assets/eznpcs`
 optional:
     1. there are a bunch of events for this server in the entry script, use them as examples or remove them if you dont want them.
