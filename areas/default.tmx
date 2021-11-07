@@ -226,7 +226,7 @@
     <property name="Arrival Animation" value="fall_in"/>
     <property name="Data" value="NA"/>
     <property name="Direction" value="Up Right"/>
-    <property name="Incoming Data" value="central3-gravy-yum-warp-xyz"/>
+    <property name="Incoming Data" value="central2-gravy-yum-warp-xyz"/>
     <property name="Port" type="int" value="8765"/>
     <property name="Warp In" type="bool" value="false"/>
    </properties>
