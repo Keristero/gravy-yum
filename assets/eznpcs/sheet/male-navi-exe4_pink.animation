@@ -1,0 +1,43 @@
+animation state="IDLE_UR"
+frame duration="0.1" x="46" y="0" w="15" h="35" originx="7" originy="32"
+
+animation state="IDLE_UL"
+frame duration="0.1" x="46" y="0" w="15" h="35" originx="7" originy="32" flipx="1"
+
+animation state="IDLE_DR"
+frame duration="0.1" x="61" y="0" w="15" h="35" originx="7" originy="32"
+
+animation state="IDLE_DL"
+frame duration="0.1" x="61" y="0" w="15" h="35" originx="7" originy="32" flipx="1"
+
+animation state="WALK_UR"
+frame duration="0.1" x="0" y="0" w="15" h="36" originx="7" originy="32"
+frame duration="0.1" x="0" y="71" w="17" h="34" originx="8" originy="31"
+frame duration="0.1" x="15" y="0" w="16" h="36" originx="8" originy="32"
+frame duration="0.1" x="31" y="0" w="15" h="36" originx="7" originy="32"
+frame duration="0.1" x="0" y="36" w="17" h="35" originx="8" originy="32"
+frame duration="0.1" x="17" y="36" w="15" h="35" originx="7" originy="32"
+
+animation state="WALK_UL"
+frame duration="0.1" x="0" y="0" w="15" h="36" originx="7" originy="32" flipx="1"
+frame duration="0.1" x="0" y="71" w="17" h="34" originx="8" originy="31" flipx="1"
+frame duration="0.1" x="15" y="0" w="16" h="36" originx="8" originy="32" flipx="1"
+frame duration="0.1" x="31" y="0" w="15" h="36" originx="7" originy="32" flipx="1"
+frame duration="0.1" x="0" y="36" w="17" h="35" originx="8" originy="32" flipx="1"
+frame duration="0.1" x="17" y="36" w="15" h="35" originx="7" originy="32" flipx="1"
+
+animation state="WALK_DR"
+frame duration="0.1" x="32" y="36" w="15" h="35" originx="7" originy="32"
+frame duration="0.1" x="47" y="36" w="15" h="35" originx="7" originy="32"
+frame duration="0.1" x="17" y="71" w="17" h="34" originx="8" originy="31"
+frame duration="0.1" x="62" y="36" w="16" h="35" originx="8" originy="32"
+frame duration="0.1" x="76" y="0" w="15" h="35" originx="7" originy="32"
+frame duration="0.1" x="34" y="71" w="18" h="34" originx="9" originy="31"
+
+animation state="WALK_DL"
+frame duration="0.1" x="32" y="36" w="15" h="35" originx="7" originy="32" flipx="1"
+frame duration="0.1" x="47" y="36" w="15" h="35" originx="7" originy="32" flipx="1"
+frame duration="0.1" x="17" y="71" w="17" h="34" originx="8" originy="31" flipx="1"
+frame duration="0.1" x="62" y="36" w="16" h="35" originx="8" originy="32" flipx="1"
+frame duration="0.1" x="76" y="0" w="15" h="35" originx="7" originy="32" flipx="1"
+frame duration="0.1" x="34" y="71" w="18" h="34" originx="9" originy="31" flipx="1"

@@ -5,7 +5,6 @@ local eznpcs = {}
 local placeholder_to_botid = {}
 
 local npc_asset_folder = '/server/assets/eznpcs/'
-local generic_npc_animation_path = npc_asset_folder..'sheet/npc.animation'
 local generic_npc_mug_animation_path = npc_asset_folder..'mug/mug.animation'
 local npcs = {}
 local events = {}
@@ -166,7 +165,7 @@ end
 
 function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mug_animation_name)
     local texture_path = npc_asset_folder.."sheet/"..asset_name..".png"
-    local animation_path = generic_npc_animation_path
+    local animation_path = npc_asset_folder.."sheet/"..asset_name..".animation"
     local mug_animation_path = generic_npc_mug_animation_path
     local name = bot_name or nil
     --Override animations if they were provided as custom properties
