@@ -2,6 +2,7 @@
 local json = require('scripts/libs/json')
 local delay = require('scripts/libs/delay')
 local create_arrow_animation = require('scripts/libs/ezwarps/arrow_animation_factory')
+local create_jack_in_out_animation = require('scripts/libs/ezwarps/log_in_animation')
 
 local ezwarps = {}
 
@@ -19,6 +20,8 @@ local special_animations = {
     arrow_down_left_in = create_arrow_animation(true,"Down Left"),
     arrow_down_right_in = create_arrow_animation(true,"Down Right"),
     fall_off_2 = require('scripts/libs/ezwarps/fall_off_2'),
+    log_in = create_jack_in_out_animation(true),
+    log_out = create_jack_in_out_animation(false)
 }
 
 local landings = {}
