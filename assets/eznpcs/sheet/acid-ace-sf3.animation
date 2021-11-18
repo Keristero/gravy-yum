@@ -1,0 +1,45 @@
+imagePath="C:/Users/Clevettes/Desktop/OBN SERVER BACKUPS/Server_10_5_2021 Bn3/assets/eznpcs/sheet/acid-ace-sf3.png"
+
+animation state="IDLE_UR"
+frame duration="0.05" x="92" y="0" w="37" h="57" originx="17" originy="56"
+
+animation state="IDLE_DR"
+frame duration="0.05" x="133" y="0" w="37" h="57" originx="17" originy="56"
+
+animation state="WALK_DR"
+frame duration="0.15" x="2" y="60" w="39" h="58" originx="19" originy="56"
+frame duration="0.15" x="46" y="60" w="39" h="58" originx="19" originy="56"
+frame duration="0.15" x="90" y="60" w="39" h="58" originx="19" originy="56"
+frame duration="0.15" x="134" y="60" w="39" h="58" originx="19" originy="56"
+frame duration="0.15" x="178" y="60" w="39" h="58" originx="19" originy="56"
+frame duration="0.15" x="222" y="60" w="39" h="58" originx="19" originy="56"
+
+animation state="WALK_UL"
+frame duration="0.15" x="4" y="123" w="35" h="59" originx="18" originy="57"
+frame duration="0.15" x="48" y="123" w="35" h="59" originx="18" originy="57"
+frame duration="0.15" x="92" y="123" w="35" h="59" originx="18" originy="57"
+frame duration="0.15" x="135" y="123" w="35" h="59" originx="18" originy="57"
+frame duration="0.15" x="180" y="123" w="35" h="59" originx="18" originy="57"
+frame duration="0.15" x="224" y="123" w="35" h="59" originx="18" originy="57"
+
+animation state="IDLE_UL"
+frame duration="0.05" x="92" y="0" w="37" h="57" originx="17" originy="56" flipx="1"
+
+animation state="IDLE_DL"
+frame duration="0.05" x="133" y="0" w="37" h="57" originx="17" originy="56" flipx="1"
+
+animation state="WALK_DL"
+frame duration="0.15" x="2" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+frame duration="0.15" x="46" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+frame duration="0.15" x="90" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+frame duration="0.15" x="134" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+frame duration="0.15" x="178" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+frame duration="0.15" x="222" y="60" w="39" h="58" originx="19" originy="56" flipx="1"
+
+animation state="WALK_UR"
+frame duration="0.15" x="4" y="123" w="35" h="59" originx="18" originy="57" flipx="1"
+frame duration="0.15" x="48" y="123" w="35" h="59" originx="18" originy="57" flipx="1"
+frame duration="0.15" x="92" y="123" w="35" h="59" originx="18" originy="57" flipx="1"
+frame duration="0.15" x="135" y="123" w="35" h="59" originx="18" originy="57" flipx="1"
+frame duration="0.15" x="180" y="123" w="35" h="59" originx="18" originy="57" flipx="1"
+frame duration="0.15" x="224" y="123" w="35" h="59" originx="18" originy="57" flipx="1"

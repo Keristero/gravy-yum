@@ -1,0 +1,46 @@
+imagePath="**"
+
+animation state="IDLE_UR"
+frame duration="0.05" x="0" y="0" w="32" h="40" originx="16" originy="36"
+
+animation state="IDLE_DR"
+frame duration="0.05" x="32" y="0" w="32" h="40" originx="16" originy="36"
+
+animation state="IDLE_DL"
+frame duration="0.05" x="64" y="0" w="32" h="40" originx="16" originy="36""
+
+animation state="IDLE_UL"
+frame duration="0.05" x="96" y="0" w="32" h="40" originx="16" originy="36"
+
+animation state="WALK_UR"
+frame duration="0.1" x="0" y="40" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="32" y="40" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="64" y="40" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="96" y="40" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="128" y="40" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="160" y="40" w="32" h="40" originx="16" originy="36"
+
+animation state="WALK_DR"
+frame duration="0.1" x="0" y="80" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="32" y="80" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="64" y="80" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="96" y="80" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="128" y="80" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="160" y="80" w="32" h="40" originx="16" originy="36"
+
+animation state="WALK_DL"
+frame duration="0.1" x="0" y="120" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="32" y="120" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="64" y="120" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="96" y="120" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="128" y="120" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="160" y="120" w="32" h="40" originx="16" originy="36"
+
+animation state="WALK_UL"
+frame duration="0.1" x="0" y="160" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="32" y="160" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="64" y="160" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="96" y="160" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="128" y="160" w="32" h="40" originx="16" originy="36"
+frame duration="0.1" x="160" y="160" w="32" h="40" originx="16" originy="36"
+

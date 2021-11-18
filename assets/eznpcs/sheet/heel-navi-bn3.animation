@@ -1,0 +1,45 @@
+imagePath="heel-navi-bn3.png"
+
+animation state="IDLE_DR"
+frame duration="0.05" x="98" y="86" w="21" h="43" originx="9" originy="41" flipx="0" flipy="0" 
+
+animation state="IDLE_UR"
+frame duration="0.05" x="119" y="86" w="21" h="43" originx="9" originy="41" flipx="0" flipy="0" 
+
+animation state="WALK_UR"
+frame duration="0.15" x="52" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="77" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="102" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="127" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="152" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="177" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+
+animation state="WALK_DR"
+frame duration="0.15" x="202" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="227" y="0" w="25" h="43" originx="13" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="43" w="25" h="43" originx="12" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="0" w="26" h="43" originx="12" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="25" y="43" w="25" h="43" originx="12" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="50" y="86" w="24" h="43" originx="12" originy="41" flipx="0" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.05" x="140" y="86" w="21" h="43" originx="9" originy="41" flipx="1" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.05" x="161" y="86" w="21" h="43" originx="9" originy="41" flipx="1" flipy="0" 
+
+animation state="WALK_UL"
+frame duration="0.15" x="50" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="75" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="100" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="125" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="150" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="175" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+
+animation state="WALK_DL"
+frame duration="0.15" x="200" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="225" y="43" w="25" h="43" originx="13" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="86" w="25" h="43" originx="12" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="26" y="0" w="26" h="43" originx="12" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="25" y="86" w="25" h="43" originx="12" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="74" y="86" w="24" h="43" originx="12" originy="41" flipx="1" flipy="0" 

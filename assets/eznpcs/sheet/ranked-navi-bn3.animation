@@ -1,0 +1,41 @@
+imagePath="C:/Users/Clevettes/Desktop/OBN SERVER BACKUPS/Server_10_5_2021/assets/eznpcs/sheet/ranked-navi-bn3.png"
+
+animation state="IDLE_DR"
+frame duration="0.15" x="4" y="1" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="31" y="1" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="58" y="1" w="19" h="50" originx="9" originy="49"
+
+animation state="IDLE_UR"
+frame duration="0.15" x="4" y="60" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="31" y="60" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="58" y="60" w="19" h="50" originx="9" originy="49"
+
+animation state="IDLE_DL"
+frame duration="0.15" x="4" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="31" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="58" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+
+animation state="IDLE_UL"
+frame duration="0.15" x="4" y="60" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="31" y="60" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="58" y="60" w="19" h="50" originx="9" originy="49" flipx="1"
+
+animation state="WALK_DR"
+frame duration="0.15" x="4" y="1" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="31" y="1" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="58" y="1" w="19" h="50" originx="9" originy="49"
+
+animation state="WALK_UR"
+frame duration="0.15" x="4" y="60" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="31" y="60" w="19" h="50" originx="9" originy="49"
+frame duration="0.15" x="58" y="60" w="19" h="50" originx="9" originy="49"
+
+animation state="WALK_DL"
+frame duration="0.15" x="4" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="31" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="58" y="1" w="19" h="50" originx="9" originy="49" flipx="1"
+
+animation state="WALK_UL"
+frame duration="0.15" x="4" y="60" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="31" y="60" w="19" h="50" originx="9" originy="49" flipx="1"
+frame duration="0.15" x="58" y="60" w="19" h="50" originx="9" originy="49" flipx="1"

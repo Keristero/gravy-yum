@@ -1,0 +1,45 @@
+imagePath="C:/Users/Clevettes/Desktop/OBN SERVER BACKUPS/Server_10_5_2021 Bn3/assets/eznpcs/sheet/burai-sf3.png"
+
+animation state="IDLE_UR"
+frame duration="0.05" x="1" y="0" w="21" h="43" originx="10" originy="42"
+
+animation state="IDLE_DR"
+frame duration="0.05" x="46" y="0" w="21" h="43" originx="9" originy="42" flipx="1"
+
+animation state="IDLE_DL"
+frame duration="0.05" x="46" y="0" w="21" h="43" originx="9" originy="42"
+
+animation state="IDLE_UL"
+frame duration="0.05" x="71" y="0" w="21" h="43" originx="11" originy="42"
+
+animation state="WALK_UR"
+frame duration="0.15" x="1" y="45" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="27" y="45" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="52" y="45" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="78" y="45" w="24" h="41" originx="10" originy="39"
+frame duration="0.15" x="103" y="45" w="24" h="41" originx="11" originy="38"
+frame duration="0.15" x="128" y="44" w="24" h="41" originx="10" originy="39"
+
+animation state="WALK_DL"
+frame duration="0.15" x="1" y="89" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="26" y="89" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="51" y="89" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="76" y="89" w="24" h="40" originx="14" originy="38"
+frame duration="0.15" x="101" y="89" w="24" h="40" originx="12" originy="38"
+frame duration="0.15" x="126" y="89" w="24" h="40" originx="12" originy="38"
+
+animation state="WALK_UL"
+frame duration="0.15" x="1" y="45" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="27" y="45" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="52" y="45" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="78" y="45" w="24" h="41" originx="10" originy="39" flipx="1"
+frame duration="0.15" x="103" y="45" w="24" h="41" originx="11" originy="38" flipx="1"
+frame duration="0.15" x="128" y="44" w="24" h="41" originx="10" originy="39" flipx="1"
+
+animation state="WALK_DR"
+frame duration="0.15" x="1" y="89" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="26" y="89" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="51" y="89" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="76" y="89" w="24" h="40" originx="14" originy="38" flipx="1"
+frame duration="0.15" x="101" y="89" w="24" h="40" originx="12" originy="38" flipx="1"
+frame duration="0.15" x="126" y="89" w="24" h="40" originx="12" originy="38" flipx="1"
