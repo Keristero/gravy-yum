@@ -1,0 +1,41 @@
+imagePath="windman.png"
+
+animation state="IDLE_UR"
+frame duration="0.15" x="78" y="108" w="31" h="57" originx="15" originy="56" flipx="0" flipy="0" 
+frame duration="0.15" x="30" y="111" w="31" h="54" originx="15" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="117" y="111" w="31" h="54" originx="15" originy="53" flipx="0" flipy="0" 
+
+animation state="IDLE_DR"
+frame duration="0.15" x="61" y="165" w="30" h="54" originx="17" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="91" y="165" w="30" h="54" originx="17" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="223" y="108" w="30" h="57" originx="17" originy="56" flipx="0" flipy="0" 
+
+animation state="WALK_UR"
+frame duration="0.15" x="78" y="0" w="39" h="54" originx="19" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="117" y="0" w="39" h="54" originx="19" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="0" w="39" h="57" originx="19" originy="56" flipx="0" flipy="0" 
+
+animation state="WALK_DR"
+frame duration="0.15" x="192" y="54" w="36" h="54" originx="18" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="57" w="36" h="54" originx="18" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="156" y="0" w="36" h="57" originx="18" originy="56" flipx="0" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.15" x="192" y="108" w="31" h="57" originx="15" originy="56" flipx="1" flipy="0" 
+frame duration="0.15" x="148" y="111" w="31" h="54" originx="15" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="30" y="165" w="31" h="54" originx="15" originy="53" flipx="1" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.15" x="121" y="165" w="30" h="54" originx="17" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="151" y="165" w="30" h="54" originx="17" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="111" w="30" h="57" originx="17" originy="56" flipx="1" flipy="0" 
+
+animation state="WALK_UL"
+frame duration="0.15" x="192" y="0" w="39" h="54" originx="19" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="78" y="54" w="39" h="54" originx="19" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="39" y="0" w="39" h="57" originx="19" originy="56" flipx="1" flipy="0" 
+
+animation state="WALK_DL"
+frame duration="0.15" x="36" y="57" w="36" h="54" originx="18" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="156" y="57" w="36" h="54" originx="18" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="117" y="54" w="36" h="57" originx="18" originy="56" flipx="1" flipy="0" 
