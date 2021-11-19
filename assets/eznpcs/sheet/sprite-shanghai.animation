@@ -1,0 +1,45 @@
+imagePath="sprite-shanghai.png"
+
+animation state="WALK_DR"
+frame duration="0.15" x="80" y="0" w="20" h="39" originx="8" originy="38" flipx="0" flipy="0" 
+frame duration="0.15" x="160" y="0" w="20" h="38" originx="8" originy="37" flipx="0" flipy="0" 
+frame duration="0.15" x="80" y="39" w="20" h="37" originx="8" originy="36" flipx="0" flipy="0" 
+frame duration="0.15" x="180" y="0" w="20" h="38" originx="8" originy="37" flipx="0" flipy="0" 
+frame duration="0.15" x="100" y="0" w="20" h="39" originx="8" originy="38" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="0" w="20" h="40" originx="8" originy="39" flipx="0" flipy="0" 
+
+animation state="WALK_UL"
+frame duration="0.15" x="100" y="39" w="20" h="37" originx="11" originy="36" flipx="0" flipy="0" 
+frame duration="0.15" x="40" y="40" w="20" h="36" originx="11" originy="35" flipx="0" flipy="0" 
+frame duration="0.15" x="80" y="76" w="20" h="35" originx="11" originy="34" flipx="0" flipy="0" 
+frame duration="0.15" x="60" y="40" w="20" h="36" originx="11" originy="35" flipx="0" flipy="0" 
+frame duration="0.15" x="120" y="39" w="20" h="37" originx="11" originy="36" flipx="0" flipy="0" 
+frame duration="0.15" x="200" y="0" w="20" h="38" originx="11" originy="37" flipx="0" flipy="0" 
+
+animation state="IDLE_DR"
+frame duration="0.05" x="20" y="0" w="20" h="40" originx="8" originy="39" flipx="0" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.05" x="220" y="0" w="20" h="38" originx="11" originy="37" flipx="0" flipy="0" 
+
+animation state="WALK_DL"
+frame duration="0.15" x="120" y="0" w="20" h="39" originx="8" originy="38" flipx="1" flipy="0" 
+frame duration="0.15" x="160" y="38" w="20" h="38" originx="8" originy="37" flipx="1" flipy="0" 
+frame duration="0.15" x="140" y="39" w="20" h="37" originx="8" originy="36" flipx="1" flipy="0" 
+frame duration="0.15" x="180" y="38" w="20" h="38" originx="8" originy="37" flipx="1" flipy="0" 
+frame duration="0.15" x="140" y="0" w="20" h="39" originx="8" originy="38" flipx="1" flipy="0" 
+frame duration="0.15" x="40" y="0" w="20" h="40" originx="8" originy="39" flipx="1" flipy="0" 
+
+animation state="WALK_UR"
+frame duration="0.15" x="0" y="40" w="20" h="37" originx="11" originy="36" flipx="1" flipy="0" 
+frame duration="0.15" x="40" y="76" w="20" h="36" originx="11" originy="35" flipx="1" flipy="0" 
+frame duration="0.15" x="100" y="76" w="20" h="35" originx="11" originy="34" flipx="1" flipy="0" 
+frame duration="0.15" x="60" y="76" w="20" h="36" originx="11" originy="35" flipx="1" flipy="0" 
+frame duration="0.15" x="20" y="40" w="20" h="37" originx="11" originy="36" flipx="1" flipy="0" 
+frame duration="0.15" x="200" y="38" w="20" h="38" originx="11" originy="37" flipx="1" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.05" x="60" y="0" w="20" h="40" originx="8" originy="39" flipx="1" flipy="0" 
+
+animation state="IDLE_UR"
+frame duration="0.05" x="220" y="38" w="20" h="38" originx="11" originy="37" flipx="1" flipy="0" 

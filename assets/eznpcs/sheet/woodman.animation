@@ -1,0 +1,45 @@
+imagePath="woodman.png"
+
+animation state="IDLE_UR"
+frame duration="0.05" x="53" y="87" w="32" h="45" originx="16" originy="42" flipx="0" flipy="0" 
+
+animation state="IDLE_DR"
+frame duration="0.05" x="85" y="87" w="32" h="45" originx="17" originy="42" flipx="0" flipy="0" 
+
+animation state="WALK_UR"
+frame duration="0.15" x="103" y="45" w="40" h="42" originx="17" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="53" y="44" w="40" h="43" originx="19" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="151" y="0" w="45" h="45" originx="22" originy="43" flipx="0" flipy="0" 
+frame duration="0.15" x="53" y="0" w="50" h="44" originx="27" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="196" y="44" w="40" h="43" originx="17" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="117" y="87" w="26" h="44" originx="13" originy="43" flipx="0" flipy="0" 
+
+animation state="WALK_DR"
+frame duration="0.15" x="0" y="0" w="53" h="42" originx="27" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="103" y="0" w="48" h="45" originx="24" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="84" w="34" h="46" originx="16" originy="43" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="42" w="43" h="42" originx="21" originy="41" flipx="0" flipy="0" 
+frame duration="0.15" x="143" y="45" w="39" h="43" originx="23" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="196" y="0" w="46" h="44" originx="24" originy="43" flipx="0" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.05" x="53" y="87" w="32" h="45" originx="16" originy="42" flipx="1" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.05" x="85" y="87" w="32" h="45" originx="17" originy="42" flipx="1" flipy="0" 
+
+animation state="WALK_UL"
+frame duration="0.15" x="103" y="45" w="40" h="42" originx="17" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="53" y="44" w="40" h="43" originx="19" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="151" y="0" w="45" h="45" originx="22" originy="43" flipx="1" flipy="0" 
+frame duration="0.15" x="53" y="0" w="50" h="44" originx="27" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="196" y="44" w="40" h="43" originx="17" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="117" y="87" w="26" h="44" originx="13" originy="43" flipx="1" flipy="0" 
+
+animation state="WALK_DL"
+frame duration="0.15" x="0" y="0" w="53" h="42" originx="27" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="103" y="0" w="48" h="45" originx="24" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="84" w="34" h="46" originx="16" originy="43" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="42" w="43" h="42" originx="21" originy="41" flipx="1" flipy="0" 
+frame duration="0.15" x="143" y="45" w="39" h="43" originx="23" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="196" y="0" w="46" h="44" originx="24" originy="43" flipx="1" flipy="0" 
