@@ -67,7 +67,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     if dialogue_type == nil then
         return
     end
-    local mug_texture_path = npc_asset_folder.."mug/"..npc.asset_name..".png"
+    local mug_texture_path = npc_asset_folder.."mug/"..mugshot_asset_name..".png"
     local mug_animation_path = npc.mug_animation_path
     if mugshot_asset_name == "player" then
         local player_mugshot = Net.get_player_mugshot(player_id)
