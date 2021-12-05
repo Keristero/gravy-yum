@@ -29,10 +29,11 @@ add objects to your map with Type=`NPC` on an object layer above the tile layer 
     - Dialogue Type: string
         - by including this property, this npc will become interactable
         - see the section on [`Dialogues`](#Dialogues).
+        - all the other dialogue properties can also be used here
     - Next Waypoint 1: string
         - by including this property, this npc will follow waypoints
         - Indicates the first waypoint that the npc should move to
-        - see the section on [`Waypoints`](#Waypoints).
+        - see the section on [`Waypoints`](#Waypoints)
 
 
 
@@ -49,6 +50,11 @@ any object can be a dialogue, you can use these custom properties to define what
         - `question`
             - prompts the player to choose yes or no, with `Text 1` as the prompt text
             - afterwards the dialogues `Next 1` or `Next 2` will be triggered, matching the player's choice.
+        - `before`
+            - compares current time against [`Date`](#Date) custom property
+            - if the current time is before `Date`, `Text 1` will be displayed, otherwise `Text 2`, it will go to the respective `Next x` dialogue node afterwards
+        - `after`
+            - same as `before`, checks if current time is after `Date`
         - `none`
             - usually used with `Event Name`, no dialogue, but the event will still be triggered
             
@@ -60,6 +66,10 @@ any object can be a dialogue, you can use these custom properties to define what
         - ID of the next dialogue to activate after the corresponding Text is spoken / chosen
     - Event Name: string
         - Name of event to activate when this dialogue starts, events can be added in your eznpcs entry script, see [`Dialogue Events`](#DialogueEvents) for details.
+    - Mugshot: string
+        - Override the speaking bot's mugshot with another one for this dialogue node.
+        - for example, even though `prog` is speaking, we can make it display Bass' mugshot by setting `Mugshot` to `bass`
+        - There is a special value `player` which will get the mugshot of the player talking to the NPC, useful for back and forth conversations
 
 ### Waypoints
 any object can be a waypoint, you can use these custom properties to define what the NPC will do once it reaches said object.
@@ -70,6 +80,11 @@ any object can be a waypoint, you can use these custom properties to define what
             - after reaching this waypoint, the NPC will head to the waypoint referenced by the first `Next Waypoint #` custom property, usually `Next Waypoint 1`
         - `random`
             - after reaching this waypoint, the next one will be selected from a random `Next Waypoint #` custom property.
+        - `before`
+            - compares current time against [`Date`](#Date) custom property
+            - if the current time is before `Date`, `Next Waypoint 1` will be next, otherwise `Next Waypoint 2` will be.
+        - `after`
+            - same as `before`, checks if current time is after `Date`
     - Wait Time: int
         - time in seconds to wait before moving to next waypoint
     - Direction: string
@@ -77,6 +92,15 @@ any object can be a waypoint, you can use these custom properties to define what
         - see the section on [`Directions`](#Directions).
     - Waypoint Event: string
         - coming soon
+
+### Date
+the `Date` custom property can be used for time based conditions on Dialogue nodes and Waypoints
+the format is a super duper basic cron like format. there are 6 numbers seperated by spaces for each part of the date string
+`second` `minute` `hour` `day` `month` `year`
+you can hardcode a specific date and time like this
+`0 0 13 1 1 2000` (1pm on first of january year 2000)
+or you can use wildcards which will always behave as the current time for that column
+`30 * * * * *` (30 seconds through the current minute, today)
 
 
 ### Interact Relay
