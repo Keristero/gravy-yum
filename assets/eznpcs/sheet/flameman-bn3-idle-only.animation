@@ -1,0 +1,21 @@
+imagePath="flameman-bn3-idle-only.png"
+
+animation state="IDLE_DR"
+frame duration="0.15" x="34" y="0" w="34" h="59" originx="14" originy="55" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="0" w="34" h="60" originx="14" originy="57" flipx="0" flipy="0" 
+frame duration="0.15" x="68" y="0" w="34" h="57" originx="14" originy="54" flipx="0" flipy="0" 
+
+animation state="IDLE_UR"
+frame duration="0.15" x="68" y="57" w="33" h="54" originx="14" originy="53" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="60" w="33" h="47" originx="14" originy="46" flipx="0" flipy="0" 
+frame duration="0.15" x="34" y="59" w="33" h="53" originx="14" originy="52" flipx="0" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.15" x="34" y="0" w="34" h="59" originx="14" originy="55" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="0" w="34" h="60" originx="14" originy="57" flipx="1" flipy="0" 
+frame duration="0.15" x="68" y="0" w="34" h="57" originx="14" originy="54" flipx="1" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.15" x="68" y="57" w="33" h="54" originx="14" originy="53" flipx="1" flipy="0" 
+frame duration="0.15" x="0" y="60" w="33" h="47" originx="14" originy="46" flipx="1" flipy="0" 
+frame duration="0.15" x="34" y="59" w="33" h="53" originx="14" originy="52" flipx="1" flipy="0" 
