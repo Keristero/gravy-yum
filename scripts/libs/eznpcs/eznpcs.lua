@@ -1,4 +1,5 @@
 local Direction = require("scripts/libs/direction")
+local helpers = require('scripts/libs/helpers')
 local math = require('math')
 
 local eznpcs = {}
@@ -78,6 +79,33 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
         local rnd_text_index = math.random( #dialogue_texts)
         message = dialogue_texts[rnd_text_index]
         next_dialogue_id = next_dialogues[rnd_text_index] or next_dialogues[1]
+    end
+
+    --date based events
+    local date_b = dialogue.custom_properties['Date']
+    if dialogue_type == "before" then
+        if date_b and #dialogue_texts >= 2 then
+            message = dialogue_texts[2]
+            next_dialogue_id = next_dialogues[2]
+            if is_now_before_date(date_b) then
+                message = dialogue_texts[1]
+                next_dialogue_id = next_dialogues[1]
+            end
+        else
+            print(npc.id..' missing before dialogue properties')
+        end
+    end
+    if dialogue_type == "after" then
+        if date_b and #dialogue_texts >= 2 then
+            message = dialogue_texts[2]
+            next_dialogue_id = next_dialogues[2]
+            if not is_now_before_date(date_b) then
+                message = dialogue_texts[1]
+                next_dialogue_id = next_dialogues[1]
+            end
+        else
+            print(npc.id..' missing after dialogue properties')
+        end
     end
 
     Net.set_bot_direction(npc.bot_id, Direction.from_points(npc, player_pos))
@@ -196,7 +224,9 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mu
         size=0.2,
         speed=1,
     }
+    print('creating bot')
     local lastBotId = Net.create_bot(npc_data)
+     print('creating bot')
     npc_data.bot_id = lastBotId
     npcs[lastBotId] = npc_data
     print('[eznpcs] created npc '..lastBotId..' at ('..x..','..y..','..z..')')
@@ -334,6 +364,35 @@ function MoveNPC(npc,delta_time)
 
 end
 
+function date_string_to_timestamp(date_string)
+    --expect basic cron like date format, only supporting * or specific values
+    --0 0 10 15 * * this would be on the 15th of every month at 10AM
+    --seconds, minute, hour, day, month, year
+    local current_date = os.date("*t")
+    local date_parts = helpers.split(date_string," ")
+    if #date_parts < 6 then
+        return nil
+    end
+    local date_part_keys = {"sec","min","hour","day","month","year"}
+    --everywhere that is not a * in the date string, replace time value with specified time
+    for index, value in ipairs(date_parts) do
+        if value ~= "*" then
+            local date_part_key = date_part_keys[index]
+            current_date[date_part_key] = tonumber(value)
+        end
+    end
+    return os.time{year=current_date.year, month=current_date.month, day=current_date.day, hour=current_date.hour, min=current_date.min, sec=current_date.sec}
+end
+
+function is_now_before_date(date_string)
+    local timestamp_a = os.time()
+    local timestamp_b = date_string_to_timestamp(date_string)
+    if timestamp_a < timestamp_b then
+        return true
+    end
+    return false
+end
+
 function NPCReachedWaypoint(npc,waypoint)
     if waypoint.custom_properties['Wait Time'] ~= nil then
         npc.wait_time = tonumber(waypoint.custom_properties['Wait Time'])
@@ -355,6 +414,25 @@ function NPCReachedWaypoint(npc,waypoint)
         local next_waypoint_index = math.random(#next_waypoints)
         next_waypoint_id = next_waypoints[next_waypoint_index]
     end
+    --date based events
+    local date_b = waypoint.custom_properties['Date']
+    if waypoint_type == "before" then
+        if date_b then
+            next_waypoint_id = next_waypoints[2]
+            if is_now_before_date(date_b) then
+                next_waypoint_id = next_waypoints[1]
+            end
+        end
+    end
+    if waypoint_type == "after" then
+        if date_b then
+            next_waypoint_id = next_waypoints[2]
+            if not is_now_before_date(date_b) then
+                next_waypoint_id = next_waypoints[1]
+            end
+        end
+    end
+
     if next_waypoint_id then
         npc.next_waypoint = Net.get_object_by_id(npc.area_id,next_waypoint_id)
     end
