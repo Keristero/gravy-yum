@@ -77,9 +77,12 @@ function ezmemory.get_or_create_item_id(item_name,item_description,is_key)
         return item_name_table[item_name]
     end
     print('[ezmemory] item '..item_name..' does not exist')
-    if not item_name or not item_description then
-        print('[ezmemory] item not created, missing name or description')
+    if not item_name then
+        print('[ezmemory] item not created, missing name')
         return
+    end
+    if not item_description then
+        item_description = ""
     end
     local new_item_id = tostring(highest_item_id + 1)
     local new_item = {name=item_name,description=item_description,key_item=is_key}
