@@ -85,6 +85,10 @@ function try_collect_datum(player_id,object)
         return
     end
     if object.custom_properties["Locked"] == "true" then
+        local unlocker_tool_name = "Unlocker"
+        if object.custom_properties["Unlocker Name"] then
+            unlocker_tool_name = object.custom_properties["Unlocker Name"]
+        end
         Net.message_player(player_id,"The Mystery Data is locked.")
         if ezmemory.count_player_item(player_id, "Unlocker") > 0 then
             data_dialogues[player_id] = {state="say_locked",object=object}
@@ -120,7 +124,8 @@ function collect_datum(player_id,object,datum_id_override)
             return
         end
         --Give the player an item
-        ezmemory.give_player_item(player_id,name,description,1,true)
+        ezmemory.create_or_update_item(name,description,true)
+        ezmemory.give_player_item(player_id,name,1)
         Net.message_player(player_id,"Got "..name.."!")
         Net.play_sound_for_player(player_id,sfx.item_get)
     elseif object.custom_properties["Type"] == "money" then
