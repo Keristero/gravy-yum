@@ -194,7 +194,7 @@ function ezmemory.give_player_item(player_id, name, amount)
         return 0
     end
     local item_info = ezmemory.get_item_info(item_id)
-    if item_info.is_key then
+    if item_info.key_item then
         for i=1,amount do
             Net.give_player_item(player_id, item_id)
         end
