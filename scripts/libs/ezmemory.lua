@@ -71,21 +71,17 @@ function ezmemory.get_item_info(item_id)
     return nil
 end
 
-function ezmemory.create_or_update_item(item_name,item_description,is_key)
+function ezmemory.get_or_create_item_id(item_name,item_description,is_key)
+    if item_name_table[item_name] then
+        --If there is already an item with this name
+        return item_name_table[item_name]
+    end
+    print('[ezmemory] item '..item_name..' does not exist')
     if not item_name or not item_description then
         print('[ezmemory] item not created, missing name or description')
         return
     end
-    local existing_item_id = ezmemory.get_item_id_by_name(item_name)
-    local new_item_id
-    if existing_item_id ~= nil then
-        new_item_id = existing_item_id
-        print('[ezmemory] item with name '..item_name..' already exists, overwriting')
-    else
-        new_item_id = tostring(highest_item_id + 1)
-        highest_item_id = tonumber(new_item_id)
-    end
-
+    local new_item_id = tostring(highest_item_id + 1)
     local new_item = {name=item_name,description=item_description,key_item=is_key}
     items[new_item_id] = new_item
     item_name_table[item_name] = new_item_id
@@ -93,24 +89,9 @@ function ezmemory.create_or_update_item(item_name,item_description,is_key)
     if is_key then
         Net.create_item(new_item_id,new_item)
     end
+    highest_item_id = tonumber(new_item_id)
+    print('[ezmemory] added new item: '..item_name)
     return new_item_id
-end
-
-function ezmemory.get_item_id_by_name(item_name)
-    if item_name_table[item_name] then
-        --If there is already an item with this name
-        return item_name_table[item_name]
-    end
-    print('[ezmemory] item '..item_name..' does not exist')
-    return nil
-end
-
-function ezmemory.get_or_create_item(item_name,item_description,is_key)
-    local existing_item_id = ezmemory.get_item_id_by_name(item_name)
-    if existing_item_id ~= nil then
-        return existing_item_id
-    end
-    return ezmemory.create_or_update_item(item_name,item_description,is_key)
 end
 
 function ezmemory.save_items()
@@ -181,20 +162,15 @@ function ezmemory.get_player_name_from_safesecret(safe_secret)
     return "Unknown"
 end
 
-function ezmemory.give_player_item(player_id, name, amount)
+function ezmemory.give_player_item(player_id, name, description, amount, is_key)
     if not amount then
         amount = 1
     end
     --TODO index items with player_memory.items[item_id]
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    local item_id = ezmemory.get_item_id_by_name(name)
-    if item_id == nil then
-        print('cant give player '..name..' because it has not been created')
-        return 0
-    end
-    local item_info = ezmemory.get_item_info(item_id)
-    if item_info.is_key then
+    local item_id = ezmemory.get_or_create_item_id(name,description,is_key)
+    if is_key then
         for i=1,amount do
             Net.give_player_item(player_id, item_id)
         end
@@ -208,17 +184,13 @@ function ezmemory.give_player_item(player_id, name, amount)
     end
     print('[ezmemory] gave '..player_id..' '..amount..' '..name..' now they have '..player_memory.items[item_id])
     ezmemory.save_player_memory(safe_secret)
-    return player_memory.items[item_id]
 end
 
 function ezmemory.remove_player_item(player_id, name, remove_quant)
+    print('[ezmemory] removed a '..name..' from '..player_id)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    local item_id = ezmemory.get_item_id_by_name(name)
-    if item_id == nil then
-        print('[ezmemory] cant remove a '..name..' because it does not exist')
-        return 0
-    end
+    local item_id = ezmemory.get_or_create_item_id(name)
     if player_memory.items[item_id] then
         --If the player has the item
         if items[item_id].key_item then
@@ -236,7 +208,6 @@ function ezmemory.remove_player_item(player_id, name, remove_quant)
         ezmemory.save_player_memory(safe_secret)
         return player_memory.items[item_id]
     end
-    print('[ezmemory] removed a '..name..' from '..player_id)
     return 0
 end
 
@@ -264,10 +235,7 @@ end
 function ezmemory.count_player_item(player_id, item_name)
     local safe_secret = helpers.get_safe_player_secret(player_id)
     local player_memory = ezmemory.get_player_memory(safe_secret)
-    local item_id = ezmemory.get_item_id_by_name(item_name)
-    if item_id == nil then
-        return 0
-    end
+    local item_id = ezmemory.get_or_create_item_id(item_name)
     if player_memory.items[item_id] then
         return player_memory.items[item_id]
     end
