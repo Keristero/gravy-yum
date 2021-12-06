@@ -120,7 +120,8 @@ function collect_datum(player_id,object,datum_id_override)
             return
         end
         --Give the player an item
-        ezmemory.give_player_item(player_id,name,description,1,true)
+        ezmemory.create_or_update_item(name,description,true)
+        ezmemory.give_player_item(player_id,name,1)
         Net.message_player(player_id,"Got "..name.."!")
         Net.play_sound_for_player(player_id,sfx.item_get)
     elseif object.custom_properties["Type"] == "money" then

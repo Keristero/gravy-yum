@@ -326,7 +326,9 @@ function try_buy_seed(player_id,plant_name)
     local price = PlantData[plant_name].price
     if ezmemory.spend_player_money(player_id,price) then
         Net.play_sound_for_player(player_id,sfx.item_get)
-        ezmemory.give_player_item(player_id, plant_name.." seed", "seed for planting "..plant_name)
+        local seed_name = plant_name.." seed"
+        ezmemory.get_or_create_item(seed_name, "seed for planting "..plant_name,false)
+        ezmemory.give_player_item(player_id, seed_name,1)
     else
         Net.message_player(player_id,"Not enough $")
         Net.play_sound_for_player(player_id,sfx.card_error)
@@ -529,7 +531,8 @@ local function harvest(tile_loc_string,player_id,safe_secret,current_time)
     local harvest_count = math.random(plant_info.harvest[1],plant_info.harvest[2])
     Net.message_player(player_id,"Harvested "..harvest_count.." "..plant_name.."!")
     Net.play_sound_for_player(player_id,sfx.item_get)
-    ezmemory.give_player_item(player_id, plant_name, "mmm, yummy "..plant_name,harvest_count)
+    ezmemory.get_or_create_item(plant_name, "mmm, yummy "..plant_name,false)
+    ezmemory.give_player_item(player_id, plant_name,harvest_count)
     deleet_plant(tile_loc_string,current_time)
 end
 

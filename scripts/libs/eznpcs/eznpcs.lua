@@ -43,6 +43,11 @@ local npc_required_properties = {"Direction","Asset Name"}
 function DoDialogue(npc,player_id,dialogue,relay_object)
     local dialogue_type = dialogue.custom_properties["Dialogue Type"]
     local event_name = dialogue.custom_properties["Event Name"]
+    local custom_mugshot = dialogue.custom_properties["Mugshot"]
+    local mugshot_asset_name = npc.asset_name
+    if custom_mugshot then
+        mugshot_asset_name = custom_mugshot
+    end
     local message = ""
     local next_dialogue_id = nil
     if event_name then
@@ -62,8 +67,13 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     if dialogue_type == nil then
         return
     end
-    local mug_texture_path = npc_asset_folder.."mug/"..npc.asset_name..".png"
+    local mug_texture_path = npc_asset_folder.."mug/"..mugshot_asset_name..".png"
     local mug_animation_path = npc.mug_animation_path
+    if mugshot_asset_name == "player" then
+        local player_mugshot = Net.get_player_mugshot(player_id)
+        mug_texture_path = player_mugshot.texture_path
+        mug_animation_path = player_mugshot.animation_path
+    end
     local player_pos = Net.get_player_position(player_id)
 
     local dialogue_texts = ExtractNumberedProperties(dialogue,"Text ")
@@ -220,7 +230,7 @@ function CreateNPC(area_id,asset_name,x,y,z,direction,bot_name,animation_name,mu
         y=y, 
         z=z, 
         direction=direction, 
-        solid=true, 
+        solid=true,
         size=0.2,
         speed=1,
     }
