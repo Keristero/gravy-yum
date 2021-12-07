@@ -1,0 +1,1 @@
+1. make all functions that should not be exported private by adding `local` before them
