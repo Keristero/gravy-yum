@@ -189,7 +189,7 @@
   <object id="253" name="Big Meanie" type="NPC" x="656" y="496">
    <properties>
     <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Dialogue Type" value="after"/>
+    <property name="Dialogue Type" value="random"/>
     <property name="Direction" value="Down"/>
     <property name="Next 1" type="object" value="430"/>
     <property name="Next Waypoint 1" type="object" value="247"/>
