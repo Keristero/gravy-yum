@@ -102,7 +102,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
                 next_dialogue_id = next_dialogues[1]
             end
         else
-            print(npc.id..' missing before dialogue properties')
+            print('missing before dialogue properties')
         end
     end
     if dialogue_type == "after" then
@@ -114,7 +114,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
                 next_dialogue_id = next_dialogues[1]
             end
         else
-            print(npc.id..' missing after dialogue properties')
+            print('missing after dialogue properties')
         end
     end
 

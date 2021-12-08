@@ -5,6 +5,7 @@
   <property name="Background Vel X" type="int" value="-2"/>
   <property name="Background Vel Y" type="int" value="-2"/>
   <property name="Name" value="Gravy Pot"/>
+  <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
   <property name="Song" value="/server/assets/graveyard.ogg"/>
  </properties>
  <tileset firstgid="1" source="../assets/tiles/simple-graveyard-tiles-64-40.tsx"/>

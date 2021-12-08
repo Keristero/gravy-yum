@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="743">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="745">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
  <properties>
   <property name="Background" value="grave"/>
   <property name="Name" value="Gravy Yum"/>
+  <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
   <property name="Song" value="/server/assets/graveyard.ogg"/>
  </properties>
  <tileset firstgid="1" source="../assets/objects/home_warp.tsx"/>
@@ -188,12 +189,11 @@
   <object id="253" name="Big Meanie" type="NPC" x="656" y="496">
    <properties>
     <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Dialogue Type" value="random"/>
+    <property name="Dialogue Type" value="after"/>
     <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="430"/>
+    <property name="Next 1" type="object" value="744"/>
+    <property name="Next 2" type="object" value="743"/>
     <property name="Next Waypoint 1" type="object" value="247"/>
-    <property name="Text 1" value="You're in my way"/>
-    <property name="Text 2" value="I'm walkin here"/>
    </properties>
    <point/>
   </object>
@@ -233,7 +233,7 @@
    <point/>
   </object>
   <object id="427" gid="74" x="544" y="552" width="144" height="79"/>
-  <object id="430" name="question" x="680" y="472">
+  <object id="430" name="question" x="736" y="472">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="431"/>
@@ -242,14 +242,14 @@
    </properties>
    <point/>
   </object>
-  <object id="431" name="yes" x="680" y="424">
+  <object id="431" name="yes" x="728" y="416">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Punch"/>
    </properties>
    <point/>
   </object>
-  <object id="432" name="no" x="728" y="464">
+  <object id="432" name="no" x="776" y="448">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Then scram!"/>
@@ -622,6 +622,22 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
+  <object id="743" name="normal message" x="704" y="496">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 1" type="object" value="430"/>
+    <property name="Text 1" value="You're in my way"/>
+    <property name="Text 2" value="I'm walkin here"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="744" name="christmas message" x="664" y="456">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="The snow reminds me of when I was a kid..."/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -713,6 +729,7 @@ Donkey Kong is here!</property>
   <object id="740" name="response" x="608" y="864">
    <properties>
     <property name="Dialogue Type" value="first"/>
+    <property name="Event Name" value="Snow"/>
     <property name="Text 1" value="And puttin it down!"/>
    </properties>
    <point/>

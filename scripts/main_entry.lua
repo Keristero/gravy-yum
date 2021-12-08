@@ -3,9 +3,10 @@ local ezmemory = require('scripts/libs/ezmemory')
 local ezmystery = require('scripts/libs/ezmystery')
 local ezfarms = require('scripts/libs/ezfarms')
 local ezweather = require('scripts/libs/ezweather')
+local ezchristmas = require('scripts/libs/ezchristmas')
 local ezwarps = require('scripts/libs/ezwarps/main')
 
-local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps}
+local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps,ezchristmas}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',
@@ -108,6 +109,21 @@ local event1 = {
     end
 }
 eznpcs.add_event(event1)
+
+local event_snow = {
+    name="Snow",
+    action=function (npc,player_id,dialogue,relay_object)
+        local area_id = Net.get_player_area(player_id)
+        ezweather.start_snow_in_area(area_id)
+        local next_dialouge_options = {
+            id=dialogue.custom_properties["Next 1"],
+            wait_for_response=false
+        }
+        return next_dialouge_options
+    end
+}
+eznpcs.add_event(event_snow)
+
 
 local event2 = {
     name="Buy Gravy",

@@ -6,6 +6,7 @@
   <property name="Background Vel Y" type="int" value="-2"/>
   <property name="Name" value="Gravy Farms"/>
   <property name="Rain Song" value="/server/assets/sfx/ezfarms/wet_hands_raining.ogg"/>
+  <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
   <property name="Song" value="/server/assets/famserver8.ogg"/>
  </properties>
  <tileset firstgid="1" source="../assets/tiles/simple-graveyard-tiles-64-40.tsx"/>

@@ -25,7 +25,7 @@ function ezweather.start_rain_in_area(area_id)
 
     volatile_memory[area_id] = {
         type="rain",
-        camera_tint={r=10, g=10, b=40, a=150}
+        camera_tint={r=10, g=10, b=40, a=120}
     }
 
     local area_custom_properties = Net.get_area_custom_properties(area_id)
@@ -38,6 +38,28 @@ function ezweather.start_rain_in_area(area_id)
     Net.set_area_custom_property(area_id, "Foreground Parallax", 1.3)
     Net.set_area_custom_property(area_id, "Foreground Vel X", 0.2)
     Net.set_area_custom_property(area_id, "Foreground Vel Y", 0.3)
+
+    fade_camera_for_players_in_area(area_id)
+end
+
+function ezweather.start_snow_in_area(area_id)
+    print('[ezweather] starting rain in '..area_id)
+
+    volatile_memory[area_id] = {
+        type="snow",
+        camera_tint={r=255, g=255, b=255, a=40}
+    }
+
+    local area_custom_properties = Net.get_area_custom_properties(area_id)
+    if area_custom_properties["Snow Song"] then
+        Net.set_song(area_id, area_custom_properties["Snow Song"])
+    end
+
+    Net.set_area_custom_property(area_id, "Foreground Animation", "/server/assets/ezweather/snow.animation")
+    Net.set_area_custom_property(area_id, "Foreground Texture", "/server/assets/ezweather/snow.png")
+    Net.set_area_custom_property(area_id, "Foreground Parallax", 1.3)
+    Net.set_area_custom_property(area_id, "Foreground Vel X", 0.2)
+    Net.set_area_custom_property(area_id, "Foreground Vel Y", -0.1)
 
     fade_camera_for_players_in_area(area_id)
 end
@@ -76,6 +98,13 @@ end
 
 function ezweather.handle_player_transfer(player_id)
     print('[ezweather] player transfered '..player_id)
+    local area_id = Net.get_player_area(player_id)
+    local area_weather = ezweather.get_area_weather(area_id)
+    Net.fade_player_camera(player_id, area_weather.camera_tint, 1)
+end
+
+function ezweather.handle_player_join(player_id)
+    print('[ezweather] player joined '..player_id)
     local area_id = Net.get_player_area(player_id)
     local area_weather = ezweather.get_area_weather(area_id)
     Net.fade_player_camera(player_id, area_weather.camera_tint, 1)
