@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="2021.03.23" orientation="isometric" renderorder="right-down" width="40" height="31" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="144">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="40" height="31" tilewidth="64" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="145">
  <properties>
   <property name="Background" value="grave"/>
   <property name="Background Vel X" type="int" value="-2"/>
@@ -22,6 +22,7 @@
  <tileset firstgid="98" source="../assets/objects/water-thing-spout.tsx"/>
  <tileset firstgid="104" source="../assets/objects/gate.tsx"/>
  <tileset firstgid="109" source="../assets/objects/plants/plants.tsx"/>
+ <tileset firstgid="214" source="../assets/objects/BlueMysteryData.tsx"/>
  <layer id="1" name="Tile Layer 1" width="40" height="31">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,86,86,86,86,86,0,0,0,0,0,0,0,0,0,
@@ -462,6 +463,14 @@ GOOD LUCK!</property>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
+  </object>
+  <object id="144" type="Mystery Datum" gid="214" x="656" y="720" width="14" height="43">
+   <properties>
+    <property name="Description" value="It is emitting a powerful aura..."/>
+    <property name="Name" value="GigFreez"/>
+    <property name="Once" type="bool" value="false"/>
+    <property name="Type" value="keyitem"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

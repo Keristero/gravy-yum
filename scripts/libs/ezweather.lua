@@ -1,26 +1,43 @@
 local ezweather = {}
 
-local memory = {}
+local volatile_memory = {}
 
+--On server start, record the default custom properties for each area that might be overwritten if the weather changes
 --TODO, support areas being added during server runtime
-local og_songs = {}
+local fine_weather_properties = {}
 local areas = Net.list_areas()
+local weather_properties = {"Song","Foreground Animation","Foreground Texture","Foreground Parallax","Foreground Vel X","Foreground Vel Y"}
 for i, area_id in ipairs(areas) do
     local area_custom_properties = Net.get_area_custom_properties(area_id)
-    if area_custom_properties["Song"] then
-        og_songs[area_id] = area_custom_properties["Song"]
+    fine_weather_properties[area_id] = {}
+    for i, property_name in ipairs(weather_properties) do
+        if area_custom_properties[property_name] ~= nil then
+            --store the default property for returning the weather to normal later
+            fine_weather_properties[area_id][property_name] = area_custom_properties[property_name]
+        else
+            fine_weather_properties[area_id][property_name] = ""
+        end
     end
 end
 
 function ezweather.start_rain_in_area(area_id)
     print('[ezweather] starting rain in '..area_id)
 
-    memory[area_id] = {camera_tint={r=10, g=10, b=40, a=150},type="rain"}
+    volatile_memory[area_id] = {
+        type="rain",
+        camera_tint={r=10, g=10, b=40, a=150}
+    }
 
     local area_custom_properties = Net.get_area_custom_properties(area_id)
     if area_custom_properties["Rain Song"] then
         Net.set_song(area_id, area_custom_properties["Rain Song"])
     end
+
+    Net.set_area_custom_property(area_id, "Foreground Animation", "/server/assets/ezweather/rain.animation")
+    Net.set_area_custom_property(area_id, "Foreground Texture", "/server/assets/ezweather/rain.png")
+    Net.set_area_custom_property(area_id, "Foreground Parallax", 1.3)
+    Net.set_area_custom_property(area_id, "Foreground Vel X", 0.2)
+    Net.set_area_custom_property(area_id, "Foreground Vel Y", 0.3)
 
     fade_camera_for_players_in_area(area_id)
 end
@@ -28,28 +45,33 @@ end
 function fade_camera_for_players_in_area(area_id)
     local players_in_area = Net.list_players(area_id)
     for i, player_id in ipairs(players_in_area) do
-        Net.fade_player_camera(player_id, memory[area_id].camera_tint, 1)
+        Net.fade_player_camera(player_id, volatile_memory[area_id].camera_tint, 1)
     end
 end
 
 function ezweather.get_area_weather(area_id)
-    if not memory[area_id] then
-        local original_song_path = Net.get_song(area_id)
-        memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
+    if not volatile_memory[area_id] then
+        volatile_memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
     end
-    return memory[area_id]
+    return volatile_memory[area_id]
 end
 
 function ezweather.clear_weather_in_area(area_id)
-    print('[ezweather] stopping rain in '..area_id)
-    memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
+    print('[ezweather] restoring fine weather properties for '..area_id)
 
+    --fade camera to no tint
+    volatile_memory[area_id] = {camera_tint={r=0, g=0, b=0, a=0},type="clear"}
     fade_camera_for_players_in_area(area_id)
-    local area_custom_properties = Net.get_area_custom_properties(area_id)
-    if og_songs[area_id] then
-        print('[ezweather] restoring default song for '..area_id)
-        Net.set_song(area_id,og_songs[area_id])
+
+    --restore default properties
+    for property_name, property_value in pairs(fine_weather_properties[area_id]) do
+        Net.set_area_custom_property(area_id, property_name, property_value)
     end
+
+    --set the song to to change the music, not sure if it is needed?
+    --if fine_weather_properties[area_id].song then
+    --    Net.set_song(area_id,fine_weather_properties[area_id].song)
+    --end
 end
 
 function ezweather.handle_player_transfer(player_id)
