@@ -191,9 +191,10 @@
     <property name="Asset Name" value="heel-navi-exe4_black"/>
     <property name="Dialogue Type" value="after"/>
     <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="744"/>
-    <property name="Next 2" type="object" value="743"/>
+    <property name="Next 1" type="object" value="430"/>
     <property name="Next Waypoint 1" type="object" value="247"/>
+    <property name="Text 1" value="You're in my way"/>
+    <property name="Text 2" value="I'm walkin here"/>
    </properties>
    <point/>
   </object>
@@ -233,7 +234,7 @@
    <point/>
   </object>
   <object id="427" gid="74" x="544" y="552" width="144" height="79"/>
-  <object id="430" name="question" x="736" y="472">
+  <object id="430" name="question" x="696" y="464">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="431"/>
@@ -242,14 +243,14 @@
    </properties>
    <point/>
   </object>
-  <object id="431" name="yes" x="728" y="416">
+  <object id="431" name="yes" x="704" y="416">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Punch"/>
    </properties>
    <point/>
   </object>
-  <object id="432" name="no" x="776" y="448">
+  <object id="432" name="no" x="760" y="448">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Then scram!"/>
@@ -619,22 +620,6 @@ Donkey Kong is here!</property>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="498"/>
     <property name="Waypoint Type" value="random"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="743" name="normal message" x="704" y="496">
-   <properties>
-    <property name="Dialogue Type" value="random"/>
-    <property name="Next 1" type="object" value="430"/>
-    <property name="Text 1" value="You're in my way"/>
-    <property name="Text 2" value="I'm walkin here"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="744" name="christmas message" x="664" y="456">
-   <properties>
-    <property name="Dialogue Type" value="random"/>
-    <property name="Text 1" value="The snow reminds me of when I was a kid..."/>
    </properties>
    <point/>
   </object>
