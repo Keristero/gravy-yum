@@ -127,24 +127,34 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
             Net.message_player(player_id, message, mug_texture_path, mug_animation_path)
         end
     end
-    textbox_responses[player_id] = {
-        npc=npc,
-        action=function(response)
-            EndConversation(player_id)
-            if dialogue_type == "question" then
-                local next_index = 2
-                if response == 1 then
-                    next_index = 1
+
+    if message == "" and next_dialogue_id then
+        --If we know what dialogue is next but we have no message to send
+        --Do the next dialogue now
+        local area_id = Net.get_player_area(player_id)
+        local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
+        DoDialogue(npc,player_id,dialogue,relay_object)
+    else
+        --If we have a message to send, send it and queue up this callback for handling the response.
+        textbox_responses[player_id] = {
+            npc=npc,
+            action=function(response)
+                EndConversation(player_id)
+                if dialogue_type == "question" then
+                    local next_index = 2
+                    if response == 1 then
+                        next_index = 1
+                    end
+                    next_dialogue_id = next_dialogues[next_index]
                 end
-                next_dialogue_id = next_dialogues[next_index]
+                if next_dialogue_id then
+                    local area_id = Net.get_player_area(player_id)
+                    local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
+                    DoDialogue(npc,player_id,dialogue,relay_object)
+                end
             end
-            if next_dialogue_id then
-                local area_id = Net.get_player_area(player_id)
-                local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
-                DoDialogue(npc,player_id,dialogue,relay_object)
-            end
-        end
-    }
+        }
+    end
 end
 
 function ExtractNumberedProperties(object,property_prefix)
