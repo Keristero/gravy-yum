@@ -626,7 +626,8 @@ Donkey Kong is here!</property>
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="All this drama. whats so good about christmas"/>
-    <property name="Text 3" value="Time to bust some christmas trees again. hehehe"/>
+    <property name="Text 2" value="Time to bust some christmas trees again. hehehe"/>
+    <property name="Text 3" value="Atleast Ill have some coal for my fireplace again"/>
    </properties>
    <point/>
   </object>

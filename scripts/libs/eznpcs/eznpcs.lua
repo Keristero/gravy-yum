@@ -42,49 +42,14 @@ local cache_types = {"NPC","Waypoint","Dialogue"}
 
 --TODO load all waypoints / dialogues on server start and delete them from the map to save bandwidth
 
-function object_is_cachable_type(object)
-    local should_be_cached = false
-    for index, cache_type in ipairs(cache_types) do
-        if object.type == cache_type then
-            should_be_cached = true
-        end
-    end
-    return should_be_cached
-end
-
-function eznpcs.get_object_by_id(area_id,object_id)
-    area_id = tostring(area_id)
-    object_id = tostring(object_id)
-    --same as eznpcs.get_object_by_id except it uses objects from a cache and caches them if they are not already cached
-    if not object_cache[area_id] then
-        object_cache[area_id] = {}
-    end
-    if object_cache[area_id][object_id] ~= nil then
-        return object_cache[area_id][object_id]
-    else
-        local object_data = Net.get_object_by_id(area_id,object_id)
-        if object_data then
-            local should_be_cached = object_is_cachable_type(object_data)
-            if should_be_cached then
-                object_cache[area_id][object_id] = object_data
-                Net.remove_object(area_id, object_id)
-            end
-            return object_data
-        else
-            print('[eznpcs] unable to find object '..area_id..","..object_id)
-            return nil
-        end
-    end
-end
-
 function DoDialogue(npc,player_id,dialogue,relay_object)
     local area_id = Net.get_player_area(player_id)
     local dialogue_type = dialogue.custom_properties["Dialogue Type"]
     local event_name = dialogue.custom_properties["Event Name"]
     local custom_mugshot = dialogue.custom_properties["Mugshot"]
-    local should_be_cached = object_is_cachable_type(dialogue)
+    local should_be_cached = helpers.object_is_of_type(dialogue,cache_types)
     if not should_be_cached then
-        print('[eznpcs] WARNING Dialogue '..dialogue.id.." in "..area_id.." has incorrect type and wont be cached")
+        print("[eznpcs] WARNING Dialogue "..dialogue.id.." at "..dialogue.x..","..dialogue.y.." in "..npc.area_id.." has incorrect type and wont be cached")
     end
     local mugshot_asset_name = npc.asset_name
     if custom_mugshot then
@@ -97,7 +62,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
         if next_dialogue_info then
             if next_dialogue_info.id then
                 if not next_dialogue_info.wait_for_response then
-                    local dialogue = eznpcs.get_object_by_id(area_id,next_dialogue_info.id)
+                    local dialogue = helpers.get_object_by_id_cached(area_id,next_dialogue_info.id,object_cache,cache_types)
                     DoDialogue(npc,player_id,dialogue,relay_object)
                     return
                 end
@@ -161,7 +126,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
         --If we know what dialogue is next but we have no message to send
         --Do the next dialogue now
         local area_id = Net.get_player_area(player_id)
-        local dialogue = eznpcs.get_object_by_id(area_id,next_dialogue_id)
+        local dialogue = helpers.get_object_by_id_cached(area_id,next_dialogue_id,object_cache,cache_types)
         DoDialogue(npc,player_id,dialogue,relay_object)
         return
     else
@@ -188,7 +153,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
                 end
                 if next_dialogue_id then
                     local area_id = Net.get_player_area(player_id)
-                    local dialogue = eznpcs.get_object_by_id(area_id,next_dialogue_id)
+                    local dialogue = helpers.get_object_by_id_cached(area_id,next_dialogue_id,object_cache,cache_types)
                     DoDialogue(npc,player_id,dialogue,relay_object)
                 end
             end
@@ -215,7 +180,7 @@ function FirstValueFromTable(tbl)
 end
 
 function CreateBotFromObject(area_id,object_id)
-    local placeholder_object = eznpcs.get_object_by_id(area_id, object_id)
+    local placeholder_object = helpers.get_object_by_id_cached(area_id, object_id,object_cache,cache_types)
     local x = placeholder_object.x
     local y = placeholder_object.y
     local z = placeholder_object.z
@@ -334,7 +299,7 @@ function WaypointFollowBehaviour(first_waypoint_id)
     behaviour = {
         type='on_tick',
         initialize=function(npc)
-            local first_waypoint = eznpcs.get_object_by_id(npc.area_id, first_waypoint_id)
+            local first_waypoint = helpers.get_object_by_id_cached(npc.area_id, first_waypoint_id,object_cache,cache_types)
             if first_waypoint then
                 npc.next_waypoint = first_waypoint
             else
@@ -453,9 +418,9 @@ function is_now_before_date(date_string)
 end
 
 function NPCReachedWaypoint(npc,waypoint)
-    local should_be_cached = object_is_cachable_type(waypoint)
+    local should_be_cached = helpers.object_is_of_type(waypoint,cache_types)
     if not should_be_cached then
-        print('[eznpcs] WARNING Waypoint '..waypoint.id.." in "..npc.area_id.." has incorrect type and wont be cached")
+        print("[eznpcs] WARNING Waypoint "..waypoint.id.." at "..waypoint.x..","..waypoint.y.." in "..npc.area_id.." has incorrect type and wont be cached")
     end
     if waypoint.custom_properties['Wait Time'] ~= nil then
         npc.wait_time = tonumber(waypoint.custom_properties['Wait Time'])
@@ -497,7 +462,7 @@ function NPCReachedWaypoint(npc,waypoint)
     end
 
     if next_waypoint_id then
-        npc.next_waypoint = eznpcs.get_object_by_id(npc.area_id,next_waypoint_id)
+        npc.next_waypoint = helpers.get_object_by_id_cached(npc.area_id,next_waypoint_id,object_cache,cache_types)
     end
 end
 
@@ -537,8 +502,7 @@ function AddNpcsToArea(area_id)
     --Loop over all objects in area, spawning NPCs for each NPC type object.
     local objects = Net.list_objects(area_id)
     for i, object_id in next, objects do
-        local object = eznpcs.get_object_by_id(area_id, object_id)
-        --Cache all objects with cachable types
+        local object = helpers.get_object_by_id_cached(area_id, object_id,object_cache,cache_types)
         if object.type == "NPC" then
             CreateBotFromObject(area_id, object_id)
         end

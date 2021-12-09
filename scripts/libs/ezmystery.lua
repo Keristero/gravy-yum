@@ -5,6 +5,8 @@ local math = require('math')
 
 local data_dialogues = {}
 local data_hidden_till_rejoin_for_player = {}
+local object_cache = {}
+local cache_types = {"Mystery Option"}
 
 local sfx = {
     item_get='/server/assets/sfx/item_get.ogg',
@@ -105,11 +107,17 @@ function collect_datum(player_id,object,datum_id_override)
         --Anti spam protection
         return
     end
+    if object.type ~= "Mystery Data" and object.type ~= "Mystery Datum" then
+        local should_be_cached = helpers.object_is_of_type(object,cache_types)
+        if not should_be_cached then
+            print("[ezmystery] WARNING Mystery Option "..object.id.." at "..object.x..","..object.y.." in "..area_id.." has incorrect type and wont be cached")
+        end
+    end
     if object.custom_properties["Type"] == "random" then
         local random_options = ExtractNumberedProperties(object,"Next ")
         local random_selection_id = random_options[math.random(#random_options)]
         if random_selection_id then
-            randomly_selected_datum = Net.get_object_by_id(area_id,random_selection_id)
+            randomly_selected_datum = helpers.get_object_by_id_cached(area_id,random_selection_id,object_cache,cache_types)
             collect_datum(player_id,randomly_selected_datum,datum_id_override)
         end
     elseif object.custom_properties["Type"] == "keyitem" then
@@ -152,6 +160,15 @@ function ezmystery.handle_object_interaction(player_id, object_id)
     local object = Net.get_object_by_id(area_id,object_id)
     if object.type == "Mystery Data" or object.type == "Mystery Datum" then
         try_collect_datum(player_id,object)
+    end
+end
+
+local areas = Net.list_areas()
+for i, area_id in next, areas do
+    --cache all Mystery Options on startup
+    local objects = Net.list_objects(area_id)
+    for i, object_id in next, objects do
+        local object = helpers.get_object_by_id_cached(area_id, object_id,object_cache,cache_types)
     end
 end
 

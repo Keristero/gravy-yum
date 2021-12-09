@@ -14,6 +14,7 @@ function StartSpinningTiles(area_id)
                 z=math.floor(object.z)
             }
             tiles_to_spin[#tiles_to_spin+1] = spin
+            Net.remove_object(area_id, object_id)
         end
     end
     print('[spin] added '..#tiles_to_spin..' spin tiles')

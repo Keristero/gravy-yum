@@ -120,7 +120,7 @@
    </properties>
    <point/>
   </object>
-  <object id="137" x="528" y="688">
+  <object id="137" type="Waypoint" x="528" y="688">
    <properties>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="138"/>
@@ -383,21 +383,21 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
   <object id="83" type="Spinning Conveyor" x="208" y="1040">
    <point/>
   </object>
-  <object id="97" name="400 zennies" x="16" y="584">
+  <object id="97" name="400 zennies" type="Mystery Option" x="16" y="584">
    <properties>
     <property name="Amount" type="int" value="400"/>
     <property name="Type" value="money"/>
    </properties>
    <point/>
   </object>
-  <object id="98" name="250 zennies" x="8" y="608">
+  <object id="98" name="250 zennies" type="Mystery Option" x="8" y="608">
    <properties>
     <property name="Amount" type="int" value="250"/>
     <property name="Type" value="money"/>
    </properties>
    <point/>
   </object>
-  <object id="99" name="150 zennies" x="8" y="632">
+  <object id="99" name="150 zennies" type="Mystery Option" x="8" y="632">
    <properties>
     <property name="Amount" type="int" value="150"/>
     <property name="Type" value="money"/>
@@ -426,7 +426,7 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
     <property name="Type" value="random"/>
    </properties>
   </object>
-  <object id="148" name="random item" x="104" y="640">
+  <object id="148" name="random item" type="Mystery Option" x="104" y="640">
    <properties>
     <property name="Next 1" type="object" value="152"/>
     <property name="Next 2" type="object" value="152"/>
@@ -435,7 +435,7 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
-  <object id="151" name="rare" x="104" y="704">
+  <object id="151" name="rare" type="Mystery Option" x="104" y="704">
    <properties>
     <property name="Next 1" type="object" value="153"/>
     <property name="Next 2" type="object" value="156"/>
@@ -443,7 +443,7 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
-  <object id="152" name="common" x="64" y="576">
+  <object id="152" name="common" type="Mystery Option" x="64" y="576">
    <properties>
     <property name="Next 1" type="object" value="99"/>
     <property name="Next 2" type="object" value="98"/>
@@ -452,14 +452,14 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
-  <object id="153" name="1000 zennies" x="24" y="704">
+  <object id="153" name="1000 zennies" type="Mystery Option" x="24" y="704">
    <properties>
     <property name="Amount" type="int" value="1000"/>
     <property name="Type" value="money"/>
    </properties>
    <point/>
   </object>
-  <object id="154" name="GigFreez" x="16" y="672">
+  <object id="154" name="GigFreez" type="Mystery Option" x="16" y="672">
    <properties>
     <property name="Description" value="This is known as the Forbidden Program..."/>
     <property name="Name" value="GigFreez"/>
@@ -467,7 +467,7 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
-  <object id="156" name="extra rare" x="64" y="672">
+  <object id="156" name="extra rare" type="Mystery Option" x="64" y="672">
    <properties>
     <property name="Next 1" type="object" value="152"/>
     <property name="Next 2" type="object" value="157"/>
@@ -475,7 +475,7 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
-  <object id="157" name="extra extra rare" x="40" y="672">
+  <object id="157" name="extra extra rare" type="Mystery Option" x="40" y="672">
    <properties>
     <property name="Next 1" type="object" value="152"/>
     <property name="Next 2" type="object" value="154"/>
