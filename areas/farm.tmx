@@ -89,7 +89,7 @@
    </properties>
    <point/>
   </object>
-  <object id="60" name="greeting" x="696" y="608">
+  <object id="60" name="greeting" type="Dialogue" x="696" y="608">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 1" type="object" value="66"/>
@@ -97,7 +97,7 @@
    </properties>
    <point/>
   </object>
-  <object id="61" name="decline chat" x="640" y="592">
+  <object id="61" name="decline chat" type="Dialogue" x="640" y="592">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="\x01...\x01"/>
@@ -106,7 +106,7 @@
   </object>
   <object id="62" type="Water Refill" gid="92" x="672" y="488" width="136" height="116"/>
   <object id="63" gid="98" x="705" y="521" width="136" height="116"/>
-  <object id="66" name="greeting" x="712" y="592">
+  <object id="66" name="question" type="Dialogue" x="712" y="592">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="67"/>
@@ -115,11 +115,10 @@
    </properties>
    <point/>
   </object>
-  <object id="67" name="shop" x="728" y="576">
+  <object id="67" name="shop" type="Dialogue" x="728" y="576">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="seed_stall"/>
-    <property name="Next 1" type="object" value="68"/>
    </properties>
    <point/>
   </object>
@@ -139,14 +138,14 @@
    </properties>
    <point/>
   </object>
-  <object id="72" name="talk to wall" x="888" y="224">
+  <object id="72" name="talk to wall" type="Dialogue" x="888" y="224">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Stay off my lawn!"/>
    </properties>
    <point/>
   </object>
-  <object id="73" name="talk to speculator" x="888" y="256">
+  <object id="73" name="talk to speculator" type="Dialogue" x="888" y="256">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Im waiting for the value of my land to rise so I can sell it..."/>
@@ -171,14 +170,14 @@
    </properties>
    <point/>
   </object>
-  <object id="99" name="decline chat" x="600" y="608">
+  <object id="99" name="decline chat" type="Dialogue" x="600" y="608">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Do you have the veggie!?"/>
    </properties>
    <point/>
   </object>
-  <object id="102" name="greeting" x="552" y="616">
+  <object id="102" name="greeting" type="Dialogue" x="552" y="616">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="103"/>
@@ -186,11 +185,10 @@
    </properties>
    <point/>
   </object>
-  <object id="103" name="shop" x="560" y="584">
+  <object id="103" name="shop" type="Dialogue" x="560" y="584">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="veggie_stall"/>
-    <property name="Next 1" type="object" value="68"/>
    </properties>
    <point/>
   </object>
@@ -204,7 +202,6 @@
   <object id="108" name="JOE.EXE" type="NPC" x="752" y="368">
    <properties>
     <property name="Animation Name" value="prog-farmer"/>
-    <property name="Asset Name" value="prog-farmer"/>
     <property name="Dialogue Type" value="question"/>
     <property name="Direction" value="Down Left"/>
     <property name="Next 1" type="object" value="109"/>
@@ -214,7 +211,7 @@
    </properties>
    <point/>
   </object>
-  <object id="109" name="yes" x="720" y="400">
+  <object id="109" name="yes" type="Dialogue" x="720" y="400">
    <properties>
     <property name="Dialogue Type" value="first"/>
     <property name="Text 1">ALRIGHT
@@ -226,7 +223,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="111" x="656" y="368">
+  <object id="111" type="Waypoint" x="656" y="368">
    <properties>
     <property name="Next Waypoint 1" type="object" value="139"/>
     <property name="Next Waypoint 2" type="object" value="126"/>
@@ -234,14 +231,14 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="112" x="592" y="464">
+  <object id="112" type="Waypoint" x="592" y="464">
    <properties>
     <property name="Next Waypoint 1" type="object" value="113"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="113" x="464" y="464">
+  <object id="113" type="Waypoint" x="464" y="464">
    <properties>
     <property name="Next Waypoint 1" type="object" value="136"/>
     <property name="Next Waypoint 2" type="object" value="127"/>
@@ -249,28 +246,28 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="114" x="464" y="688">
+  <object id="114" type="Waypoint" x="464" y="688">
    <properties>
     <property name="Next Waypoint 1" type="object" value="115"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="115" x="528" y="688">
+  <object id="115" type="Waypoint" x="528" y="688">
    <properties>
     <property name="Next Waypoint 1" type="object" value="116"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="116" x="528" y="720">
+  <object id="116" type="Waypoint" x="528" y="720">
    <properties>
     <property name="Next Waypoint 1" type="object" value="117"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="117" x="752" y="720">
+  <object id="117" type="Waypoint" x="752" y="720">
    <properties>
     <property name="Next Waypoint 1" type="object" value="118"/>
     <property name="Wait Time" type="int" value="5"/>
@@ -278,7 +275,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="118" x="752" y="656">
+  <object id="118" type="Waypoint" x="752" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="137"/>
     <property name="Next Waypoint 2" type="object" value="119"/>
@@ -286,28 +283,28 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="119" x="912" y="656">
+  <object id="119" type="Waypoint" x="912" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="122"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="120" x="912" y="528">
+  <object id="120" type="Waypoint" x="912" y="528">
    <properties>
     <property name="Next Waypoint 1" type="object" value="121"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="121" x="752" y="528">
+  <object id="121" type="Waypoint" x="752" y="528">
    <properties>
     <property name="Next Waypoint 1" type="object" value="108"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="122" x="912" y="624">
+  <object id="122" type="Waypoint" x="912" y="624">
    <properties>
     <property name="Next Waypoint 1" type="object" value="120"/>
     <property name="Next Waypoint 2" type="object" value="123"/>
@@ -315,7 +312,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="123" x="1136" y="624">
+  <object id="123" type="Waypoint" x="1136" y="624">
    <properties>
     <property name="Direction" value="Down Left"/>
     <property name="Next Waypoint 1" type="object" value="124"/>
@@ -324,21 +321,21 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="124" x="1136" y="400">
+  <object id="124" type="Waypoint" x="1136" y="400">
    <properties>
     <property name="Next Waypoint 1" type="object" value="125"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="125" x="912" y="400">
+  <object id="125" type="Waypoint" x="912" y="400">
    <properties>
     <property name="Next Waypoint 1" type="object" value="120"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="126" x="656" y="240">
+  <object id="126" type="Waypoint" x="656" y="240">
    <properties>
     <property name="Next Waypoint 1" type="object" value="127"/>
     <property name="Wait Time" type="int" value="5"/>
@@ -346,28 +343,28 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="127" x="464" y="240">
+  <object id="127" type="Waypoint" x="464" y="240">
    <properties>
     <property name="Next Waypoint 1" type="object" value="128"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="128" x="464" y="208">
+  <object id="128" type="Waypoint" x="464" y="208">
    <properties>
     <property name="Next Waypoint 1" type="object" value="129"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="129" x="272" y="208">
+  <object id="129" type="Waypoint" x="272" y="208">
    <properties>
     <property name="Next Waypoint 1" type="object" value="130"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="130" x="272" y="656">
+  <object id="130" type="Waypoint" x="272" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="131"/>
     <property name="Next Waypoint 2" type="object" value="135"/>
@@ -375,7 +372,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="131" x="208" y="656">
+  <object id="131" type="Waypoint" x="208" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="132"/>
     <property name="Wait Time" type="int" value="5"/>
@@ -383,7 +380,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="132" x="208" y="816">
+  <object id="132" type="Waypoint" x="208" y="816">
    <properties>
     <property name="Next Waypoint 1" type="object" value="133"/>
     <property name="Wait Time" type="int" value="5"/>
@@ -391,7 +388,7 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="133" x="464" y="816">
+  <object id="133" type="Waypoint" x="464" y="816">
    <properties>
     <property name="Next Waypoint 1" type="object" value="114"/>
     <property name="Wait Time" type="int" value="5"/>
@@ -399,35 +396,35 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="134" x="432" y="688">
+  <object id="134" type="Waypoint" x="432" y="688">
    <properties>
     <property name="Next Waypoint 1" type="object" value="114"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="135" x="432" y="656">
+  <object id="135" type="Waypoint" x="432" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="134"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="136" x="432" y="464">
+  <object id="136" type="Waypoint" x="432" y="464">
    <properties>
     <property name="Next Waypoint 1" type="object" value="135"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="137" x="752" y="616">
+  <object id="137" type="Waypoint" x="752" y="616">
    <properties>
     <property name="Next Waypoint 1" type="object" value="138"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="138" x="528" y="616">
+  <object id="138" type="Waypoint" x="528" y="616">
    <properties>
     <property name="Direction" value="Up Right"/>
     <property name="Next Waypoint 1" type="object" value="115"/>
@@ -449,7 +446,6 @@ GOOD LUCK!</property>
   <object id="141" name="BOB.MP3.EXE" type="NPC" x="560" y="816">
    <properties>
     <property name="Animation Name" value="prog-farmer"/>
-    <property name="Asset Name" value="prog-farmer"/>
     <property name="Dialogue Type" value="random"/>
     <property name="Direction" value="Down Left"/>
     <property name="Next Waypoint 1" type="object" value="133"/>

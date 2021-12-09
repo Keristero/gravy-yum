@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="748">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="759">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -178,7 +178,7 @@
   </object>
   <object id="187" type="Shop" gid="71" x="949.561" y="313.621" width="35" height="45"/>
   <object id="188" gid="72" x="966.061" y="309.121" width="35" height="45"/>
-  <object id="247" x="656" y="528">
+  <object id="247" type="Waypoint" x="656" y="528">
    <properties>
     <property name="Next Waypoint 1" type="object" value="420"/>
     <property name="Wait Time" type="int" value="2"/>
@@ -189,16 +189,16 @@
   <object id="253" name="Big Meanie" type="NPC" x="656" y="496">
    <properties>
     <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Dialogue Type" value="random"/>
+    <property name="Date" value="* * * * 12 *"/>
+    <property name="Dialogue Type" value="after"/>
     <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="430"/>
+    <property name="Next 1" type="object" value="748"/>
+    <property name="Next 2" type="object" value="749"/>
     <property name="Next Waypoint 1" type="object" value="247"/>
-    <property name="Text 1" value="You're in my way"/>
-    <property name="Text 2" value="I'm walkin here"/>
    </properties>
    <point/>
   </object>
-  <object id="256" x="528" y="656">
+  <object id="256" type="Waypoint" x="528" y="656">
    <properties>
     <property name="Direction" value="Down Left"/>
     <property name="Next Waypoint 1" type="object" value="419"/>
@@ -207,14 +207,14 @@
    </properties>
    <point/>
   </object>
-  <object id="419" x="528" y="592">
+  <object id="419" type="Waypoint" x="528" y="592">
    <properties>
     <property name="Next Waypoint 1" type="object" value="468"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="420" x="656" y="656">
+  <object id="420" type="Waypoint" x="656" y="656">
    <properties>
     <property name="Next Waypoint 1" type="object" value="256"/>
     <property name="Waypoint Type" value="random"/>
@@ -234,7 +234,7 @@
    <point/>
   </object>
   <object id="427" gid="74" x="544" y="552" width="144" height="79"/>
-  <object id="430" name="question" x="696" y="464">
+  <object id="430" name="question" type="Dialogue" x="712" y="472">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="431"/>
@@ -243,14 +243,14 @@
    </properties>
    <point/>
   </object>
-  <object id="431" name="yes" x="704" y="416">
+  <object id="431" name="yes" type="Dialogue" x="696" y="424">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Punch"/>
    </properties>
    <point/>
   </object>
-  <object id="432" name="no" x="760" y="448">
+  <object id="432" name="no" type="Dialogue" x="728" y="448">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Then scram!"/>
@@ -262,7 +262,7 @@
   <object id="434" name="Lil Gravy" type="NPC" x="936" y="288">
    <properties>
     <property name="Asset Name" value="punk-navi-exe6_red"/>
-    <property name="Counter Chat" type="object" value="458"/>
+    <property name="Counter Chat" type="object" value="753"/>
     <property name="Dialogue Type" value="none"/>
     <property name="Direct Chat" type="object" value="459"/>
     <property name="Direction" value="Down Left"/>
@@ -270,7 +270,7 @@
    </properties>
    <point/>
   </object>
-  <object id="435" name="question" x="976" y="240">
+  <object id="435" name="question" type="Dialogue" x="976" y="240">
    <properties>
     <property name="Dialogue Type" value="question"/>
     <property name="Next 1" type="object" value="437"/>
@@ -279,7 +279,7 @@
    </properties>
    <point/>
   </object>
-  <object id="436" name="no" x="1024" y="240">
+  <object id="436" name="no" type="Dialogue" x="1024" y="240">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Thats a shame"/>
@@ -288,7 +288,7 @@
    </properties>
    <point/>
   </object>
-  <object id="437" name="yes" x="976" y="192">
+  <object id="437" name="yes" type="Dialogue" x="976" y="192">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Buy Gravy"/>
@@ -297,7 +297,7 @@
    </properties>
    <point/>
   </object>
-  <object id="438" name="no money" x="1024" y="192">
+  <object id="438" name="no money" type="Dialogue" x="1024" y="192">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Sorry, you aint got the monies"/>
@@ -306,15 +306,15 @@
    </properties>
    <point/>
   </object>
-  <object id="446" name="drink gravy" x="968" y="144">
+  <object id="446" name="drink gravy" type="Dialogue" x="968" y="144">
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Drink Gravy"/>
-    <property name="Next 1" type="object" value="447"/>
+    <property name="Next 1" type="object" value="755"/>
    </properties>
    <point/>
   </object>
-  <object id="447" name="tips and rumors" x="960" y="104">
+  <object id="447" name="tips and rumors" type="Dialogue" x="992" y="104">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 5" type="object" value="448"/>
@@ -324,11 +324,11 @@
     <property name="Text 4">Every week new net areas are mysteriously appearing.
 the world is becoming more and more interconnected...</property>
     <property name="Text 5" value="He-he-here we go!"/>
-    <property name="Text 6" value="Gravy really hits the spot when its cold!"/>
+    <property name="Text 6" value="Gravy really hits the spot when its hot!"/>
    </properties>
    <point/>
   </object>
-  <object id="448" name="rap part" x="992" y="96">
+  <object id="448" name="rap part" type="Dialogue" x="1016" y="96">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="450"/>
@@ -341,7 +341,7 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="450" name="rap part" x="1016" y="72">
+  <object id="450" name="rap part" type="Dialogue" x="1040" y="72">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="451"/>
@@ -351,7 +351,7 @@ Donkey Kong!</property>
    </properties>
    <point/>
   </object>
-  <object id="451" name="rap part" x="1048" y="56">
+  <object id="451" name="rap part" type="Dialogue" x="1072" y="56">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="452"/>
@@ -366,7 +366,7 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="452" name="rap part" x="1096" y="64">
+  <object id="452" name="rap part" type="Dialogue" x="1120" y="64">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="453"/>
@@ -378,7 +378,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="453" name="rap part" x="1136" y="104">
+  <object id="453" name="rap part" type="Dialogue" x="1160" y="104">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="454"/>
@@ -393,7 +393,7 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="454" name="rap part" x="1136" y="128">
+  <object id="454" name="rap part" type="Dialogue" x="1160" y="128">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="455"/>
@@ -403,7 +403,7 @@ Donkey Kong!</property>
    </properties>
    <point/>
   </object>
-  <object id="455" name="rap part" x="1120" y="144">
+  <object id="455" name="rap part" type="Dialogue" x="1144" y="144">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="456"/>
@@ -418,7 +418,7 @@ Huh!</property>
    </properties>
    <point/>
   </object>
-  <object id="456" name="rap part" x="1104" y="160">
+  <object id="456" name="rap part" type="Dialogue" x="1128" y="160">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 2" type="object" value="461"/>
@@ -430,7 +430,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="458" name="greeting" x="952" y="256">
+  <object id="458" name="greeting" type="Dialogue" x="992" y="280">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 1" type="object" value="435"/>
@@ -441,7 +441,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="459" name="decline chat" x="904" y="240">
+  <object id="459" name="decline chat" type="Dialogue" x="904" y="240">
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Text 1" value="Other side thanks..."/>
@@ -451,7 +451,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="461" name="rap complete" x="1088" y="176">
+  <object id="461" name="rap complete" type="Dialogue" x="1112" y="176">
    <properties>
     <property name="Dialogue Type" value="first"/>
     <property name="Next 1" type="object" value="462"/>
@@ -459,7 +459,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="462" name="gift zenny" x="1056" y="176">
+  <object id="462" name="gift zenny" type="Dialogue" x="1080" y="176">
    <properties>
     <property name="Amount" type="int" value="1000000"/>
     <property name="Dialogue Type" value="none"/>
@@ -468,7 +468,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="464" name="encore" x="1008" y="136">
+  <object id="464" name="encore" type="Dialogue" x="1032" y="136">
    <properties>
     <property name="Dialogue Type" value="first"/>
     <property name="Next 1" type="object" value="448"/>
@@ -478,14 +478,14 @@ Donkey Kong is here!</property>
    <point/>
   </object>
   <object id="465" gid="10" x="792" y="216" width="34" height="52"/>
-  <object id="468" x="528" y="528">
+  <object id="468" type="Waypoint" x="528" y="528">
    <properties>
     <property name="Next Waypoint 1" type="object" value="475"/>
     <property name="Waypoint Type" value="random"/>
    </properties>
    <point/>
   </object>
-  <object id="475" x="592" y="528">
+  <object id="475" type="Waypoint" x="592" y="528">
    <properties>
     <property name="Next Waypoint 1" type="object" value="247"/>
     <property name="Waypoint Type" value="random"/>
@@ -495,18 +495,16 @@ Donkey Kong is here!</property>
   <object id="480" name="BrandonE" type="NPC" x="912" y="1136">
    <properties>
     <property name="Asset Name" value="male-navi-exe6_teal"/>
-    <property name="Dialogue Type" value="random"/>
+    <property name="Date" value="* * * * 12 *"/>
+    <property name="Dialogue Type" value="after"/>
     <property name="Direction" value="Left"/>
+    <property name="Next 1" type="object" value="752"/>
+    <property name="Next 2" type="object" value="751"/>
     <property name="Next Waypoint 1" type="object" value="486"/>
-    <property name="Text 1" value="I'm a Software Engineer specializing in Application Security, or I was..."/>
-    <property name="Text 2" value="I hope none  of these navis end up like me in the afterlife..."/>
-    <property name="Text 3" value="These guys made my dream a reality."/>
-    <property name="Text 4" value="I wish I could make game work..."/>
-    <property name="Text 5" value="I oughta get back into programming what matters!"/>
    </properties>
    <point/>
   </object>
-  <object id="486" x="848" y="1136">
+  <object id="486" type="Waypoint" x="848" y="1136">
    <properties>
     <property name="Next Waypoint 1" type="object" value="487"/>
     <property name="Next Waypoint 2" type="object" value="497"/>
@@ -514,7 +512,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="487" x="720" y="1136">
+  <object id="487" type="Waypoint" x="720" y="1136">
    <properties>
     <property name="Next Waypoint 1" type="object" value="488"/>
     <property name="Next Waypoint 2" type="object" value="498"/>
@@ -522,7 +520,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="488" x="592" y="1136">
+  <object id="488" type="Waypoint" x="592" y="1136">
    <properties>
     <property name="Next Waypoint 1" type="object" value="489"/>
     <property name="Next Waypoint 2" type="object" value="493"/>
@@ -530,7 +528,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="489" x="592" y="1008">
+  <object id="489" type="Waypoint" x="592" y="1008">
    <properties>
     <property name="Next Waypoint 1" type="object" value="490"/>
     <property name="Next Waypoint 2" type="object" value="494"/>
@@ -538,7 +536,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="490" x="656" y="1008">
+  <object id="490" type="Waypoint" x="656" y="1008">
    <properties>
     <property name="Next Waypoint 1" type="object" value="491"/>
     <property name="Next Waypoint 2" type="object" value="499"/>
@@ -546,7 +544,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="491" x="656" y="1072">
+  <object id="491" type="Waypoint" x="656" y="1072">
    <properties>
     <property name="Next Waypoint 1" type="object" value="492"/>
     <property name="Next Waypoint 2" type="object" value="495"/>
@@ -554,7 +552,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="492" x="848" y="1072">
+  <object id="492" type="Waypoint" x="848" y="1072">
    <properties>
     <property name="Next Waypoint 1" type="object" value="486"/>
     <property name="Next Waypoint 2" type="object" value="496"/>
@@ -562,7 +560,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="493" x="560" y="1136">
+  <object id="493" type="Waypoint" x="560" y="1136">
    <properties>
     <property name="Direction" value="Down Left"/>
     <property name="Next Waypoint 1" type="object" value="488"/>
@@ -571,7 +569,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="494" x="560" y="1008">
+  <object id="494" type="Waypoint" x="560" y="1008">
    <properties>
     <property name="Direction" value="Up Right"/>
     <property name="Next Waypoint 1" type="object" value="489"/>
@@ -580,7 +578,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="495" x="656" y="1104">
+  <object id="495" type="Waypoint" x="656" y="1104">
    <properties>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="491"/>
@@ -589,7 +587,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="496" x="848" y="1040">
+  <object id="496" type="Waypoint" x="848" y="1040">
    <properties>
     <property name="Direction" value="Down Right"/>
     <property name="Next Waypoint 1" type="object" value="492"/>
@@ -598,7 +596,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="497" x="848" y="1168">
+  <object id="497" type="Waypoint" x="848" y="1168">
    <properties>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="486"/>
@@ -607,7 +605,7 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="498" x="720" y="1104">
+  <object id="498" type="Waypoint" x="720" y="1104">
    <properties>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="487"/>
@@ -616,11 +614,108 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="499" x="720" y="1008">
+  <object id="499" type="Waypoint" x="720" y="1008">
    <properties>
     <property name="Direction" value="Up Left"/>
     <property name="Next Waypoint 1" type="object" value="498"/>
     <property name="Waypoint Type" value="random"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="748" name="christmas chat" type="Dialogue" x="672" y="464">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="All this drama. whats so good about christmas"/>
+    <property name="Text 3" value="Time to bust some christmas trees again. hehehe"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="749" name="normal chat" type="Dialogue" x="704" y="496">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 1" type="object" value="430"/>
+    <property name="Text 1" value="You're in my way"/>
+    <property name="Text 2" value="I'm walkin here"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="751" name="normal chat" type="Dialogue" x="912" y="1200">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="I'm a Software Engineer specializing in Application Security, or I was..."/>
+    <property name="Text 2" value="I hope none  of these navis end up like me in the afterlife..."/>
+    <property name="Text 3" value="These guys made my dream a reality."/>
+    <property name="Text 4" value="I wish I could make game work..."/>
+    <property name="Text 5" value="I oughta get back into programming what matters!"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="752" name="christmas chat" type="Dialogue" x="944" y="1200">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="Next year Im going back to making games"/>
+    <property name="Text 2" value="Despite how I look. Id smash you in Dance Dance Revolution"/>
+    <property name="Text 3" value="I can eat pasta with basically anything."/>
+   </properties>
+   <point/>
+  </object>
+  <object id="753" name="christmas_check" type="Dialogue" x="952" y="264">
+   <properties>
+    <property name="Date" value="* * * * 12 *"/>
+    <property name="Dialogue Type" value="after"/>
+    <property name="Next 1" type="object" value="754"/>
+    <property name="Next 2" type="object" value="458"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="754" name="christmas greeting" type="Dialogue" x="928" y="216">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 1" type="object" value="435"/>
+    <property name="Text 1" value="Seasons greetings..."/>
+    <property name="Text 2" value="Due to the weather, today the gravy will be served cold"/>
+    <property name="Text 3" value="Ho Ho Hello... agh thats a bit forced"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="755" name="christmas_check" type="Dialogue" x="1000" y="144">
+   <properties>
+    <property name="Date" value="* * * * 12 *"/>
+    <property name="Dialogue Type" value="after"/>
+    <property name="Next 1" type="object" value="756"/>
+    <property name="Next 2" type="object" value="447"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="756" name="christmas tips and rumors" type="Dialogue" x="944" y="88">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Next 3" type="object" value="446"/>
+    <property name="Next 4" type="object" value="757"/>
+    <property name="Text 1" value="Gravy really hits the spot when its cold!"/>
+    <property name="Text 2" value="Have a somewhat merry Christmas..."/>
+    <property name="Text 3" value="Those eyes look lonely... This ones on the house"/>
+    <property name="Text 4">Hmmm...
+since this should be tax deductable
+Get something nice</property>
+    <property name="Text 5" value="Till next time"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="757" name="gift zenny" type="Dialogue" x="952" y="56">
+   <properties>
+    <property name="Amount" type="int" value="69"/>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Event Name" value="Gift Monies"/>
+    <property name="Next 1" type="object" value="758"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="758" name="nice" type="Dialogue" x="968" y="32">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Mugshot" value="player"/>
+    <property name="Text 1" value="Nice!"/>
    </properties>
    <point/>
   </object>
@@ -679,71 +774,6 @@ Donkey Kong is here!</property>
     <property name="Leave Animation" value="arrow_up_left_out"/>
     <property name="Target Area" value="gravy-pot"/>
     <property name="Target Object" value="95"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="736" name="Big Meanie" type="NPC" x="544" y="768">
-   <properties>
-    <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Date" value="30 * * * * *"/>
-    <property name="Dialogue Type" value="before"/>
-    <property name="Direction" value="Down"/>
-    <property name="Text 1" value="Its before 30 seconds"/>
-    <property name="Text 2" value="Its after 30 seconds"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="737" name="bass" type="NPC" x="544" y="864">
-   <properties>
-    <property name="Asset Name" value="bass"/>
-    <property name="Dialogue Type" value="first"/>
-    <property name="Direction" value="Down Right"/>
-    <property name="Next 1" type="object" value="739"/>
-    <property name="Text 1" value="Theeeere is nothing like a crown!"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="739" name="player ask" x="576" y="864">
-   <properties>
-    <property name="Dialogue Type" value="first"/>
-    <property name="Mugshot" value="player"/>
-    <property name="Next 1" type="object" value="740"/>
-    <property name="Text 1" value="...For picking it up?"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="740" name="response" x="608" y="864">
-   <properties>
-    <property name="Dialogue Type" value="first"/>
-    <property name="Event Name" value="Snow"/>
-    <property name="Text 1" value="And puttin it down!"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="745" name="Big Meanie" type="NPC" x="640" y="768">
-   <properties>
-    <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Date" value="30 * * * * *"/>
-    <property name="Dialogue Type" value="before"/>
-    <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="746"/>
-    <property name="Next 2" type="object" value="747"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="746" x="608" y="768">
-   <properties>
-    <property name="Dialogue Type" value="random"/>
-    <property name="Text 1" value="hey ho"/>
-    <property name="Text 2" value="lets go"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="747" x="640" y="800">
-   <properties>
-    <property name="Dialogue Type" value="random"/>
-    <property name="Text 1" value="yeep yoop"/>
-    <property name="Text 2" value="big poop"/>
    </properties>
    <point/>
   </object>
