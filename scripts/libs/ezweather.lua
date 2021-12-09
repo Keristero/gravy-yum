@@ -43,7 +43,7 @@ function ezweather.start_rain_in_area(area_id)
 end
 
 function ezweather.start_snow_in_area(area_id)
-    print('[ezweather] starting rain in '..area_id)
+    print('[ezweather] starting snow in '..area_id)
 
     volatile_memory[area_id] = {
         type="snow",
