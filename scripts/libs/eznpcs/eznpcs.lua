@@ -48,7 +48,7 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     if custom_mugshot then
         mugshot_asset_name = custom_mugshot
     end
-    local message = ""
+    local message = nil
     local next_dialogue_id = nil
     if event_name then
         next_dialogue_info = events[event_name].action(npc,player_id,dialogue,relay_object)
@@ -116,21 +116,23 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
 
     Net.set_bot_direction(npc.bot_id, Direction.from_points(npc, player_pos))
 
-    if dialogue_type ~= "none" then
-        if dialogue_type == "question" then
-            Net.question_player(player_id, message, mug_texture_path, mug_animation_path)
-        else
-            Net.message_player(player_id, message, mug_texture_path, mug_animation_path)
-        end
-    end
-
-    if message == "" and next_dialogue_id then
+    if message == nil and next_dialogue_id ~= nil then
         --If we know what dialogue is next but we have no message to send
         --Do the next dialogue now
         local area_id = Net.get_player_area(player_id)
         local dialogue = Net.get_object_by_id(area_id,next_dialogue_id)
         DoDialogue(npc,player_id,dialogue,relay_object)
+        return
     else
+        
+        if dialogue_type ~= "none" then
+            if dialogue_type == "question" then
+                Net.question_player(player_id, message, mug_texture_path, mug_animation_path)
+            else
+                Net.message_player(player_id, message, mug_texture_path, mug_animation_path)
+            end
+        end
+
         --If we have a message to send, send it and queue up this callback for handling the response.
         textbox_responses[player_id] = {
             npc=npc,
