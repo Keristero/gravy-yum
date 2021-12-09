@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="745">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="748">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -324,6 +324,7 @@
     <property name="Text 4">Every week new net areas are mysteriously appearing.
 the world is becoming more and more interconnected...</property>
     <property name="Text 5" value="He-he-here we go!"/>
+    <property name="Text 6" value="Gravy really hits the spot when its cold!"/>
    </properties>
    <point/>
   </object>
@@ -719,13 +720,30 @@ Donkey Kong is here!</property>
    </properties>
    <point/>
   </object>
-  <object id="742" name="OrangeNavi" type="NPC" x="624" y="784">
+  <object id="745" name="Big Meanie" type="NPC" x="640" y="768">
    <properties>
-    <property name="Asset Name" value="female-navi-exe6_pink"/>
+    <property name="Asset Name" value="heel-navi-exe4_black"/>
+    <property name="Date" value="30 * * * * *"/>
+    <property name="Dialogue Type" value="before"/>
+    <property name="Direction" value="Down"/>
+    <property name="Next 1" type="object" value="746"/>
+    <property name="Next 2" type="object" value="747"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="746" x="608" y="768">
+   <properties>
     <property name="Dialogue Type" value="random"/>
-    <property name="Direction" value="Up Left"/>
-    <property name="Text 1" value="Meeehh"/>
-    <property name="Text 3" value="Gehhhh"/>
+    <property name="Text 1" value="hey ho"/>
+    <property name="Text 2" value="lets go"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="747" x="640" y="800">
+   <properties>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Text 1" value="yeep yoop"/>
+    <property name="Text 2" value="big poop"/>
    </properties>
    <point/>
   </object>

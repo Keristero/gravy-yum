@@ -94,27 +94,23 @@ function DoDialogue(npc,player_id,dialogue,relay_object)
     --date based events
     local date_b = dialogue.custom_properties['Date']
     if dialogue_type == "before" then
-        if date_b and #dialogue_texts >= 2 then
+        if date_b then
             message = dialogue_texts[2]
             next_dialogue_id = next_dialogues[2]
             if is_now_before_date(date_b) then
                 message = dialogue_texts[1]
                 next_dialogue_id = next_dialogues[1]
             end
-        else
-            print('missing before dialogue properties')
         end
     end
     if dialogue_type == "after" then
-        if date_b and #dialogue_texts >= 2 then
+        if date_b then
             message = dialogue_texts[2]
             next_dialogue_id = next_dialogues[2]
             if not is_now_before_date(date_b) then
                 message = dialogue_texts[1]
                 next_dialogue_id = next_dialogues[1]
             end
-        else
-            print('missing after dialogue properties')
         end
     end
 
