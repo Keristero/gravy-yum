@@ -42,7 +42,16 @@ function handle_board_close(player_id)
     end
 end
 
+function handle_player_avatar_change(player_id, details)
+    --Testing, set player hp to full
+    --local player_max_hp = Net.get_player_max_health(player_id)
+    print('maxhp= '..details.max_health)
+    --TODO FIX
+    Net.set_player_health(player_id, details.max_health)
+end
+
 function handle_player_join(player_id)
+
     for i,plugin in ipairs(plugins)do
         if plugin.handle_player_join then
             plugin.handle_player_join(player_id)
@@ -199,3 +208,24 @@ local gift_zenny = {
     end
 }
 eznpcs.add_event(gift_zenny)
+
+local deal_damage = {
+    name="Damage",
+    action=function (npc,player_id,dialogue)
+        local damage_amount = tonumber(dialogue.custom_properties["Amount"])
+        local player_hp = tonumber(Net.get_player_health(player_id))
+        local new_hp = player_hp-damage_amount
+        Net.play_sound_for_player(player_id,sfx.hurt)
+        Net.message_player(player_id,"Took "..damage_amount.. " damage!\n new hp ="..new_hp)
+        Net.set_player_health(player_id, new_hp)
+
+        if dialogue.custom_properties["Next 1"] then
+            local next_dialouge_options = {
+                wait_for_response=true,
+                id=dialogue.custom_properties["Next 1"]
+            }
+            return next_dialouge_options
+        end
+    end
+}
+eznpcs.add_event(deal_damage)

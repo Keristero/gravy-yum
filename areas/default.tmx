@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="759">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="764">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -720,6 +720,18 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
+  <object id="759" name="Big Meanie" type="NPC" x="672" y="504">
+   <properties>
+    <property name="Asset Name" value="heel-navi-exe4_black"/>
+    <property name="Date" value="* * * * 12 *"/>
+    <property name="Dialogue Type" value="after"/>
+    <property name="Direction" value="Down"/>
+    <property name="Next 1" type="object" value="748"/>
+    <property name="Next 2" type="object" value="749"/>
+    <property name="Next Waypoint 1" type="object" value="247"/>
+   </properties>
+   <point/>
+  </object>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -775,6 +787,24 @@ Get something nice</property>
     <property name="Leave Animation" value="arrow_up_left_out"/>
     <property name="Target Area" value="gravy-pot"/>
     <property name="Target Object" value="95"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="760" name="Big Meanie" type="NPC" x="528" y="752">
+   <properties>
+    <property name="Asset Name" value="bass"/>
+    <property name="Dialogue Type" value="random"/>
+    <property name="Direction" value="Down"/>
+    <property name="Next 1" type="object" value="763"/>
+    <property name="Text 1" value="Grrr..."/>
+   </properties>
+   <point/>
+  </object>
+  <object id="763" name="yes" type="Dialogue" x="488" y="744">
+   <properties>
+    <property name="Amount" type="int" value="1"/>
+    <property name="Dialogue Type" value="none"/>
+    <property name="Event Name" value="Damage"/>
    </properties>
    <point/>
   </object>
