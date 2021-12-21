@@ -461,13 +461,5 @@ GOOD LUCK!</property>
    </properties>
    <point/>
   </object>
-  <object id="144" type="Mystery Datum" gid="214" x="656" y="720" width="14" height="43">
-   <properties>
-    <property name="Description" value="It is emitting a powerful aura..."/>
-    <property name="Name" value="GigFreez"/>
-    <property name="Once" type="bool" value="false"/>
-    <property name="Type" value="keyitem"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

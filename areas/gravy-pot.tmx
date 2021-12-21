@@ -231,18 +231,14 @@
    <properties>
     <property name="Dialogue Type" value="random"/>
     <property name="Next 1" type="object" value="175"/>
-    <property name="Text 1">It only comes round once a year!
-There's snow outside with some reindeer!
-Go to the window and then you will see!</property>
+    <property name="Text 1" value="It only comes round once a year! Theres snow outside with some reindeer! Go to the window and then you will see!"/>
    </properties>
    <point/>
   </object>
   <object id="174" name="christmas song" type="Dialogue" x="608" y="840">
    <properties>
     <property name="Dialogue Type" value="random"/>
-    <property name="Text 1">And everybody knows,
-Its christmas!,
-Its christmas!</property>
+    <property name="Text 1" value="And everybody knows. Its christmas! Its christmas!"/>
    </properties>
    <point/>
   </object>
@@ -251,8 +247,7 @@ Its christmas!</property>
     <property name="Dialogue Type" value="random"/>
     <property name="Mugshot" value="player"/>
     <property name="Next 1" type="object" value="174"/>
-    <property name="Text 1">Santa's coming down the chimney!
-Putting some presents underneath the tree!</property>
+    <property name="Text 1" value="Santas coming down the chimney! Putting some presents underneath the tree!"/>
    </properties>
    <point/>
   </object>

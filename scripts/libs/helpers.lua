@@ -37,7 +37,7 @@ function helpers.get_object_by_id_cached(area_id,object_id,object_cache,cache_ty
     else
         local object_data = Net.get_object_by_id(area_id,object_id)
         if object_data then
-            local should_be_cached = helpers.object_is_of_type(object_data,cache_types,cache_types)
+            local should_be_cached = helpers.object_is_of_type(object_data,cache_types)
             if should_be_cached then
                 object_cache[area_id][object_id] = object_data
                 Net.remove_object(area_id, object_id)
