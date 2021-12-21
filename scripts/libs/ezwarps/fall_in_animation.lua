@@ -5,14 +5,14 @@ local fall_in_animation = {
     pre_animation_offsets={
         x=0,
         y=0,
-        z=20
+        z=40
     },
     duration=1,
     animate=function(player_id)
         local player_pos = Net.get_player_position(player_id)
         local area_id = Net.get_player_area(player_id)
-        local landing_z = player_pos.z-20
-        local fall_duration = 1
+        local landing_z = player_pos.z-40
+        local fall_duration = 2
         local keyframes = {{
             properties={{
                 property="Z",
@@ -26,7 +26,7 @@ local fall_in_animation = {
                 ease="Linear",
                 value=landing_z
             }},
-            duration=1
+            duration=fall_duration
         }
         Net.animate_player_properties(player_id, keyframes)
         delay.for_player(player_id,function ()

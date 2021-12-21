@@ -17,6 +17,14 @@ local sfx = {
 
 eznpcs.load_npcs()
 
+function handle_player_request(player_id, data)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_request then
+            plugin.handle_player_request(player_id, data)
+        end
+    end
+end
+
 --Pass handlers on to all the libraries we are using
 function handle_tile_interaction(player_id, x, y, z, button)
     for i,plugin in ipairs(plugins)do
@@ -43,11 +51,11 @@ function handle_board_close(player_id)
 end
 
 function handle_player_avatar_change(player_id, details)
-    --Testing, set player hp to full
-    --local player_max_hp = Net.get_player_max_health(player_id)
-    print('maxhp= '..details.max_health)
-    --TODO FIX
-    Net.set_player_health(player_id, details.max_health)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_avatar_change then
+            plugin.handle_player_avatar_change(player_id, details)
+        end
+    end
 end
 
 function handle_player_join(player_id)

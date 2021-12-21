@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="766">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="767">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -778,7 +778,7 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="760" name="Big Meanie" type="NPC" x="528" y="752">
+  <object id="760" name="Hurter Bass" type="NPC" x="216" y="1056">
    <properties>
     <property name="Asset Name" value="bass"/>
     <property name="Dialogue Type" value="random"/>
@@ -788,7 +788,7 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="763" name="yes" type="Dialogue" x="488" y="744">
+  <object id="763" name="yes" type="Dialogue" x="176" y="1048">
    <properties>
     <property name="Amount" type="int" value="1"/>
     <property name="Dialogue Type" value="none"/>
@@ -796,12 +796,21 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="765" name="Central Test" type="Server Warp" gid="65" x="608" y="768" width="61" height="32">
+  <object id="765" name="Central Test" type="Server Warp" gid="65" x="544" y="832" width="61" height="32">
    <properties>
-    <property name="Address" value="keristero.xyz"/>
+    <property name="Address" value="127.0.0.1"/>
     <property name="Data" value="central3-gravy-yum-warp-xyz"/>
     <property name="Direction" value="Up Left"/>
     <property name="Port" type="int" value="8765"/>
+    <property name="Warp In" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="766" name="Central Test" type="Server Warp" gid="65" x="608" y="832" width="61" height="32">
+   <properties>
+    <property name="Address" value="127.0.0.1"/>
+    <property name="Data" value="central3-gravy-yum-warp-xyz"/>
+    <property name="Direction" value="Up Left"/>
+    <property name="Port" type="int" value="8766"/>
     <property name="Warp In" type="bool" value="true"/>
    </properties>
   </object>

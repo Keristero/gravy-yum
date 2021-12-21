@@ -197,7 +197,7 @@ function ezwarps.handle_player_request(player_id, data)
         if data == key then
             local entry_pos = prepare_player_arrival(player_id,l["x"],l["y"],l["z"],l["arrival_animation"])
             Net.transfer_player(player_id, l["area_id"], l["warp_in"], entry_pos.x, entry_pos.y, entry_pos.z, l["direction"])
-            print('[ezwarps] transfering player to landing'..l)
+            print('[ezwarps] transfering player to landing',data)
             return
         end
     end
