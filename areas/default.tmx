@@ -796,24 +796,6 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="765" name="Central Test" type="Server Warp" gid="65" x="544" y="832" width="61" height="32">
-   <properties>
-    <property name="Address" value="127.0.0.1"/>
-    <property name="Data" value="central3-gravy-yum-warp-xyz"/>
-    <property name="Direction" value="Up Left"/>
-    <property name="Port" type="int" value="8765"/>
-    <property name="Warp In" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="766" name="Central Test" type="Server Warp" gid="65" x="608" y="832" width="61" height="32">
-   <properties>
-    <property name="Address" value="127.0.0.1"/>
-    <property name="Data" value="central3-gravy-yum-warp-xyz"/>
-    <property name="Direction" value="Up Left"/>
-    <property name="Port" type="int" value="8766"/>
-    <property name="Warp In" type="bool" value="true"/>
-   </properties>
-  </object>
  </objectgroup>
  <layer id="16" name="Floor 3" width="40" height="40" offsetx="0" offsety="-32">
   <data encoding="csv">
