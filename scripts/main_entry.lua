@@ -5,8 +5,9 @@ local ezfarms = require('scripts/libs/ezfarms')
 local ezweather = require('scripts/libs/ezweather')
 local ezchristmas = require('scripts/libs/ezchristmas')
 local ezwarps = require('scripts/libs/ezwarps/main')
+local ezencounters = require('scripts/libs/ezencounters/main')
 
-local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps,ezchristmas}
+local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps,ezchristmas,ezencounters}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',
@@ -16,6 +17,22 @@ local sfx = {
 }
 
 eznpcs.load_npcs()
+
+function handle_battle_results(player_id, stats)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_battle_results then
+            plugin.handle_battle_results(player_id, stats)
+        end
+    end
+end
+
+function handle_player_move(player_id, x, y, z)
+    for i,plugin in ipairs(plugins)do
+        if plugin.handle_player_move then
+            plugin.handle_player_move(player_id, x, y, z)
+        end
+    end
+end
 
 function handle_player_request(player_id, data)
     for i,plugin in ipairs(plugins)do

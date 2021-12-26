@@ -293,6 +293,13 @@ function ezwarps.handle_player_join(player_id)
     end
 end
 
+function ezwarps.player_is_in_animation(player_id)
+    if players_in_animations[player_id] then
+        return true
+    end
+    return false
+end
+
 function ezwarps.handle_player_disconnect(player_id)
     delay.clear_player_events(player_id)
 end
