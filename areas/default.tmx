@@ -7,7 +7,7 @@
   <property name="Background" value="grave"/>
   <property name="Name" value="Gravy Yum"/>
   <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
-  <property name="Song" value="/server/assets/graveyard.ogg"/>
+  <property name="Song" value="/server/assets/gravy.mid"/>
  </properties>
  <tileset firstgid="1" source="../assets/objects/home_warp.tsx"/>
  <tileset firstgid="6" source="../assets/tiles/tree.tsx"/>

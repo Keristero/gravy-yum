@@ -3,12 +3,10 @@ local shared_rewards_table = {
         min={
             rank=1,
             hp=0.0,
-            
         },
         max={
             rank=11,
             hp=1.0,
-
         }
     }
 }
@@ -31,7 +29,7 @@ local encounter1 = {
 
 local encounter2 = {
     path="/server/assets/packages/ezencounters_bundle.zip",
-    weight=50,
+    weight=1,
     enemies = {
         {name="Mettaur",rank=1},
     },

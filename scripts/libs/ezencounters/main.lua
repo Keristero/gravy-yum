@@ -1,4 +1,5 @@
 local ezwarps = require('scripts/libs/ezwarps/main')
+local ezmemory = require('scripts/libs/ezmemory')
 
 local ezencounters = {}
 local player_last_position = {}

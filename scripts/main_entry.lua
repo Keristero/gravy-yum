@@ -3,11 +3,10 @@ local ezmemory = require('scripts/libs/ezmemory')
 local ezmystery = require('scripts/libs/ezmystery')
 local ezfarms = require('scripts/libs/ezfarms')
 local ezweather = require('scripts/libs/ezweather')
-local ezchristmas = require('scripts/libs/ezchristmas')
 local ezwarps = require('scripts/libs/ezwarps/main')
 local ezencounters = require('scripts/libs/ezencounters/main')
 
-local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps,ezchristmas,ezencounters}
+local plugins = {ezweather,eznpcs,ezmemory,ezmystery,ezfarms,ezwarps,ezencounters}
 
 local sfx = {
     hurt='/server/assets/sfx/hurt.ogg',
