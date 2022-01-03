@@ -5,9 +5,9 @@
   <property name="Background Vel X" type="int" value="-2"/>
   <property name="Background Vel Y" type="int" value="-2"/>
   <property name="Name" value="Gravy Farms"/>
-  <property name="Rain Song" value="/server/assets/sfx/ezfarms/wet_hands_raining.ogg"/>
+  <property name="Rain Song" value="/server/assets/ezlibs-assets/ezfarms/wet_hands_raining.ogg"/>
   <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
-  <property name="Song" value="/server/assets/famserver8.ogg"/>
+  <property name="Song" value="/server/assets/gravy.mid"/>
  </properties>
  <tileset firstgid="1" source="../assets/tiles/simple-graveyard-tiles-64-40.tsx"/>
  <tileset firstgid="21" source="../assets/objects/simple-graveyard-arrows-70-44.tsx"/>
@@ -22,8 +22,8 @@
  <tileset firstgid="92" source="../assets/objects/water-thing.tsx"/>
  <tileset firstgid="98" source="../assets/objects/water-thing-spout.tsx"/>
  <tileset firstgid="104" source="../assets/objects/gate.tsx"/>
- <tileset firstgid="109" source="../assets/objects/plants/plants.tsx"/>
- <tileset firstgid="214" source="../assets/objects/BlueMysteryData.tsx"/>
+ <tileset firstgid="109" source="../assets/ezlibs-assets/ezfarms/plants.tsx"/>
+ <tileset firstgid="110" source="../assets/objects/BlueMysteryData.tsx"/>
  <layer id="1" name="Tile Layer 1" width="40" height="31">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,86,86,86,86,86,0,0,0,0,0,0,0,0,0,

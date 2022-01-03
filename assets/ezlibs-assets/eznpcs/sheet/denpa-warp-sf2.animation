@@ -1,0 +1,25 @@
+imagePath="D:/EverythingOpenBN/ClientServer_4_14_2021/Server_10_5_2021/assets/ezlibs-assets/eznpcs/sheet/denpa-warp-sf2.png"
+
+animation state="IDLE_UR"
+frame duration="0.05" x="1" y="1" w="26" h="41" originx="12" originy="39"
+
+animation state="IDLE_DR"
+frame duration="0.05" x="29" y="1" w="29" h="41" originx="12" originy="39"
+
+animation state="IDLE_UL"
+frame duration="0.05" x="1" y="1" w="26" h="41" originx="12" originy="39" flipx="1"
+
+animation state="IDLE_DL"
+frame duration="0.05" x="29" y="1" w="29" h="41" originx="12" originy="39" flipx="1"
+
+animation state="WALK_UR"
+frame duration="0.05" x="1" y="1" w="26" h="41" originx="12" originy="39"
+
+animation state="WALK_DR"
+frame duration="0.05" x="29" y="1" w="29" h="41" originx="12" originy="39"
+
+animation state="WALK_UL"
+frame duration="0.05" x="1" y="1" w="26" h="41" originx="12" originy="39" flipx="1"
+
+animation state="WALK_DL"
+frame duration="0.05" x="29" y="1" w="29" h="41" originx="12" originy="39" flipx="1"

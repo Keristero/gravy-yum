@@ -24,8 +24,8 @@
  <tileset firstgid="75" source="../assets/tiles/simple-graveyard-conveyers-64-40.tsx"/>
  <tileset firstgid="81" source="../assets/objects/simple-graveyard-arrows-70-44.tsx"/>
  <tileset firstgid="89" source="../assets/objects/BlueMysteryData.tsx"/>
- <tileset firstgid="97" source="../assets/objects/ezmystery/GreenMysteryData.tsx"/>
- <tileset firstgid="105" source="../assets/objects/ezmystery/PurpleMysteryData.tsx"/>
+ <tileset firstgid="97" source="../assets/assets/ezlibs-assets/ezmystery/GreenMysteryData.tsx"/>
+ <tileset firstgid="98" source="../assets/assets/ezlibs-assets/ezmystery/PurpleMysteryData.tsx"/>
  <layer id="1" name="Ground" width="40" height="40">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

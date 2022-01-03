@@ -1,0 +1,41 @@
+imagePath="C:/Users/Clevettes/Desktop/OBN SERVER BACKUPS/Server_10_5_2021/assets/ezlibs-assets/eznpcs/sheet/elecman.png"
+
+animation state="IDLE_UR"
+frame duration="0.15" x="75" y="40" w="24" h="43" originx="11" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="99" y="40" w="24" h="43" originx="11" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="123" y="40" w="24" h="43" originx="11" originy="42" flipx="0" flipy="0" 
+
+animation state="IDLE_DR"
+frame duration="0.15" x="174" y="0" w="25" h="43" originx="12" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="199" y="0" w="25" h="43" originx="12" originy="42" flipx="0" flipy="0" 
+frame duration="0.15" x="224" y="0" w="25" h="43" originx="12" originy="42" flipx="0" flipy="0" 
+
+animation state="WALK_UR"
+frame duration="0.15" x="0" y="0" w="29" h="40" originx="14" originy="39" flipx="0" flipy="0" 
+frame duration="0.15" x="29" y="0" w="29" h="40" originx="14" originy="39" flipx="0" flipy="0" 
+frame duration="0.15" x="58" y="0" w="29" h="40" originx="14" originy="39" flipx="0" flipy="0" 
+
+animation state="WALK_DR"
+frame duration="0.15" x="222" y="44" w="27" h="39" originx="15" originy="38" flipx="0" flipy="0" 
+frame duration="0.15" x="222" y="83" w="27" h="39" originx="15" originy="38" flipx="0" flipy="0" 
+frame duration="0.15" x="0" y="84" w="27" h="39" originx="15" originy="38" flipx="0" flipy="0" 
+
+animation state="IDLE_UL"
+frame duration="0.15" x="147" y="40" w="24" h="43" originx="11" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="174" y="43" w="24" h="43" originx="11" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="198" y="43" w="24" h="43" originx="11" originy="42" flipx="1" flipy="0" 
+
+animation state="IDLE_DL"
+frame duration="0.15" x="0" y="40" w="25" h="43" originx="12" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="25" y="40" w="25" h="43" originx="12" originy="42" flipx="1" flipy="0" 
+frame duration="0.15" x="50" y="40" w="25" h="43" originx="12" originy="42" flipx="1" flipy="0" 
+
+animation state="WALK_UL"
+frame duration="0.15" x="87" y="0" w="29" h="40" originx="14" originy="39" flipx="1" flipy="0" 
+frame duration="0.15" x="116" y="0" w="29" h="40" originx="14" originy="39" flipx="1" flipy="0" 
+frame duration="0.15" x="145" y="0" w="29" h="40" originx="14" originy="39" flipx="1" flipy="0" 
+
+animation state="WALK_DL"
+frame duration="0.15" x="27" y="83" w="27" h="39" originx="15" originy="38" flipx="1" flipy="0" 
+frame duration="0.15" x="54" y="83" w="27" h="39" originx="15" originy="38" flipx="1" flipy="0" 
+frame duration="0.15" x="81" y="83" w="27" h="39" originx="15" originy="38" flipx="1" flipy="0" 

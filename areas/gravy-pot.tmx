@@ -6,7 +6,7 @@
   <property name="Background Vel Y" type="int" value="-2"/>
   <property name="Name" value="Gravy Pot"/>
   <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
-  <property name="Song" value="/server/assets/graveyard.ogg"/>
+  <property name="Song" value="/server/assets/gravy.mid"/>
  </properties>
  <tileset firstgid="1" source="../assets/tiles/simple-graveyard-tiles-64-40.tsx"/>
  <tileset firstgid="21" source="../assets/objects/simple-graveyard-arrows-70-44.tsx"/>
@@ -16,12 +16,12 @@
  <tileset firstgid="63" source="../assets/tiles/simple-graveyard-conveyers-64-40-alt.tsx"/>
  <tileset firstgid="69" source="../assets/tiles/simple-graveyard-stairs-63-55-alt.tsx"/>
  <tileset firstgid="79" source="../assets/objects/warp.tsx"/>
- <tileset firstgid="85" source="../assets/objects/BlueMysteryData.tsx"/>
+ <tileset firstgid="85" source="../assets/ezlibs-assets/ezmystery/BlueMysteryData.tsx"/>
  <tileset firstgid="93" source="../assets/tiles/cursed-stairs-2.tsx"/>
  <tileset firstgid="108" source="../assets/tiles/simple-graveyard-stairs-63-55.tsx"/>
  <tileset firstgid="118" source="../assets/tiles/cursed-stairs-2-alt.tsx"/>
- <tileset firstgid="133" source="../assets/objects/ezmystery/GreenMysteryData.tsx"/>
- <tileset firstgid="141" source="../assets/objects/ezmystery/PurpleMysteryData.tsx"/>
+ <tileset firstgid="133" source="../assets/ezlibs-assets/ezmystery/GreenMysteryData.tsx"/>
+ <tileset firstgid="141" source="../assets/ezlibs-assets/ezmystery/PurpleMysteryData.tsx"/>
  <layer id="1" name="Tile Layer 1" width="40" height="40">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
