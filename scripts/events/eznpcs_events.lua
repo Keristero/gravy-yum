@@ -7,6 +7,13 @@ local ezweather = require('scripts/ezlibs-scripts/ezweather')
 local ezwarps = require('scripts/ezlibs-scripts/ezwarps/main')
 local ezencounters = require('scripts/ezlibs-scripts/ezencounters/main')
 
+local sfx = {
+    hurt='/server/assets/ezlibs-assets/sfx/hurt.ogg',
+    item_get='/server/assets/ezlibs-assets/sfx/item_get.ogg',
+    recover='/server/assets/ezlibs-assets/sfx/recover.ogg',
+    card_error='/server/assets/ezlibs-assets/ezfarms/card_error.ogg'
+}
+
 local event1 = {
     name="Punch",
     action=function (npc,player_id,dialogue,relay_object)
