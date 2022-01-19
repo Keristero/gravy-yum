@@ -1,15 +1,19 @@
-local shared_rewards_table = {
-    {
-        min={
-            rank=1,
-            hp=0.0,
-        },
-        max={
-            rank=11,
-            hp=1.0,
-        }
-    }
+local ezmemory = require('scripts/ezlibs-scripts/ezmemory')
+
+local sfx = {
+    item_get='/server/assets/ezlibs-assets/sfx/item_get.ogg'
 }
+
+local give_result_awards = function (player_id,encounter_info,stats)
+    -- stats = { health: number, score: number, time: number, ran: bool, emotion: number, turns: number, npcs: { id: String, health: number }[] }
+    if stats.ran then
+        return -- no rewards for wimps
+    end
+    local reward_monies = (stats.score*50)
+    ezmemory.spend_player_money(player_id,-reward_monies) -- spending money backwards gives money
+    Net.message_player(player_id,"Got $"..reward_monies.."!")
+    Net.play_sound_for_player(player_id,sfx.item_get)
+end
 
 local encounter1 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters_bundle.zip",
@@ -24,7 +28,7 @@ local encounter1 = {
         {0,0,0,0,1,0},
         {0,0,0,1,0,1}
     },
-    rewards = shared_rewards_table
+    results_callback = give_result_awards
 }
 
 local encounter2 = {
@@ -38,7 +42,7 @@ local encounter2 = {
         {1,0,1,1,1,1},
         {1,1,1,1,1,1}
     },
-    rewards = shared_rewards_table
+    results_callback = give_result_awards
 }
 
 return {
