@@ -28,25 +28,34 @@ local encounter1 = {
         {0,0,0,0,1,0},
         {0,0,0,1,0,1}
     },
-    results_callback = give_result_awards
-}
-
-local encounter2 = {
-    path="/server/assets/ezlibs-assets/ezencounters/ezencounters_bundle.zip",
-    weight=1,
-    enemies = {
-        {name="Mettaur",rank=1},
+    obstacles = {
+        {name="RockCube"}
     },
-    positions = {
-        {1,1,1,1,1,1},
-        {1,0,1,1,1,1},
-        {1,1,1,1,1,1}
+    obstacle_positions = {
+        {0,0,0,0,1,0},
+        {0,0,0,1,0,0},
+        {0,0,0,0,0,0}
     },
+    player_positions = {
+        {0,0,1,0,0,0},
+        {0,0,0,0,0,0},
+        {0,0,2,0,0,0}
+    },
+    freedom_mission={
+        turn_count=5,
+        player_can_flip=true
+    },
+    background = {
+        texture = "bn6_green_area",
+        x_velocity= 0,
+        y_velocity= 1
+    },
+    music = "surge_of_power",
     results_callback = give_result_awards
 }
 
 return {
-    minimum_steps_before_encounter=400,
+    minimum_steps_before_encounter=100,
     encounter_chance_per_step=0.01,
     encounters={encounter1}
 }
