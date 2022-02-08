@@ -30,7 +30,7 @@ local give_result_awards_rare = function (player_id,encounter_info,stats)
     end
 end
 
-local encounter1 = {
+local e1 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
@@ -50,7 +50,7 @@ local encounter1 = {
     results_callback = give_result_awards
 }
 
-local encounter2 = {
+local e2 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
@@ -65,7 +65,7 @@ local encounter2 = {
     results_callback = give_result_awards
 }
 
-local encounter3 = {
+local e3 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
@@ -73,7 +73,7 @@ local encounter3 = {
     },
     positions = {
         {0,0,0,0,1,0},
-        {0,0,0,0,0,1},
+        {0,0,0,0,0,0},
         {0,0,0,0,1,0}
     },
     obstacles = {
@@ -85,13 +85,13 @@ local encounter3 = {
         {0,0,0,0,0,0}
     },
     tiles = {
-        {13,1,1,1,1,13},
-        {13,1,1,1,1,13},
-        {13,1,1,1,1,13}
+        {13,1,1,1,1,1},
+        {13,1,1,1,1,1},
+        {13,1,1,1,1,1}
     },
     results_callback = give_result_awards
 }
-local encounter4 = {
+local e4 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
@@ -106,7 +106,7 @@ local encounter4 = {
     results_callback = give_result_awards
 }
 
-local encounter5 = {
+local e5 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
@@ -126,24 +126,38 @@ local encounter5 = {
     results_callback = give_result_awards
 }
 
-local encounter6 = {
+local e6 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
     weight=10,
     enemies = {
-        {name="Mettaur",rank=1},
-        {name="Gunner",rank=1}
+        {name="Mettaur",rank=2},
+        {name="Gunner",rank=2}
     },
     positions = {
-        {0,0,0,1,0,2},
+        {0,0,0,1,0,0},
         {0,0,0,0,0,2},
-        {0,0,0,0,1,2}
+        {0,0,0,0,1,0}
     },
     results_callback = give_result_awards
 }
 
-local rare_encounter_1 = {
+local e7 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
-    weight=1,
+    weight=10,
+    enemies = {
+        {name="Mettaur",rank=3},
+    },
+    positions = {
+        {0,0,0,1,0,0},
+        {0,0,0,0,0,1},
+        {0,0,0,0,1,0}
+    },
+    results_callback = give_result_awards
+}
+
+local re1 = {
+    path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
+    weight=2,
     enemies = {
         {name="Cacter",rank=1},
     },
@@ -163,9 +177,9 @@ local rare_encounter_1 = {
     results_callback = give_result_awards_rare
 }
 
-local rare_encounter_2 = {
+local re2 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
-    weight=1,
+    weight=2,
     enemies = {
         {name="Canosmart",rank=1},
     },
@@ -185,9 +199,9 @@ local rare_encounter_2 = {
     results_callback = give_result_awards_rare
 }
 
-local rare_encounter_3 = {
+local re3 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
-    weight=1,
+    weight=2,
     enemies = {
         {name="RareChampy",rank=1},
     },
@@ -207,8 +221,26 @@ local rare_encounter_3 = {
     results_callback = give_result_awards_rare
 }
 
+local re4 = {
+    path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
+    weight=2,
+    enemies = {
+        {name="Shooter",rank=4},
+        {name="Sniper",rank=1},
+    },
+    positions = {
+        {0,0,0,0,0,2},
+        {0,0,0,1,0,0},
+        {0,0,0,0,0,2}
+    },
+    music = {
+        path='bn5_boss.mid'
+    },
+    results_callback = give_result_awards_rare
+}
+
 return {
     minimum_steps_before_encounter=80,
     encounter_chance_per_step=0.05,
-    encounters={encounter1,encounter2,encounter3,encounter4,encounter5,encounter6,rare_encounter_1,rare_encounter_2,rare_encounter_3}
+    encounters={e1,e2,e3,e4,e5,e6,e7,re1,re2,re3}
 }
