@@ -4,8 +4,18 @@ local sfx = {
     item_get='/server/assets/ezlibs-assets/sfx/item_get.ogg'
 }
 
+local persist_health_and_emotion = function (player_id,encounter_info,stats)
+    if stats.emotion == 1 then
+        Net.set_player_emotion(player_id, stats.emotion)
+    else
+        Net.set_player_emotion(player_id, 0)
+    end
+    Net.set_player_health(player_id,stats.health)
+end
+
 local give_result_awards = function (player_id,encounter_info,stats)
     -- stats = { health: number, score: number, time: number, ran: bool, emotion: number, turns: number, npcs: { id: String, health: number }[] }
+    persist_health_and_emotion(player_id,encounter_info,stats)
     if stats.ran then
         return -- no rewards for wimps
     end
@@ -131,7 +141,7 @@ local e6 = {
     weight=10,
     enemies = {
         {name="Mettaur",rank=2},
-        {name="Gunner",rank=2}
+        {name="Gunner",rank=4}
     },
     positions = {
         {0,0,0,1,0,0},
