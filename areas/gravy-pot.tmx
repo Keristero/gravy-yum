@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="187">
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="196">
  <properties>
   <property name="Background" value="grave"/>
   <property name="Background Vel X" type="int" value="-2"/>
   <property name="Background Vel Y" type="int" value="-2"/>
+  <property name="Forced Base HP" type="int" value="1000"/>
+  <property name="Honor HPMem" type="bool" value="true"/>
   <property name="Name" value="Gravy Pot"/>
   <property name="Snow Song" value="/server/assets/all_i_want.ogg"/>
   <property name="Song" value="/server/assets/gravy.mid"/>
@@ -320,6 +322,13 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
+  <object id="191" type="Mystery Datum" gid="85" x="560" y="528" width="14" height="43">
+   <properties>
+    <property name="Name" value="HPMem"/>
+    <property name="Once" type="bool" value="true"/>
+    <property name="Type" value="item"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="3" name="Tile Layer 2" width="40" height="40" offsetx="0" offsety="-16">
   <data encoding="csv">
@@ -477,6 +486,13 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
     <property name="Type" value="random"/>
    </properties>
    <point/>
+  </object>
+  <object id="193" type="Mystery Datum" gid="85" x="80" y="1232" width="14" height="43">
+   <properties>
+    <property name="Name" value="HPMem"/>
+    <property name="Once" type="bool" value="true"/>
+    <property name="Type" value="item"/>
+   </properties>
   </object>
  </objectgroup>
  <layer id="6" name="Tile Layer 3" width="40" height="40" offsetx="0" offsety="-32">
@@ -813,6 +829,13 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
    </properties>
    <point/>
   </object>
+  <object id="192" type="Mystery Datum" gid="85" x="1072" y="304" width="14" height="43">
+   <properties>
+    <property name="Name" value="HPMem"/>
+    <property name="Once" type="bool" value="true"/>
+    <property name="Type" value="item"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="12" name="Tile Layer 6" width="40" height="40" offsetx="0" offsety="-80">
   <data encoding="csv">
@@ -1036,6 +1059,13 @@ LET ME SHOW YOU DE WEY MY BRUDDA</property>
     <property name="Wait Time" type="int" value="20"/>
    </properties>
    <point/>
+  </object>
+  <object id="194" type="Mystery Datum" gid="85" x="1104" y="784" width="14" height="43">
+   <properties>
+    <property name="Name" value="HPMem"/>
+    <property name="Once" type="bool" value="true"/>
+    <property name="Type" value="item"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

@@ -10,7 +10,7 @@ local persist_health_and_emotion = function (player_id,encounter_info,stats)
     else
         Net.set_player_emotion(player_id, 0)
     end
-    Net.set_player_health(player_id,stats.health)
+    ezmemory.set_player_health(player_id,stats.health)
 end
 
 local give_result_awards = function (player_id,encounter_info,stats)
@@ -39,6 +39,24 @@ local give_result_awards_rare = function (player_id,encounter_info,stats)
         Net.play_sound_for_player(player_id,sfx.item_get)
     end
 end
+
+local boss1 = {
+    name="Many Mets",
+    path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
+    weight=0,
+    enemies = {
+        {name="Mettaur",rank=7,nickname=">:)"},
+    },
+    positions = {
+        {0,0,0,0,0,0},
+        {0,0,0,0,1,0},
+        {0,0,0,0,0,0}
+    },
+    results_callback = function (player_id,encounter_info,stats)
+        Net.message_player(player_id,"Hmmmm")
+    end
+}
+
 
 local e1 = {
     path="/server/assets/ezlibs-assets/ezencounters/ezencounters.zip",
@@ -252,5 +270,5 @@ local re4 = {
 return {
     minimum_steps_before_encounter=80,
     encounter_chance_per_step=0.05,
-    encounters={e1,e2,e3,e4,e5,e6,e7,re1,re2,re3}
+    encounters={e1,e2,e3,e4,e5,e6,e7,re1,re2,re3,boss1}
 }
