@@ -1,1 +1,1 @@
-./net_battle_server
+./net_battle_server --resend-budget 8388608
