@@ -1,46 +1,46 @@
 local it = ""
 local tag_sfx = "resources/sfx/trap.ogg"
 
-function handle_player_request(player_id, data)
+Net:on("player_request", function(event)
     if it == "" then
-        print("[Tag] defaulted it to",player_id)
-        it = player_id
+        print("[Tag] defaulted it to", event.player_id)
+        it = event.player_id
     end
-end
+end)
 
 
-function handle_actor_interaction(player_id, actor_id)
-    if it == player_id then
-        if Net.is_bot(actor_id) == false then
-            local mugshot_info = Net.get_player_mugshot(player_id)
-            Net.play_sound_for_player(player_id, tag_sfx)
-            Net.play_sound_for_player(actor_id, tag_sfx)
+Net:on("actor_interaction", function(event)
+    if it == event.player_id then
+        if Net.is_bot(event.actor_id) == false then
+            local mugshot_info = Net.get_player_mugshot(event.player_id)
+            Net.play_sound_for_player(event.player_id, tag_sfx)
+            Net.play_sound_for_player(event.actor_id, tag_sfx)
 
-            Net.exclusive_player_emote(player_id, actor_id, 11)
-            Net.exclusive_player_emote(actor_id, player_id, 4)
+            Net.exclusive_player_emote(event.player_id, event.actor_id, 11)
+            Net.exclusive_player_emote(event.actor_id, event.player_id, 4)
 
-            Net.message_player(actor_id, "You're it!", mugshot_info.texture_path, mugshot_info.animation_path)
-            it = actor_id
-            print("[Tag] "..player_id,"tagged",actor_id)
+            Net.message_player(event.actor_id, "You're it!", mugshot_info.texture_path, mugshot_info.animation_path)
+            it = event.actor_id
+            print("[Tag] " .. event.player_id, "tagged", event.actor_id)
         end
     end
-end
+end)
 
-function handle_player_disconnect(player_id)
-    if it == player_id then
+Net:on("player_disconnect", function(event)
+    if it == event.player_id then
         it = ""
         print("[Tag] it left the server")
     end
-end
+end)
 
 local timer = 0
 
-function tick(elapsed)
-  timer = timer + elapsed
-  if timer > 5 then
-    if it ~= "" then
-        Net.set_player_emote(it, 2)
-        timer = 0
+Net:on("tick", function(event)
+    timer = timer + event.delta_time
+    if timer > 5 then
+        if it ~= "" then
+            Net.set_player_emote(it, 2)
+            timer = 0
+        end
     end
-  end
-end
+end)

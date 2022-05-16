@@ -8,16 +8,16 @@ function StartSpinningTiles(area_id)
         local object = Net.get_object_by_id(area_id, object_id)
         if object.type == "Spinning Conveyor" then
             local spin = {
-                area_id=area_id,
-                x=math.floor(object.x),
-                y=math.floor(object.y),
-                z=math.floor(object.z)
+                area_id = area_id,
+                x = math.floor(object.x),
+                y = math.floor(object.y),
+                z = math.floor(object.z)
             }
-            tiles_to_spin[#tiles_to_spin+1] = spin
+            tiles_to_spin[#tiles_to_spin + 1] = spin
             Net.remove_object(area_id, object_id)
         end
     end
-    print('[spin] added '..#tiles_to_spin..' spin tiles')
+    print('[spin] added ' .. #tiles_to_spin .. ' spin tiles')
 end
 
 function LoadSpinTiles()
@@ -45,14 +45,14 @@ function SpinTiles()
     end
 end
 
-function tick(delta_time)
+Net:on("tick", function(event)
     if delay_till_change > 0 then
-        delay_till_change = delay_till_change - delta_time
+        delay_till_change = delay_till_change - event.delta_time
     else
         SpinTiles()
         delay_till_change = 3
     end
-end
+end)
 
 LoadSpinTiles()
 print('[spin] loaded')

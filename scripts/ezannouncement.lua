@@ -31,9 +31,9 @@ function TryAnnouncement()
     return true
 end
 
-function tick(delta_time)
+Net:on("tick", function(event)
     if delay_till_check > 0 then
-        delay_till_check = delay_till_check - delta_time
+        delay_till_check = delay_till_check - event.delta_time
     else
         if TryAnnouncement() then
             
@@ -42,4 +42,4 @@ function tick(delta_time)
         end
         delay_till_check = 10
     end
-end
+end)
