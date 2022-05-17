@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="772">
+<map version="1.8" tiledversion="1.8.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="777">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -720,6 +720,47 @@ Get something nice</property>
     <property name="Next 2" type="object" value="749"/>
     <property name="Next Waypoint 1" type="object" value="247"/>
    </properties>
+   <point/>
+  </object>
+  <object id="772" name="Shop Test Dude" type="NPC" x="688" y="688">
+   <properties>
+    <property name="Asset Name" value="bass"/>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Direction" value="Down"/>
+    <property name="Next 1" type="object" value="773"/>
+    <property name="Text 1" value="Hey..."/>
+   </properties>
+   <point/>
+  </object>
+  <object id="773" name="test_shop" type="Dialogue" x="720" y="672">
+   <properties>
+    <property name="Dialogue Type" value="shop"/>
+    <property name="Item 1" type="object" value="774"/>
+    <property name="Item 2" type="object" value="775"/>
+    <property name="Item 3" type="object" value="776"/>
+    <property name="Next 1" type="object" value="432"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="774" name="test_item" type="Shop Item" x="744" y="720">
+   <properties>
+    <property name="Description" value="99% Cocoa. Dark souls of chocolate"/>
+    <property name="Is Key" type="bool" value="true"/>
+    <property name="Name" value="Chocolate"/>
+    <property name="Price" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="775" name="test_item" type="Shop Item" x="744" y="744">
+   <properties>
+    <property name="Description" value="Cheese Supreme"/>
+    <property name="Is Key" type="bool" value="false"/>
+    <property name="Name" value="Doritos"/>
+    <property name="Price" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="776" name="test_item" type="Shop Item" x="728" y="752">
    <point/>
   </object>
  </objectgroup>

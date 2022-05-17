@@ -5,6 +5,12 @@
     ],
     "Lua.diagnostics.globals": [
         "Net",
-        "Async"
+        "Async",
+        "helpers",
+        "eznpcs",
+        "async",
+        "await",
+        "ezmemory",
+        "first_value_from_table"
     ]
 }
