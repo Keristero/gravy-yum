@@ -1,0 +1,27 @@
+{
+    "maps": [
+        {
+            "fileName": "areas/default.tmx",
+            "height": 1280,
+            "width": 2560,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "fileName": "areas/farm.tmx",
+            "height": 1136,
+            "width": 2272,
+            "x": 2048,
+            "y": -1152
+        },
+        {
+            "fileName": "areas/gravy-pot.tmx",
+            "height": 1280,
+            "width": 2560,
+            "x": -1728,
+            "y": -1280
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}

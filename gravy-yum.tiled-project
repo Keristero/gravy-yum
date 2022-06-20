@@ -6,5 +6,83 @@
     "folders": [
         "."
     ],
-    "objectTypesFile": ""
+    "objectTypesFile": "",
+    "propertyTypes": [
+        {
+            "id": 6,
+            "name": "Dialogue Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "first",
+                "random",
+                "question",
+                "quiz",
+                "before",
+                "after",
+                "shop",
+                "item",
+                "password",
+                "none"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 4,
+            "name": "Direction",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "Left",
+                "Right",
+                "Up",
+                "Down",
+                "Up Left",
+                "Up Right",
+                "Down Left",
+                "Down Right"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 10,
+            "name": "Item Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "item",
+                "keyitem",
+                "money",
+                "none"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 9,
+            "name": "Mystery Datum Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "money",
+                "keyitem",
+                "random",
+                "none"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 7,
+            "name": "Waypoint Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "first",
+                "random",
+                "before",
+                "after",
+                "none"
+            ],
+            "valuesAsFlags": false
+        }
+    ]
 }
