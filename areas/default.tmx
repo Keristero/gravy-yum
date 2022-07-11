@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="777">
+<map version="1.8" tiledversion="1.8.5" orientation="isometric" renderorder="right-down" compressionlevel="0" width="40" height="40" tilewidth="64" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="804">
  <editorsettings>
   <export target="../../../tmx-parser/default.json" format="json"/>
  </editorsettings>
@@ -237,6 +237,7 @@
    <properties>
     <property name="Dialogue Type" value="none"/>
     <property name="Event Name" value="Punch"/>
+    <property name="Next 1" type="object" value="781"/>
    </properties>
    <point/>
   </object>
@@ -722,46 +723,67 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="772" name="Shop Test Dude" type="NPC" x="688" y="688">
+  <object id="781" name="advance quest" type="Dialogue" x="704" y="384">
    <properties>
-    <property name="Asset Name" value="bass"/>
+    <property name="Dialogue Type" value="quest_event"/>
+    <property name="Event Value" value="punched"/>
+    <property name="Quest Name" value="Get Punched"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="782" name="advance quest" type="Dialogue" x="252" y="256">
+   <properties>
+    <property name="Dialogue Type" value="quest_event"/>
+    <property name="Event Value" value="accepted"/>
+    <property name="Quest Name" value="Get Punched"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="783" name="Take Quest" type="Dialogue" x="260" y="300">
+   <properties>
     <property name="Dialogue Type" value="first"/>
-    <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="773"/>
-    <property name="Text 1" value="Hey..."/>
+    <property name="Next 1" type="object" value="782"/>
+    <property name="Text 1" value="Hey, I need you to go over to my mate over there and get punched!"/>
    </properties>
    <point/>
   </object>
-  <object id="773" name="test_shop" type="Dialogue" x="720" y="672">
+  <object id="784" name="Turn In Quest" type="Dialogue" x="328" y="304">
    <properties>
-    <property name="Dialogue Type" value="shop"/>
-    <property name="Item 1" type="object" value="774"/>
-    <property name="Item 2" type="object" value="775"/>
-    <property name="Item 3" type="object" value="776"/>
-    <property name="Next 1" type="object" value="432"/>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Next 1" type="object" value="785"/>
+    <property name="Text 1" value="Great job getting punched loser"/>
    </properties>
    <point/>
   </object>
-  <object id="774" name="test_item" type="Shop Item" x="744" y="720">
+  <object id="785" name="advance quest" type="Dialogue" x="316" y="256">
    <properties>
-    <property name="Description" value="99% Cocoa. Dark souls of chocolate"/>
-    <property name="Is Key" type="bool" value="true"/>
-    <property name="Name" value="Chocolate"/>
-    <property name="Price" type="int" value="1"/>
+    <property name="Dialogue Type" value="quest_event"/>
+    <property name="Event Value" value="reset"/>
+    <property name="Quest Name" value="Get Punched"/>
    </properties>
    <point/>
   </object>
-  <object id="775" name="test_item" type="Shop Item" x="744" y="744">
+  <object id="788" name="Quest Pending" type="Dialogue" x="296" y="304">
    <properties>
-    <property name="Description" value="Cheese Supreme"/>
-    <property name="Is Key" type="bool" value="false"/>
-    <property name="Name" value="Doritos"/>
-    <property name="Price" type="int" value="2"/>
+    <property name="Dialogue Type" value="first"/>
+    <property name="Text 1" value="What are you waiting for? Go get punched!"/>
    </properties>
    <point/>
   </object>
-  <object id="776" name="test_item" type="Shop Item" x="728" y="752">
-   <point/>
+  <object id="790" x="576" y="608"/>
+  <object id="791" name="Recktangle" type="Location Trigger" x="488" y="636" width="52" height="48">
+   <properties>
+    <property name="Event Name" value="test"/>
+   </properties>
+  </object>
+  <object id="793" x="524" y="612"/>
+  <object id="795" x="568" y="620"/>
+  <object id="796" x="568" y="652"/>
+  <object id="797" name="Cirgle" type="Location Trigger" x="620" y="628" width="100" height="92">
+   <properties>
+    <property name="Event Name" value="test"/>
+   </properties>
+   <ellipse/>
   </object>
  </objectgroup>
  <layer id="12" name="Floor 2" width="40" height="40" offsetx="0" offsety="-16">
@@ -794,11 +816,11 @@ Get something nice</property>
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,16,18,18,18,16,45,0,0,0,0,0,0,18,18,18,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,22,18,22,16,0,0,0,0,0,0,0,0,2147483684,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,16,16,16,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483684,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,18,18,18,18,18,0,0,0,0,0,0,0,0,0,2147483684,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,18,18,18,18,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,18,18,0,18,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,18,18,18,18,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,18,18,18,18,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -821,24 +843,6 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="760" name="Hurter Bass" type="NPC" x="216" y="1056">
-   <properties>
-    <property name="Asset Name" value="bass"/>
-    <property name="Dialogue Type" value="random"/>
-    <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="763"/>
-    <property name="Text 1" value="Grrr..."/>
-   </properties>
-   <point/>
-  </object>
-  <object id="763" name="yes" type="Dialogue" x="176" y="1048">
-   <properties>
-    <property name="Amount" type="int" value="1"/>
-    <property name="Dialogue Type" value="none"/>
-    <property name="Event Name" value="Damage"/>
-   </properties>
-   <point/>
-  </object>
   <object id="767" name="Many Mets battle" type="Radius Encounter" x="656" y="752">
    <properties>
     <property name="Name" value="Many Mets"/>
@@ -847,14 +851,56 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="771" name="Big Meanie" type="NPC" x="592" y="768">
+  <object id="778" name="Quest Giver" type="NPC" x="336" y="368">
    <properties>
     <property name="Asset Name" value="heel-navi-exe4_black"/>
-    <property name="Date" value="* * * * 12 *"/>
-    <property name="Dialogue Type" value="after"/>
+    <property name="Dialogue Type" value="quest_switch"/>
     <property name="Direction" value="Down"/>
-    <property name="Next 1" type="object" value="748"/>
-    <property name="Next 2" type="object" value="749"/>
+    <property name="Quest Name" value="Get Punched"/>
+    <property name="accepted" type="object" value="788"/>
+    <property name="punched" type="object" value="784"/>
+    <property name="unaccepted" type="object" value="783"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="799" type="Custom Warp" gid="65" x="528" y="848" width="61" height="32">
+   <properties>
+    <property name="Direction" value="Up Right"/>
+    <property name="Target Area" value="default"/>
+    <property name="Target Object" type="object" value="800"/>
+   </properties>
+  </object>
+  <object id="800" type="Custom Warp" gid="65" x="240" y="912" width="61" height="32">
+   <properties>
+    <property name="Direction" value="Down Left"/>
+    <property name="Target Area" value="default"/>
+    <property name="Target Object" type="object" value="799"/>
+   </properties>
+  </object>
+  <object id="801" type="Custom Warp" gid="65" x="144" y="912" width="61" height="32">
+   <properties>
+    <property name="Direction" value="Down Right"/>
+    <property name="Target Area" value="farm"/>
+    <property name="Target Object" value="161"/>
+   </properties>
+  </object>
+  <object id="802" name="To Gravy Pot" type="Radius Warp" x="124" y="976">
+   <properties>
+    <property name="Activation Radius" type="float" value="0.6"/>
+    <property name="Arrival Animation" value="arrow_up_left_in"/>
+    <property name="Leave Animation" value="arrow_up_left_out"/>
+    <property name="Target Area" value="default"/>
+    <property name="Target Object" type="object" value="803"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="803" name="To Gravy Pot" type="Radius Warp" x="124" y="1040">
+   <properties>
+    <property name="Activation Radius" type="float" value="0.6"/>
+    <property name="Arrival Animation" value="arrow_up_left_in"/>
+    <property name="Leave Animation" value="arrow_up_left_out"/>
+    <property name="Target Area" value="default"/>
+    <property name="Target Object" type="object" value="802"/>
    </properties>
    <point/>
   </object>

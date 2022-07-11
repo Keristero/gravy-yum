@@ -52,9 +52,7 @@ local boss1 = {
         {0,0,0,0,1,0},
         {0,0,0,0,0,0}
     },
-    results_callback = function (player_id,encounter_info,stats)
-        Net.message_player(player_id,"Hmmmm")
-    end
+    results_callback = give_result_awards_rare
 }
 
 

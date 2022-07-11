@@ -6,6 +6,7 @@ local ezfarms = require('scripts/ezlibs-scripts/ezfarms')
 local ezweather = require('scripts/ezlibs-scripts/ezweather')
 local ezwarps = require('scripts/ezlibs-scripts/ezwarps/main')
 local ezencounters = require('scripts/ezlibs-scripts/ezencounters/main')
+local helpers = require('scripts/ezlibs-scripts/helpers')
 
 local sfx = {
     hurt = '/server/assets/ezlibs-assets/sfx/hurt.ogg',
@@ -19,8 +20,10 @@ local event1 = {
     action = function(npc, player_id, dialogue, relay_object)
         return async(function()
             local player_mugshot = Net.get_player_mugshot(player_id)
+            local next_dialogues = helpers.extract_numbered_properties(dialogue,"Next ")
             Net.play_sound_for_player(player_id, sfx.hurt)
             await(Async.message_player(player_id, "owchie!", player_mugshot.texture_path, player_mugshot.animation_path))
+            return first_value_from_table(next_dialogues)
         end)
     end
 }

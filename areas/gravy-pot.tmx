@@ -72,9 +72,9 @@
  </layer>
  <objectgroup id="2" name="Object Layer 1">
   <object id="58" gid="21" x="1205" y="607" width="70" height="44"/>
-  <object id="95" name="To Default" type="Radius Warp" x="1208" y="624">
+  <object id="95" name="To Default" type="Radius Warp" x="1216" y="624">
    <properties>
-    <property name="Activation Radius" type="float" value="0.5"/>
+    <property name="Activation Radius" type="float" value="0.6"/>
     <property name="Arrival Animation" value="arrow_down_right_in"/>
     <property name="Leave Animation" value="arrow_down_right_out"/>
     <property name="Target Area" value="default"/>

@@ -83,6 +83,23 @@
                 "none"
             ],
             "valuesAsFlags": false
+        },
+        {
+            "id": 11,
+            "members": [
+                {
+                    "name": "Name",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "Next 1",
+                    "type": "object",
+                    "value": 0
+                }
+            ],
+            "name": "Quest Stage",
+            "type": "class"
         }
     ]
 }
