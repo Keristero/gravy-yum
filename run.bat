@@ -1,1 +1,1 @@
-net_battle_server.exe --resend-budget 8388608
+net_battle_server.exe --resend-budget 196608
