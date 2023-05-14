@@ -1,3 +1,4 @@
+/*
 local it = ""
 local tag_sfx = "resources/sfx/trap.ogg"
 
@@ -44,3 +45,4 @@ Net:on("tick", function(event)
         end
     end
 end)
+*/
