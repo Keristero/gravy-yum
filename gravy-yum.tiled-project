@@ -2,11 +2,11 @@
     "automappingRulesFile": "",
     "commands": [
     ],
+    "compatibilityVersion": 1080,
     "extensionsPath": "extensions",
     "folders": [
         "."
     ],
-    "objectTypesFile": "",
     "propertyTypes": [
         {
             "id": 6,
@@ -71,20 +71,7 @@
             "valuesAsFlags": false
         },
         {
-            "id": 7,
-            "name": "Waypoint Type",
-            "storageType": "string",
-            "type": "enum",
-            "values": [
-                "first",
-                "random",
-                "before",
-                "after",
-                "none"
-            ],
-            "valuesAsFlags": false
-        },
-        {
+            "color": "#ffa0a0a4",
             "id": 11,
             "members": [
                 {
@@ -99,7 +86,24 @@
                 }
             ],
             "name": "Quest Stage",
-            "type": "class"
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Waypoint Type",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "first",
+                "random",
+                "before",
+                "after",
+                "none"
+            ],
+            "valuesAsFlags": false
         }
     ]
 }
