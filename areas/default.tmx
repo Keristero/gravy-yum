@@ -180,7 +180,11 @@
     <property name="Navi" value="loui"/>
    </properties>
   </object>
-  <object id="179" gid="60" x="880" y="1104" width="64" height="56"/>
+  <object id="179" gid="60" x="880" y="1104" width="64" height="56">
+   <properties>
+    <property name="Navi" value="Dumplis"/>
+   </properties>
+  </object>
   <object id="180" gid="60" x="880" y="1168" width="64" height="56"/>
   <object id="181" gid="60" x="944" y="1168" width="64" height="56"/>
   <object id="182" gid="60" x="944" y="1104" width="64" height="56"/>
