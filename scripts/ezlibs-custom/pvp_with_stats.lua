@@ -86,7 +86,7 @@ Net:on("textbox_response", function(event)
     requests[player_id][other_id] = nil
     Net.initiate_pvp(player_id, other_id)
     players_in_battle[event.player_id] = true
-    players_in_battle[event.other_id] = true
+    players_in_battle[other_id] = true
   else
     -- we're making a request for the other player
     requests[other_id][player_id] = true
