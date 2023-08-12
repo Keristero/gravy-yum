@@ -127,14 +127,18 @@ Net:on("object_interaction", function(event)
   --show leaderboard bbs for area when its interacted with
   local player_area = Net.get_player_area(event.player_id)
   local object = Net.get_object_by_id(player_area, event.object_id)
+  if not (object.class == "Wins BBS" or object.class == "Points BBS") then
+    return
+  end
+  --load pvp stats
+  local area_memory = ezmemory.get_area_memory(player_area)
+  local posts = {}
   if object.class == "Wins BBS" then
-    --load pvp stats
-    local area_memory = ezmemory.get_area_memory(player_area)
     if not area_memory.pvp_wins then
       Net.message_player(event.player_id,"...Theres nothing here yet")
       return
     end
-    local posts = {}
+
     for player_name, win_count in pairs(area_memory.pvp_wins) do
       table.insert(posts,{ id= player_name, read=true, title=player_name, author=win_count})
     end
@@ -143,13 +147,10 @@ Net:on("object_interaction", function(event)
     local menu = ezmenus.open_menu(event.player_id,"Total Wins BBS",gold_color,posts)
   end
   if object.class == "Points BBS" then
-    --load pvp stats
-    local area_memory = ezmemory.get_area_memory(player_area)
     if not area_memory.pvp_points then
       Net.message_player(event.player_id,"...Theres nothing here yet")
       return
     end
-    local posts = {}
     for player_name, win_count in pairs(area_memory.pvp_points) do
       table.insert(posts,{ id= player_name, read=true, title=player_name, author=win_count})
     end
@@ -185,7 +186,7 @@ local function record_pvp_victory(player_id,other_player_id)
   --if opponent had points, base points gain on those
   if area_memory.pvp_points[other_player_name] then
     --you get 10% of opponents points as bonus
-    award_points = award_points + (area_memory.pvp_points[other_player_name]*0.1)
+    award_points = award_points + math.floor((area_memory.pvp_points[other_player_name]*0.1))
   end
   area_memory.pvp_wins[player_name] = area_memory.pvp_wins[player_name] + 1
   area_memory.pvp_points[player_name] = area_memory.pvp_points[player_name] + award_points
