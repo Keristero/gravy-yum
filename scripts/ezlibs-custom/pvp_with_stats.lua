@@ -87,8 +87,8 @@ Net:on("textbox_response", function(event)
     -- we're saying yes to the other player's request
     requests[player_id][other_id] = nil
     Net.initiate_pvp(player_id, other_id)
-    players_in_battle[event.player_id] = true
-    players_in_battle[other_id] = true
+    players_in_battle[event.player_id] = other_id
+    players_in_battle[other_id] = event.player_id
   else
     -- we're making a request for the other player
     requests[other_id][player_id] = true
@@ -195,10 +195,10 @@ end
 
 Net:on("battle_results", function(event)
   if players_in_battle[event.player_id] then
-      players_in_battle[event.player_id] = nil
       if not event.ran and event.health >= 1 then
-        record_pvp_victory(event.player_id)
+        record_pvp_victory(event.player_id,players_in_battle[event.player_id])
       end
+      players_in_battle[event.player_id] = nil
   end
 end)
 
