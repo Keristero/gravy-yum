@@ -1,10 +1,12 @@
 local ezmemory = require('scripts/ezlibs-scripts/ezmemory')
 local ezmenus = require('scripts/ezlibs-scripts/ezmenus')
+local helpers = require('scripts/ezlibs-scripts/helpers')
 
 local requests = {}
 local questioned_requests = {}
 local players_in_battle = {}
 local timer = 0
+local point_decay_timer = 0
 
 Net:on("player_connect", function(event)
   local player_id = event.player_id
@@ -98,11 +100,26 @@ end)
 
 Net:on("tick", function(event)
     timer = timer + event.delta_time
+    point_decay_timer = point_decay_timer + event.delta_time
     if timer > 10 then
         for player_id, value in pairs(players_in_battle) do
             Net.set_player_emote(player_id, 7) --swords emote
         end  
         timer = 0
+    end
+    --points decay
+    if point_decay_timer > 3600 then
+      local area_list = Net.list_areas()
+      for index, area_id in ipairs(area_list) do
+        local area_memory = ezmemory.get_area_memory(area_id)
+        if area_memory.pvp_points then
+          for player_name, points in pairs(area_memory.pvp_points) do
+            area_memory.pvp_points[player_name] = math.floor(area_memory.pvp_points[player_name]*0.99)
+          end
+        end
+        ezmemory.save_area_memory(area_id)
+      end
+      point_decay_timer = 0
     end
 end)
 
@@ -114,6 +131,7 @@ Net:on("object_interaction", function(event)
     --load pvp stats
     local area_memory = ezmemory.get_area_memory(player_area)
     if not area_memory.pvp_wins then
+      Net.message_player(event.player_id,"...Theres nothing here yet")
       return
     end
     local posts = {}
@@ -122,25 +140,56 @@ Net:on("object_interaction", function(event)
     end
     table.sort(posts, function(a, b) return tonumber(a.author) > tonumber(b.author) end)
     local gold_color = {r=245, g=190, b=40, a=255}
-    local menu = ezmenus.open_menu(event.player_id,"Wins BBS",gold_color,posts)
+    local menu = ezmenus.open_menu(event.player_id,"Total Wins BBS",gold_color,posts)
+  end
+  if object.class == "Points BBS" then
+    --load pvp stats
+    local area_memory = ezmemory.get_area_memory(player_area)
+    if not area_memory.pvp_points then
+      Net.message_player(event.player_id,"...Theres nothing here yet")
+      return
+    end
+    local posts = {}
+    for player_name, win_count in pairs(area_memory.pvp_points) do
+      table.insert(posts,{ id= player_name, read=true, title=player_name, author=win_count})
+    end
+    table.sort(posts, function(a, b) return tonumber(a.author) > tonumber(b.author) end)
+    local purple_color = {r=159, g=39, b=245, a=255}
+    local menu = ezmenus.open_menu(event.player_id,"PVP Points BBS",purple_color,posts)
   end
 end)
 
-local function record_pvp_victory(player_id)
+local function record_pvp_victory(player_id,other_player_id)
   local area_id = Net.get_player_area(player_id)
   local area_memory = ezmemory.get_area_memory(area_id)
   local player_name = Net.get_player_name(player_id)
+  local other_player_name = Net.get_player_name(other_player_id)
+  local award_points = 10
   if player_name == 'anon' then
     return
   end
+  --ensure values exist
   if not area_memory.pvp_wins then
     area_memory.pvp_wins = {}
   end
+  if not area_memory.pvp_points then
+    area_memory.pvp_points = {}
+  end
+  --ensure players exist
   if not area_memory.pvp_wins[player_name] then
     area_memory.pvp_wins[player_name] = 0
   end
+  if not area_memory.pvp_points[player_name] then
+    area_memory.pvp_points[player_name] = 0
+  end
+  --if opponent had points, base points gain on those
+  if area_memory.pvp_points[other_player_name] then
+    --you get 10% of opponents points as bonus
+    award_points = award_points + (area_memory.pvp_points[other_player_name]*0.1)
+  end
   area_memory.pvp_wins[player_name] = area_memory.pvp_wins[player_name] + 1
-  print('[PvP] recorded win for '..player_name..'!')
+  area_memory.pvp_points[player_name] = area_memory.pvp_points[player_name] + award_points
+  print('[PvP] recorded win for '..player_name..'! gained'..award_points.." points!")
   ezmemory.save_area_memory(area_id)
 end
 
