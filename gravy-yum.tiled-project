@@ -92,6 +92,24 @@
             ]
         },
         {
+            "color": "#ff25fff8",
+            "id": 12,
+            "members": [
+            ],
+            "name": "Waypoint",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
+            ]
+        },
+        {
             "id": 7,
             "name": "Waypoint Type",
             "storageType": "string",

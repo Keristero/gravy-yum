@@ -1,3 +1,6 @@
+local ezmemory = require('scripts/ezlibs-scripts/ezmemory')
+local ezmenus = require('scripts/ezlibs-scripts/ezmenus')
+
 local requests = {}
 local questioned_requests = {}
 local players_in_battle = {}
@@ -94,7 +97,7 @@ end)
 
 Net:on("tick", function(event)
     timer = timer + event.delta_time
-    if timer > 20 then
+    if timer > 10 then
         for player_id, value in pairs(players_in_battle) do
             Net.set_player_emote(player_id, 7) --swords emote
         end  
@@ -102,8 +105,53 @@ Net:on("tick", function(event)
     end
 end)
 
+Net:on("object_interaction", function(event)
+  --show leaderboard bbs for area when its interacted with
+  local player_area = Net.get_player_area(event.player_id)
+  print('PVP',event.player_id, event.object_id, event.button)
+  local object = Net.get_object_by_id(player_area, event.object_id)
+  if object.class == "Wins BBS" then
+    --load pvp stats
+    local area_memory = ezmemory.get_area_memory(player_area)
+    if not area_memory.pvp_wins then
+      return
+    end
+    local posts = {}
+    for player_name, win_count in pairs(area_memory.pvp_wins) do
+      table.insert(posts,{ id= player_name, read=true, title=player_name, author=win_count})
+    end
+    table.sort(posts, function(a, b) return tonumber(a.author) > tonumber(b.author) end)
+    local gold_color = {r=245, g=190, b=40, a=255}
+    local menu = ezmenus.open_menu(event.player_id,"Wins BBS",gold_color,posts)
+  end
+end)
+
+local function record_pvp_victory(player_id)
+  local area_id = Net.get_player_area(player_id)
+  local area_memory = ezmemory.get_area_memory(area_id)
+  local player_name = Net.get_player_name(player_id)
+  if player_name == 'anon' then
+    return
+  end
+  if not area_memory.pvp_wins then
+    area_memory.pvp_wins = {}
+  end
+  if not area_memory.pvp_wins[player_name] then
+    area_memory.pvp_wins[player_name] = 0
+  end
+  area_memory.pvp_wins[player_name] = area_memory.pvp_wins[player_name] + 1
+  print('[PvP] recorded win for '..player_name..'!')
+  ezmemory.save_area_memory(area_id)
+end
+
 Net:on("battle_results", function(event)
     if players_in_battle[event.player_id] then
+        print(event.player_id, event.health, event.time, event.ran, event.emotion, event.turns, event.enemies)
         players_in_battle[event.player_id] = nil
+        if not event.ran and event.health >= 1 then
+          record_pvp_victory(event.player_id)
+        end
     end
 end)
+
+return {}
