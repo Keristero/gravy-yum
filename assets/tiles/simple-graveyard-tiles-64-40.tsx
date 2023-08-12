@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.5.0" name="simple-graveyard-tiles-64-40" tilewidth="64" tileheight="40" tilecount="20" columns="4" objectalignment="top">
+<tileset version="1.8" tiledversion="1.9.2" name="simple-graveyard-tiles-64-40" tilewidth="64" tileheight="40" tilecount="20" columns="4" objectalignment="top">
  <tileoffset x="0" y="8"/>
  <image source="simple-graveyard-tiles-64-40.png" width="256" height="200"/>
  <tile id="0">
