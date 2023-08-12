@@ -86,6 +86,7 @@ Net:on("textbox_response", function(event)
     requests[player_id][other_id] = nil
     Net.initiate_pvp(player_id, other_id)
     players_in_battle[event.player_id] = true
+    players_in_battle[event.other_id] = true
   else
     -- we're making a request for the other player
     requests[other_id][player_id] = true
@@ -108,7 +109,6 @@ end)
 Net:on("object_interaction", function(event)
   --show leaderboard bbs for area when its interacted with
   local player_area = Net.get_player_area(event.player_id)
-  print('PVP',event.player_id, event.object_id, event.button)
   local object = Net.get_object_by_id(player_area, event.object_id)
   if object.class == "Wins BBS" then
     --load pvp stats
@@ -145,13 +145,12 @@ local function record_pvp_victory(player_id)
 end
 
 Net:on("battle_results", function(event)
-    if players_in_battle[event.player_id] then
-        print(event.player_id, event.health, event.time, event.ran, event.emotion, event.turns, event.enemies)
-        players_in_battle[event.player_id] = nil
-        if not event.ran and event.health >= 1 then
-          record_pvp_victory(event.player_id)
-        end
-    end
+  if players_in_battle[event.player_id] then
+      players_in_battle[event.player_id] = nil
+      if not event.ran and event.health >= 1 then
+        record_pvp_victory(event.player_id)
+      end
+  end
 end)
 
 return {}
