@@ -1,0 +1,13 @@
+{
+    "serverlists":["https://www.keristero.xyz/server_list/"],
+    "advertisements":[
+        {
+            "name":"Gravy Yum",
+            "description":"Water your crops then kick back for some nice warm gravy.",
+            "tags":["pvp","farming","enemies"],
+            "address":"keristero.xyz:8765",
+            "data":"",
+            "icon":"advertisement.png"
+        }
+    ]
+}
