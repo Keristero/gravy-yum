@@ -164,8 +164,10 @@ local function build_server_map()
     local server_map = {}
     local areas = Net.list_areas()
     for i, area_id in ipairs(areas) do
+        local area_p = Net.get_area_custom_properties(area_id)
         if not server_map[area_id] then
             server_map[area_id] = {
+                name=area_p["Name"],
                 l={},--local connections (same server)
                 r={}--remote connections (other servers)
             }
