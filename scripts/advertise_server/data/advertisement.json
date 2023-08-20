@@ -11,7 +11,8 @@
             "address":"keristero.xyz:8765",
             "data":"",
             "icon":"advertisement.png",
-            "color":"rgb(212,70,255)"
+            "color":"rgb(212,70,255)",
+            "advertise_map":true
         }
     ]
 }

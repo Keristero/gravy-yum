@@ -160,6 +160,33 @@ local function initialize_pending_fields_from_advertisements(advertisements)
     end
 end
 
+local function build_server_map()
+    local server_map = {}
+    local areas = Net.list_areas()
+    for i, area_id in ipairs(areas) do
+        if not server_map[area_id] then
+            server_map[area_id] = {
+                l={},--local connections (same server)
+                r={}--remote connections (other servers)
+            }
+        end
+        local objects = Net.list_objects(area_id)
+        for j, object_id in ipairs(objects) do
+            local object = Net.get_object_by_id(area_id,object_id)
+            local custom_p = object.custom_properties
+            if custom_p["Target Area"] then
+                server_map[area_id].l[custom_p["Target Area"]] = {id=custom_p["Target Object"]}
+            end
+            local address = custom_p["Address"]
+            local port = custom_p["Port"]
+            if address and port then
+                server_map[area_id].r[address..":"..port] = {data=custom_p["Data"],incoming_data=custom_p["Incoming Data"]}
+            end
+        end
+    end
+    return server_map
+end
+
 --load configuration
 async(function()
     print('[advertise_server] loading...')
@@ -172,6 +199,13 @@ async(function()
     initialize_pending_fields_from_advertisements(advertisements)
     --load images
     await(load_all_images_for_advertisements(advertisements))
+    --load sever map
+    local server_map = build_server_map()
+    for i, advertisement in ipairs(advertisements) do
+        if advertisement.advertise_map then
+            set_pending_field(advertisement.unique_server_id,"map",server_map)
+        end
+    end
     while true do
         --every minimum_sync_interval, we send all the batched changes
         await(Async.sleep(minimum_sync_interval))
