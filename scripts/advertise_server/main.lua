@@ -113,9 +113,11 @@ function sync_to_servers(server_id)
                 headers = headers,
                 body = json.encode(payload)
             }))
-            local data = json.decode(res.body)
-            if data and data.secret_key ~= nil then
-                await(save_secret_key(secret_keys_json_path,server_id,listserver_name,data.secret_key))
+            if res then
+                local data = json.decode(res.body)
+                if data and data.secret_key ~= nil then
+                    await(save_secret_key(secret_keys_json_path,server_id,listserver_name,data.secret_key))
+                end
             end
         end
         public_info.time_since_last_sync[server_id] = 0
@@ -148,7 +150,9 @@ local function load_all_images_for_advertisements(advertisements)
 end
 
 local function initialize_pending_fields_from_advertisements(advertisements)
+    set_pending_field_for_all_servers("online_players",0)
     for i, advertisement in ipairs(advertisements) do
+        --Some ephemral fields need defaults
         local server_id = advertisement.unique_server_id
         for field_name, value in pairs(advertisement) do
             set_pending_field(server_id,field_name,value)
