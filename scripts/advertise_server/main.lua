@@ -14,6 +14,7 @@ local public_info = {
 local listservers = {}
 local secret_keys = {}
 local server_ids = {}
+local last_map_list = {}
 
 --shorthands for async stuff.
 local function async(p)
@@ -160,9 +161,8 @@ local function initialize_pending_fields_from_advertisements(advertisements)
     end
 end
 
-local function build_server_map()
+local function build_server_map(areas)
     local server_map = {}
-    local areas = Net.list_areas()
     for i, area_id in ipairs(areas) do
         local area_p = Net.get_area_custom_properties(area_id)
         if not server_map[area_id] then
@@ -189,6 +189,21 @@ local function build_server_map()
     return server_map
 end
 
+function advertise_map_if_it_changed(advertisements)
+    local areas = Net.list_areas()
+    if #areas == #last_map_list then
+        last_map_list = areas
+        return
+    end
+    local server_map = build_server_map(areas)
+    for i, advertisement in ipairs(advertisements) do
+        if advertisement.advertise_map then
+            set_pending_field(advertisement.unique_server_id,"map",server_map)
+        end
+    end
+    last_map_list = areas
+end
+
 --load configuration
 async(function()
     print('[advertise_server] loading...')
@@ -202,15 +217,11 @@ async(function()
     --load images
     await(load_all_images_for_advertisements(advertisements))
     --load sever map
-    local server_map = build_server_map()
-    for i, advertisement in ipairs(advertisements) do
-        if advertisement.advertise_map then
-            set_pending_field(advertisement.unique_server_id,"map",server_map)
-        end
-    end
+    advertise_map_if_it_changed(advertisements)
     while true do
         --every minimum_sync_interval, we send all the batched changes
         await(Async.sleep(minimum_sync_interval))
+        advertise_map_if_it_changed(advertisements)
         for unique_server_id, time in pairs(public_info.time_since_last_sync) do
             if time > maximum_sync_interval then
                 sync_to_servers(unique_server_id)
