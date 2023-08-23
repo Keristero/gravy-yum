@@ -12,6 +12,7 @@
             "data":"",
             "icon":"advertisement.png",
             "color":"rgb(212,70,255)",
+            "default_area_id":"default",
             "advertise_map":true
         }
     ]
