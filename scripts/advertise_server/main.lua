@@ -40,7 +40,7 @@ end
 
 --Event handlers
 Net:on("player_connect", function(event)
-    player_maps[event.player_id] = 'default'--when a landing script transfers the player this will be immediately overwritten correctly (i think)
+    player_maps[event.player_id] = 'default'--TODO this does not work correctly if the player is transfered elsewhere while joining
     set_pending_field_for_all_servers("player_maps",player_maps)
 end)
 
