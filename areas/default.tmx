@@ -76,10 +76,10 @@
  <objectgroup id="19" name="Ground Objects">
   <object id="80" type="Interact Warp" gid="6" x="880" y="400" width="33" height="54">
    <properties>
-    <property name="Address" value="142.93.58.233"/>
+    <property name="Address" value="159.223.165.219:8000"/>
     <property name="Data" value="lev_beast_in_test"/>
     <property name="Leave Animation" value="lev_beast_out"/>
-    <property name="Port" type="int" value="8765"/>
+    <property name="Port" type="int" value="8000"/>
     <property name="Warp Out" type="bool" value="false"/>
    </properties>
   </object>
