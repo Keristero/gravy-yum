@@ -993,13 +993,13 @@ Get something nice</property>
    </properties>
    <point/>
   </object>
-  <object id="804" name="D3STROIT" type="Server Warp" gid="65" x="1151" y="511" width="61" height="32">
+  <object id="804" name="ReyHome" type="Server Warp" gid="65" x="1151" y="511" width="61" height="32">
    <properties>
-    <property name="Address" value="d3str0y3d255.duckdns.org"/>
-    <property name="Data" value="mm_gravy_yum_2"/>
+    <property name="Address" value="keristero.xyz"/>
+    <property name="Data" value="GravyYum"/>
     <property name="Direction" value="Up Left"/>
-    <property name="Incoming Data" value="REDACTED"/>
-    <property name="Port" type="int" value="8765"/>
+    <property name="Incoming Data" value="ReyHome"/>
+    <property name="Port" type="int" value="9876"/>
     <property name="Warp In" type="bool" value="true"/>
    </properties>
   </object>
