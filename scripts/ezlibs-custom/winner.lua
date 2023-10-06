@@ -16,7 +16,7 @@ Net:on("player_join", function(event)
   print('visits',area_memory.visitors)
   for i, value in ipairs(winner_threshholds) do
     if area_memory.visitors == value then
-      local item_name = prizes[math.random(1,#prizes)]
+      local item_name = prizes[math.random(1,#prizes)].." "..i
       ezmemory.create_or_update_item(item_name, "prize for being the "..value.."th visitor to "..player_area.."!", true)
       ezmemory.give_player_item(player_id, item_name, 1)
       Net.message_player(player_id,"Congratulations, you are the "..value.."th visitor! you win...\na "..item_name.."!!!")
