@@ -1,1 +1,1 @@
-This is a test announcement 2
+Notice: doing a quick reboot to update the MOTD

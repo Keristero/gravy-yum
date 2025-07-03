@@ -6,9 +6,9 @@
         {
             "unique_server_id":"gravy_yum",
             "name":"Gravy Yum",
-            "description":"Water your crops then kick back for some nice warm gravy.",
+            "description":"Water your crops then kick back for some nice warm gravy. Important Notice: We moved to port 8769, please read the thread in the discord channel #servers to migrate your identity file and keep your save data",
             "tags":["pvp","farming","enemies"],
-            "address":"keristero.xyz:8765",
+            "address":"keristero.xyz:8769",
             "data":"",
             "icon":"advertisement.png",
             "color":"rgb(212,70,255)",
