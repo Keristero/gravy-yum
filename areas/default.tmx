@@ -77,7 +77,7 @@
   <object id="80" type="Interact Warp" gid="6" x="880" y="400" width="33" height="54">
    <properties>
     <property name="Address" value="96.60.137.203"/>
-    <property name="Data" value="trains__default__train"/>
+    <property name="Data" value="trains__default__red line"/>
     <property name="Leave Animation" value="lev_beast_out"/>
     <property name="Port" type="int" value="8768"/>
     <property name="Warp Out" type="bool" value="false"/>
